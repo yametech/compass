@@ -7,7 +7,7 @@ export interface WorkloadEntrySpec {
   // port.  Domain names can be used if and only if the resolution is set
   // to DNS, and must be fully-qualified without wildcards. Use the form
   // unix:///absolute/path/to/socket for Unix domain socket endpoints.
-  Address?: string;
+  address?: string;
   // Set of ports associated with the endpoint. If the port map is
   // specified, it must be a map of servicePortName to this endpoint's
   // port, such that traffic to the service port will be forwarded to
@@ -22,9 +22,9 @@ export interface WorkloadEntrySpec {
   // **NOTE 1:** Do not use for `unix://` addresses.
   //
   // **NOTE 2:** endpoint port map takes precedence over targetPort.
-  Ports?: Map<string, number>;
+  ports?: Map<string, number>;
   // One or more labels associated with the endpoint.
-  Labels?: Map<string, string>;
+  labels?: Map<string, string>;
   // Network enables Istio to group endpoints resident in the same L3
   // domain/network. All endpoints in the same network are assumed to be
   // directly reachable from one another. When endpoints in different
@@ -33,7 +33,7 @@ export interface WorkloadEntrySpec {
   // `AUTO_PASSTHROUGH` mode in a Gateway Server). This is
   // an advanced configuration used typically for spanning an Istio mesh
   // over multiple clusters.
-  Network?: string;
+  network?: string;
   // The locality associated with the endpoint. A locality corresponds
   // to a failure domain (e.g., country/region/zone). Arbitrary failure
   // domain hierarchies can be represented by separating each
@@ -51,21 +51,21 @@ export interface WorkloadEntrySpec {
   // locality. Endpoint e2 could be the IP associated with a gateway
   // (that bridges networks n1 and n2), or the IP associated with a
   // standard service endpoint.
-  Locality?: string;
+  locality?: string;
   // The load balancing weight associated with the endpoint. Endpoints
   // with higher weights will receive proportionally higher traffic.
-  Weight: number;
+  weight?: number;
   // The service account associated with the workload if a sidecar
   // is present in the workload. The service account must be present
   // in the same namespace as the configuration ( WorkloadEntry or a
   // ServiceEntry)
-  ServiceAccount: string;
+  serviceAccount?: string;
 }
 
 @autobind()
 export class WorkloadEntry extends KubeObject {
   static kind = "WorkloadEntry";
-  spec: WorkloadEntry;
+  spec: WorkloadEntrySpec;
 
   getOwnerNamespace(): string {
     if (this.metadata.labels == undefined) {

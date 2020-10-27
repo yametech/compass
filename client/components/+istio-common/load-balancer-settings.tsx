@@ -91,13 +91,7 @@ export class DistributeDetail extends React.Component<Props> {
                                 />
 
                             </Grid>
-
-
                         </Grid>
-
-
-
-
                     </Grid>
                 </Grid>
             </>

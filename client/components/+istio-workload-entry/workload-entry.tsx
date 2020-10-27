@@ -9,6 +9,7 @@ import { KubeObjectMenu, KubeObjectMenuProps } from "../kube-object";
 import { KubeObjectListLayout } from "../kube-object";
 import { apiManager } from "../../api/api-manager";
 import { MenuItem } from "../menu";
+import { WorkloadEntryDialog } from "./add-workload-entry-dialog"
 
 enum sortBy {
     name = "name",
@@ -65,7 +66,14 @@ export class WorkloadEntrys extends React.Component<Props> {
                     renderItemMenu={(item: WorkloadEntry) => {
                         return <WorkloadEntryMenu object={item} />;
                     }}
+                    addRemoveButtons={{
+                        addTooltip: <Trans>Gateway</Trans>,
+                        onAdd: () => {
+                            WorkloadEntryDialog.open();
+                        },
+                    }}
                 />
+                <WorkloadEntryDialog />
             </>
         );
     }

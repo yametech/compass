@@ -29,7 +29,7 @@ export interface ServiceEntrySpec {
   //    service accounts associated with the pods of the service, the
   //    SANs specified here will also be verified.
   //
-  Hosts?: string[];
+  hosts?: string[];
   // The virtual IP addresses associated with the service. Could be CIDR
   // prefix. For HTTP traffic, generated route configurations will include http route
   // domains for both the `addresses` and `hosts` field values and the destination will
@@ -44,29 +44,29 @@ export interface ServiceEntrySpec {
   // simple TCP proxy, forwarding incoming traffic on a specified port to
   // the specified destination endpoint IP/host. Unix domain socket
   // addresses are not supported in this field.
-  Addresses?: string[];
+  addresses?: string[];
   // The ports associated with the external service. If the
   // Endpoints are Unix domain socket addresses, there must be exactly one
   // port.
-  Ports?: Port[];
+  ports?: Port[];
   // Specify whether the service should be considered external to the mesh
   // or part of the mesh.
-  Location: ServiceEntry_Location;
+  location: ServiceEntry_Location;
   // Service discovery mode for the hosts. Care must be taken
   // when setting the resolution mode to NONE for a TCP port without
   // accompanying IP addresses. In such cases, traffic to any IP on
   // said port will be allowed (i.e. `0.0.0.0:<port>`).
-  Resolution: ServiceEntry_Resolution;
+  resolution: ServiceEntry_Resolution;
   // One or more endpoints associated with the service. Only one of
   // `endpoints` or `workloadSelector` can be specified.
-  Endpoints: WorkloadEntrySpec;
+  endpoints: WorkloadEntrySpec;
   // Applicable only for MESH_INTERNAL services. Only one of
   // `endpoints` or `workloadSelector` can be specified. Selects one
   // or more Kubernetes pods or VM workloads (specified using
   // `WorkloadEntry`) based on their labels. The `WorkloadEntry` object
   // representing the VMs should be defined in the same namespace as
   // the ServiceEntry.
-  WorkloadSelector?: WorkloadSelector;
+  workloadSelector?: WorkloadSelector;
   // A list of namespaces to which this service is exported. Exporting a service
   // allows it to be used by sidecars, gateways and virtual services defined in
   // other namespaces. This feature provides a mechanism for service owners
@@ -83,7 +83,7 @@ export interface ServiceEntrySpec {
   // For a Kubernetes Service, the equivalent effect can be achieved by setting
   // the annotation "networking.istio.io/exportTo" to a comma-separated list
   // of namespace names.
-  ExportTo?: string[];
+  exportTo?: string[];
   // If specified, the proxy will verify that the server certificate's
   // subject alternate name matches one of the specified values.
   //
@@ -91,7 +91,7 @@ export interface ServiceEntrySpec {
   // service account specified in the workloadEntry will also be used
   // to derive the additional subject alternate names that should be
   // verified.
-  SubjectAltNames: string[];
+  subjectAltNames: string[];
 }
 
 // `WorkloadSelector` specifies the criteria used to determine if the `Gateway`,
@@ -106,7 +106,7 @@ export interface WorkloadSelector {
   // on which this `Sidecar` configuration should be applied. The scope of
   // label search is restricted to the configuration namespace in which the
   // the resource is present.
-  Labels?: Map<string, string>;
+  labels?: Map<string, string>;
 }
 
 // Resolution determines how the proxy will resolve the IP addresses of
