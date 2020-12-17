@@ -13,7 +13,7 @@ export abstract class ItemStore<T extends ItemObject = ItemObject> {
 
   protected defaultSorting = (item: T) => {
     let ele:any = item;
-    if (ele.created === undefined) {
+    if (ele?.metadata?.creationTimestamp !== undefined) {
       return item?.getCreationTime();
     }
     
