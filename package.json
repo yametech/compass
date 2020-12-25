@@ -65,7 +65,7 @@
     "@types/cookie-session": "^2.0.37",
     "@types/cors": "^2.8.7",
     "@types/crypto-js": "^3.1.43",
-    "@types/dompurify": "^2.0.3",
+    "@types/dompurify": "^2.0.17",
     "@types/dotenv": "^8.2.0",
     "@types/enzyme": "^3.10.3",
     "@types/enzyme-adapter-react-16": "^1.0.5",
