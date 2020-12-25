@@ -164,14 +164,24 @@ export class KubeObject implements ItemObject {
   }
 
   getAnnotations(): string[] {
-    const labels = KubeObject.stringifyLabels(this.metadata.annotations);
-    return labels.filter((label) => {
+    const annotations = KubeObject.stringifyLabels(this.metadata.annotations);
+    return annotations.filter((annotation) => {
       const skip = resourceApplierApi.annotations.some((key) =>
-        label.startsWith(key)
+        annotation.startsWith(key)
       );
       return !skip;
     });
   }
+
+  getAnnotation(key: string): string {
+    return this.getAnnotations().find(annotation => {
+      const annotationKeyValue = annotation.split("=");
+      if (annotationKeyValue[0] == key) {
+        return annotationKeyValue[1];
+      }
+    })
+  }
+
 
   addOwnerReferences(ownerReferences: OwnerReferences[]) {
     if (ownerReferences !== undefined) {

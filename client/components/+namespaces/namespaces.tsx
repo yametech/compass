@@ -16,6 +16,7 @@ import { namespaceStore } from "./namespace.store";
 import { apiManager } from "../../api/api-manager";
 import { NamespaceNodeRangeLimitDialog } from "./namespace-nodelimit-dialog";
 import { NamespaceStorageClasslimit } from "./namespace-storageclass-dialog";
+import { Namespace2Layernet } from "./namespace-add2layernet";
 
 enum sortBy {
   name = "name",
@@ -72,6 +73,7 @@ export class Namespaces extends React.Component<Props> {
         <AddNamespaceDialog />
         <NamespaceNodeRangeLimitDialog />
         <NamespaceStorageClasslimit />
+        <Namespace2Layernet />
       </MainLayout>
     )
   }
@@ -88,6 +90,10 @@ export function NamespaceMenu(props: KubeObjectMenuProps<Namespace>) {
       <MenuItem onClick={() => { NamespaceStorageClasslimit.open(object); }}>
         <Icon material="store" title={_i18n._(t`Allow StorageClass`)} interactive={toolbar} />
         <span className="title"><Trans>Allow StorageClass</Trans></span>
+      </MenuItem>
+      <MenuItem onClick={() => { Namespace2Layernet.open(object); }}>
+        <Icon material="gesture" title={_i18n._(t`Add 2LayerNet`)} interactive={toolbar} />
+        <span className="title"><Trans>Add 2LayerNet</Trans></span>
       </MenuItem>
     </KubeObjectMenu>
 

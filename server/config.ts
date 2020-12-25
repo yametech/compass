@@ -15,6 +15,9 @@ export const config = {
   API_PREFIX: {
     BASE: '/api', // local express.js server api
     TENANT: '/base',  // tenant api
+    TEKTON: '/tekton', // tekton
+    WORKLOAD: '/workload', // tekton
+    CLUSTER: '/cluster',
     TERMINAL: '/api-kube', // terminal api
     KUBE_BASE: '/api-kube', // kubernetes cluster api
     KUBE_USERS: '/api-users', // users & groups api

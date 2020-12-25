@@ -258,6 +258,22 @@ export class KubeApi<T extends KubeObject = any> {
     return this.request.put(apiUrl, { data }).then(this.parseResponse);
   }
 
+  async updateAnnotation(
+    { name = "", namespace = "default" } = {},
+    data?: Partial<T>
+  ): Promise<T> {
+    const apiUrl = this.getUrl({ namespace, name }) + "/annotation";
+    return this.request.put(apiUrl, { data }).then(this.parseResponse);
+  }
+
+  async updateLabel(
+    { name = "", namespace = "default" } = {},
+    data?: Partial<T>
+  ): Promise<T> {
+    const apiUrl = this.getUrl({ namespace, name }) + "/label";
+    return this.request.put(apiUrl, { data }).then(this.parseResponse);
+  }
+
   async delete({ name = "", namespace = "default" }) {
     const apiUrl = this.getUrl({ namespace, name });
     return this.request.del(apiUrl);
