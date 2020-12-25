@@ -198,6 +198,10 @@ export class CopyTaskDialog extends React.Component<Props> {
 
   handleChange = async (event: any) => {
     this.ifSwitch = event.target.checked;
+    if (!this.ifSwitch) {
+      const name = this.value.taskName;
+      await this.loadData(String(name), CopyTaskDialog.namespace);
+    }
   };
 
   get taskOptions() {

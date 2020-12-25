@@ -160,7 +160,7 @@ export class PipelineRuns extends React.Component<Props> {
         return (
           <Icon
             small={true}
-            material="check_circle_outline"
+            material="check_circle"
             className="pipelineRun-Succeeded"
           />
         );
@@ -197,7 +197,6 @@ export class PipelineRuns extends React.Component<Props> {
     return (
       <>
         <KubeObjectListLayout
-          isClusterScoped
           className="PipelineRuns"
           store={pipelineRunStore}
           dependentStores={[

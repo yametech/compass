@@ -76,7 +76,6 @@ export class Pipelines extends React.Component<Props> {
     return (
       <>
         <KubeObjectListLayout
-          isClusterScoped
           className="Pipelines"
           store={pipelineStore}
           dependentStores={[taskStore, pipelineRunStore, pipelineResourceStore, tektonGraphStore]} // other

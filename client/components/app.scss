@@ -131,7 +131,7 @@ a {
   //}
 
   &:not([href]) {
-    border-bottom: 1px dotted;
+    // border-bottom: 1px dotted;
     text-decoration: none;
   }
 }
