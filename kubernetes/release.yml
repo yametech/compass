@@ -28,67 +28,67 @@ spec:
     singular: basedepartment
   scope: Namespaced
   versions:
-  - name: v1
-    schema:
-      openAPIV3Schema:
-        description: BaseDepartment is the Schema for the basedepartments API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: BaseDepartmentSpec defines the desired state of BaseDepartment
-            properties:
-              defaultNamespace:
-                type: string
-              gits:
-                items:
-                  properties:
-                    address:
-                      type: string
-                    password:
-                      type: string
-                    token:
-                      type: string
-                    user:
-                      type: string
-                    verification:
-                      type: string
-                  type: object
-                type: array
-              namespace:
-                items:
+    - name: v1
+      schema:
+        openAPIV3Schema:
+          description: BaseDepartment is the Schema for the basedepartments API
+          properties:
+            apiVersion:
+              description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+              type: string
+            kind:
+              description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: BaseDepartmentSpec defines the desired state of BaseDepartment
+              properties:
+                defaultNamespace:
                   type: string
-                type: array
-              registers:
-                items:
-                  properties:
-                    address:
-                      type: string
-                    password:
-                      type: string
-                    token:
-                      type: string
-                    user:
-                      type: string
-                    verification:
-                      type: string
-                  type: object
-                type: array
-            type: object
-          status:
-            description: BaseDepartmentStatus defines the observed state of BaseDepartment
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
+                gits:
+                  items:
+                    properties:
+                      address:
+                        type: string
+                      password:
+                        type: string
+                      token:
+                        type: string
+                      user:
+                        type: string
+                      verification:
+                        type: string
+                    type: object
+                  type: array
+                namespace:
+                  items:
+                    type: string
+                  type: array
+                registers:
+                  items:
+                    properties:
+                      address:
+                        type: string
+                      password:
+                        type: string
+                      token:
+                        type: string
+                      user:
+                        type: string
+                      verification:
+                        type: string
+                    type: object
+                  type: array
+              type: object
+            status:
+              description: BaseDepartmentStatus defines the observed state of BaseDepartment
+              type: object
+          type: object
+      served: true
+      storage: true
+      subresources:
+        status: {}
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -103,38 +103,38 @@ spec:
     singular: baserole
   scope: Namespaced
   versions:
-  - name: v1
-    schema:
-      openAPIV3Schema:
-        description: BaseRole is the Schema for the baseroles API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: BaseRoleSpec defines the desired state of BaseRole
-            properties:
-              comment:
-                type: string
-              value:
-                format: int32
-                type: integer
-            required:
-            - value
-            type: object
-          status:
-            description: BaseRoleStatus defines the observed state of BaseRole
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
+    - name: v1
+      schema:
+        openAPIV3Schema:
+          description: BaseRole is the Schema for the baseroles API
+          properties:
+            apiVersion:
+              description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+              type: string
+            kind:
+              description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: BaseRoleSpec defines the desired state of BaseRole
+              properties:
+                comment:
+                  type: string
+                value:
+                  format: int32
+                  type: integer
+              required:
+                - value
+              type: object
+            status:
+              description: BaseRoleStatus defines the observed state of BaseRole
+              type: object
+          type: object
+      served: true
+      storage: true
+      subresources:
+        status: {}
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -149,35 +149,35 @@ spec:
     singular: baseroleuser
   scope: Namespaced
   versions:
-  - name: v1
-    schema:
-      openAPIV3Schema:
-        description: BaseRoleUser is the Schema for the baseroleusers API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: BaseRoleUserSpec defines the desired state of BaseRoleUser
-            properties:
-              role_id:
-                type: string
-              user_id:
-                type: string
-            type: object
-          status:
-            description: BaseRoleUserStatus defines the observed state of BaseRoleUser
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
+    - name: v1
+      schema:
+        openAPIV3Schema:
+          description: BaseRoleUser is the Schema for the baseroleusers API
+          properties:
+            apiVersion:
+              description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+              type: string
+            kind:
+              description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: BaseRoleUserSpec defines the desired state of BaseRoleUser
+              properties:
+                role_id:
+                  type: string
+                user_id:
+                  type: string
+              type: object
+            status:
+              description: BaseRoleUserStatus defines the observed state of BaseRoleUser
+              type: object
+          type: object
+      served: true
+      storage: true
+      subresources:
+        status: {}
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -192,45 +192,45 @@ spec:
     singular: baseuser
   scope: Namespaced
   versions:
-  - name: v1
-    schema:
-      openAPIV3Schema:
-        description: BaseUser is the Schema for the baseusers API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: BaseUserSpec defines the desired state of BaseUser
-            properties:
-              department_id:
-                type: string
-              display:
-                type: string
-              email:
-                type: string
-              name:
-                type: string
-              password:
-                type: string
-              roles:
-                items:
+    - name: v1
+      schema:
+        openAPIV3Schema:
+          description: BaseUser is the Schema for the baseusers API
+          properties:
+            apiVersion:
+              description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+              type: string
+            kind:
+              description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: BaseUserSpec defines the desired state of BaseUser
+              properties:
+                department_id:
                   type: string
-                type: array
-            type: object
-          status:
-            description: BaseUserStatus defines the observed state of BaseUser
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
+                display:
+                  type: string
+                email:
+                  type: string
+                name:
+                  type: string
+                password:
+                  type: string
+                roles:
+                  items:
+                    type: string
+                  type: array
+              type: object
+            status:
+              description: BaseUserStatus defines the observed state of BaseUser
+              type: object
+          type: object
+      served: true
+      storage: true
+      subresources:
+        status: {}
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -245,39 +245,39 @@ spec:
     singular: tektongraph
   scope: Namespaced
   versions:
-  - name: v1
-    schema:
-      openAPIV3Schema:
-        description: TektonGraph is the Schema for the tektongraphs API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: TektonGraphSpec defines the desired state of TektonGraph
-            properties:
-              data:
-                type: string
-              height:
-                format: int32
-                type: integer
-              width:
-                format: int32
-                type: integer
-            type: object
-          status:
-            description: TektonGraphStatus defines the observed state of TektonGraph
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
+    - name: v1
+      schema:
+        openAPIV3Schema:
+          description: TektonGraph is the Schema for the tektongraphs API
+          properties:
+            apiVersion:
+              description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+              type: string
+            kind:
+              description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: TektonGraphSpec defines the desired state of TektonGraph
+              properties:
+                data:
+                  type: string
+                height:
+                  format: int32
+                  type: integer
+                width:
+                  format: int32
+                  type: integer
+              type: object
+            status:
+              description: TektonGraphStatus defines the observed state of TektonGraph
+              type: object
+          type: object
+      served: true
+      storage: true
+      subresources:
+        status: {}
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -292,48 +292,48 @@ spec:
     singular: tektonstore
   scope: Namespaced
   versions:
-  - name: v1
-    schema:
-      openAPIV3Schema:
-        description: TektonStore is the Schema for the tektonstores API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: TektonStoreSpec defines the desired state of TektonStore
-            properties:
-              author:
-                type: string
-              data:
-                type: string
-              forks:
-                format: int32
-                type: integer
-              paramsDescription:
-                type: string
-              tektonResourceType:
-                type: string
-            required:
-            - author
-            - data
-            - forks
-            - paramsDescription
-            - tektonResourceType
-            type: object
-          status:
-            description: TektonStoreStatus defines the observed state of TektonStore
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
+    - name: v1
+      schema:
+        openAPIV3Schema:
+          description: TektonStore is the Schema for the tektonstores API
+          properties:
+            apiVersion:
+              description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+              type: string
+            kind:
+              description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: TektonStoreSpec defines the desired state of TektonStore
+              properties:
+                author:
+                  type: string
+                data:
+                  type: string
+                forks:
+                  format: int32
+                  type: integer
+                paramsDescription:
+                  type: string
+                tektonResourceType:
+                  type: string
+              required:
+                - author
+                - data
+                - forks
+                - paramsDescription
+                - tektonResourceType
+              type: object
+            status:
+              description: TektonStoreStatus defines the observed state of TektonStore
+              type: object
+          type: object
+      served: true
+      storage: true
+      subresources:
+        status: {}
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -348,53 +348,53 @@ spec:
     singular: tektonwebhook
   scope: Namespaced
   versions:
-  - name: v1
-    schema:
-      openAPIV3Schema:
-        description: TektonWebHook is the Schema for the tektonwebhooks API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: TektonWebHookSpec defines the desired state of TektonWebHook
-            properties:
-              git:
-                type: string
-              jobs:
-                items:
-                  properties:
-                    branch:
-                      type: string
-                    params:
-                      items:
-                        properties:
-                          name:
-                            type: string
-                          value:
-                            type: string
-                        type: object
-                      type: array
-                    pipeline_run:
-                      type: string
-                  type: object
-                type: array
-              secret:
-                type: string
-            type: object
-          status:
-            description: TektonWebHookStatus defines the observed state of TektonWebHook
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
+    - name: v1
+      schema:
+        openAPIV3Schema:
+          description: TektonWebHook is the Schema for the tektonwebhooks API
+          properties:
+            apiVersion:
+              description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+              type: string
+            kind:
+              description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: TektonWebHookSpec defines the desired state of TektonWebHook
+              properties:
+                git:
+                  type: string
+                jobs:
+                  items:
+                    properties:
+                      branch:
+                        type: string
+                      params:
+                        items:
+                          properties:
+                            name:
+                              type: string
+                            value:
+                              type: string
+                          type: object
+                        type: array
+                      pipeline_run:
+                        type: string
+                    type: object
+                  type: array
+                secret:
+                  type: string
+              type: object
+            status:
+              description: TektonWebHookStatus defines the observed state of TektonWebHook
+              type: object
+          type: object
+      served: true
+      storage: true
+      subresources:
+        status: {}
 ---
 apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
@@ -409,48 +409,48 @@ spec:
     singular: workloads
   scope: Namespaced
   versions:
-  - name: v1
-    schema:
-      openAPIV3Schema:
-        description: Workloads is the Schema for the workloads API
-        properties:
-          apiVersion:
-            description: 'APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
-            type: string
-          kind:
-            description: 'Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
-            type: string
-          metadata:
-            type: object
-          spec:
-            description: WorkloadsSpec defines the desired state of Workloads
-            properties:
-              appName:
-                description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html Workloads ResourceType [Deployment,Statefulset...]'
-                type: string
-              metadata:
-                type: string
-              resourceType:
-                type: string
-              service:
-                type: string
-              volumeClaims:
-                type: string
-            required:
-            - appName
-            - metadata
-            - resourceType
-            - service
-            - volumeClaims
-            type: object
-          status:
-            description: WorkloadsStatus defines the observed state of Workloads
-            type: object
-        type: object
-    served: true
-    storage: true
-    subresources:
-      status: {}
+    - name: v1
+      schema:
+        openAPIV3Schema:
+          description: Workloads is the Schema for the workloads API
+          properties:
+            apiVersion:
+              description: "APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources"
+              type: string
+            kind:
+              description: "Kind is a string value representing the REST resource this object represents. Servers may infer this from the endpoint the client submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds"
+              type: string
+            metadata:
+              type: object
+            spec:
+              description: WorkloadsSpec defines the desired state of Workloads
+              properties:
+                appName:
+                  description: 'INSERT ADDITIONAL SPEC FIELDS - desired state of cluster Important: Run "operator-sdk generate k8s" to regenerate code after modifying this file Add custom validation using kubebuilder tags: https://book-v1.book.kubebuilder.io/beyond_basics/generating_crd.html Workloads ResourceType [Deployment,Statefulset...]'
+                  type: string
+                metadata:
+                  type: string
+                resourceType:
+                  type: string
+                service:
+                  type: string
+                volumeClaims:
+                  type: string
+              required:
+                - appName
+                - metadata
+                - resourceType
+                - service
+                - volumeClaims
+              type: object
+            status:
+              description: WorkloadsStatus defines the observed state of Workloads
+              type: object
+          type: object
+      served: true
+      storage: true
+      subresources:
+        status: {}
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -460,8 +460,8 @@ spec:
   group: tekton.dev
   names:
     categories:
-    - tekton
-    - tekton-pipelines
+      - tekton
+      - tekton-pipelines
     kind: ClusterTask
     plural: clustertasks
   scope: Cluster
@@ -469,12 +469,12 @@ spec:
     status: {}
   version: v1alpha1
   versions:
-  - name: v1alpha1
-    served: true
-    storage: true
-  - name: v1beta1
-    served: true
-    storage: false
+    - name: v1alpha1
+      served: true
+      storage: true
+    - name: v1beta1
+      served: true
+      storage: false
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -484,8 +484,8 @@ spec:
   group: tekton.dev
   names:
     categories:
-    - tekton
-    - tekton-pipelines
+      - tekton
+      - tekton-pipelines
     kind: Condition
     plural: conditions
   scope: Namespaced
@@ -503,12 +503,12 @@ spec:
   group: caching.internal.knative.dev
   names:
     categories:
-    - knative-internal
-    - caching
+      - knative-internal
+      - caching
     kind: Image
     plural: images
     shortNames:
-    - img
+      - img
     singular: image
   scope: Namespaced
   subresources:
@@ -529,14 +529,14 @@ spec:
     listKind: InjectorList
     plural: injectors
     shortNames:
-    - nuwainj
+      - nuwainj
     singular: injector
   scope: Namespaced
   version: v1
   versions:
-  - name: v1
-    served: true
-    storage: true
+    - name: v1
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -552,8 +552,8 @@ spec:
   group: tekton.dev
   names:
     categories:
-    - tekton
-    - tekton-pipelines
+      - tekton
+      - tekton-pipelines
     kind: PipelineResource
     plural: pipelineresources
   scope: Namespaced
@@ -567,39 +567,39 @@ metadata:
   name: pipelineruns.tekton.dev
 spec:
   additionalPrinterColumns:
-  - JSONPath: .status.conditions[?(@.type=="Succeeded")].status
-    name: Succeeded
-    type: string
-  - JSONPath: .status.conditions[?(@.type=="Succeeded")].reason
-    name: Reason
-    type: string
-  - JSONPath: .status.startTime
-    name: StartTime
-    type: date
-  - JSONPath: .status.completionTime
-    name: CompletionTime
-    type: date
+    - JSONPath: .status.conditions[?(@.type=="Succeeded")].status
+      name: Succeeded
+      type: string
+    - JSONPath: .status.conditions[?(@.type=="Succeeded")].reason
+      name: Reason
+      type: string
+    - JSONPath: .status.startTime
+      name: StartTime
+      type: date
+    - JSONPath: .status.completionTime
+      name: CompletionTime
+      type: date
   group: tekton.dev
   names:
     categories:
-    - tekton
-    - tekton-pipelines
+      - tekton
+      - tekton-pipelines
     kind: PipelineRun
     plural: pipelineruns
     shortNames:
-    - pr
-    - prs
+      - pr
+      - prs
   scope: Namespaced
   subresources:
     status: {}
   version: v1alpha1
   versions:
-  - name: v1alpha1
-    served: true
-    storage: true
-  - name: v1beta1
-    served: true
-    storage: false
+    - name: v1alpha1
+      served: true
+      storage: true
+    - name: v1beta1
+      served: true
+      storage: false
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -609,8 +609,8 @@ spec:
   group: tekton.dev
   names:
     categories:
-    - tekton
-    - tekton-pipelines
+      - tekton
+      - tekton-pipelines
     kind: Pipeline
     plural: pipelines
   scope: Namespaced
@@ -618,12 +618,12 @@ spec:
     status: {}
   version: v1alpha1
   versions:
-  - name: v1alpha1
-    served: true
-    storage: true
-  - name: v1beta1
-    served: true
-    storage: false
+    - name: v1alpha1
+      served: true
+      storage: true
+    - name: v1beta1
+      served: true
+      storage: false
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -634,33 +634,33 @@ metadata:
   name: statefulsets.nuwa.nip.io
 spec:
   additionalPrinterColumns:
-  - JSONPath: .spec.replicas
-    description: The desired number of pods.
-    name: Replicas
-    type: integer
-  - JSONPath: .status.replicas
-    description: The number of currently all pods.
-    name: Current
-    type: integer
-  - JSONPath: .status.updatedReplicas
-    description: The number of pods updated.
-    name: Update
-    type: integer
-  - JSONPath: .status.readyReplicas
-    description: The number of pods ready.
-    name: Ready
-    type: integer
-  - JSONPath: .metadata.creationTimestamp
-    description: CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.
-    name: Age
-    type: date
+    - JSONPath: .spec.replicas
+      description: The desired number of pods.
+      name: Replicas
+      type: integer
+    - JSONPath: .status.replicas
+      description: The number of currently all pods.
+      name: Current
+      type: integer
+    - JSONPath: .status.updatedReplicas
+      description: The number of pods updated.
+      name: Update
+      type: integer
+    - JSONPath: .status.readyReplicas
+      description: The number of pods ready.
+      name: Ready
+      type: integer
+    - JSONPath: .metadata.creationTimestamp
+      description: CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.
+      name: Age
+      type: date
   group: nuwa.nip.io
   names:
     kind: StatefulSet
     listKind: StatefulSetList
     plural: statefulsets
     shortNames:
-    - nuwasts
+      - nuwasts
     singular: statefulset
   scope: Namespaced
   subresources:
@@ -671,9 +671,9 @@ spec:
     status: {}
   version: v1
   versions:
-  - name: v1
-    served: true
-    storage: true
+    - name: v1
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -690,34 +690,34 @@ metadata:
   name: stones.nuwa.nip.io
 spec:
   additionalPrinterColumns:
-  - JSONPath: .status.replicas
-    description: The desired number of pods.
-    name: Replicas
-    type: integer
-  - JSONPath: .status.statefulset
-    description: The desired number of statefulset.
-    name: Statefulset
-    type: integer
-  - JSONPath: .metadata.creationTimestamp
-    description: CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.
-    name: Age
-    type: date
+    - JSONPath: .status.replicas
+      description: The desired number of pods.
+      name: Replicas
+      type: integer
+    - JSONPath: .status.statefulset
+      description: The desired number of statefulset.
+      name: Statefulset
+      type: integer
+    - JSONPath: .metadata.creationTimestamp
+      description: CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.
+      name: Age
+      type: date
   group: nuwa.nip.io
   names:
     kind: Stone
     listKind: StoneList
     plural: stones
     shortNames:
-    - nuwaste
+      - nuwaste
     singular: stone
   scope: Namespaced
   subresources:
     status: {}
   version: v1
   versions:
-  - name: v1
-    served: true
-    storage: true
+    - name: v1
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -731,39 +731,39 @@ metadata:
   name: taskruns.tekton.dev
 spec:
   additionalPrinterColumns:
-  - JSONPath: .status.conditions[?(@.type=="Succeeded")].status
-    name: Succeeded
-    type: string
-  - JSONPath: .status.conditions[?(@.type=="Succeeded")].reason
-    name: Reason
-    type: string
-  - JSONPath: .status.startTime
-    name: StartTime
-    type: date
-  - JSONPath: .status.completionTime
-    name: CompletionTime
-    type: date
+    - JSONPath: .status.conditions[?(@.type=="Succeeded")].status
+      name: Succeeded
+      type: string
+    - JSONPath: .status.conditions[?(@.type=="Succeeded")].reason
+      name: Reason
+      type: string
+    - JSONPath: .status.startTime
+      name: StartTime
+      type: date
+    - JSONPath: .status.completionTime
+      name: CompletionTime
+      type: date
   group: tekton.dev
   names:
     categories:
-    - tekton
-    - tekton-pipelines
+      - tekton
+      - tekton-pipelines
     kind: TaskRun
     plural: taskruns
     shortNames:
-    - tr
-    - trs
+      - tr
+      - trs
   scope: Namespaced
   subresources:
     status: {}
   version: v1alpha1
   versions:
-  - name: v1alpha1
-    served: true
-    storage: true
-  - name: v1beta1
-    served: true
-    storage: false
+    - name: v1alpha1
+      served: true
+      storage: true
+    - name: v1beta1
+      served: true
+      storage: false
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -773,8 +773,8 @@ spec:
   group: tekton.dev
   names:
     categories:
-    - tekton
-    - tekton-pipelines
+      - tekton
+      - tekton-pipelines
     kind: Task
     plural: tasks
   scope: Namespaced
@@ -782,12 +782,12 @@ spec:
     status: {}
   version: v1alpha1
   versions:
-  - name: v1alpha1
-    served: true
-    storage: true
-  - name: v1beta1
-    served: true
-    storage: false
+    - name: v1alpha1
+      served: true
+      storage: true
+    - name: v1beta1
+      served: true
+      storage: false
 ---
 apiVersion: apiextensions.k8s.io/v1beta1
 kind: CustomResourceDefinition
@@ -798,33 +798,33 @@ metadata:
   name: waters.nuwa.nip.io
 spec:
   additionalPrinterColumns:
-  - JSONPath: .status.desired_replicas
-    description: The desired number of pods.
-    name: DesiredReplicas
-    type: integer
-  - JSONPath: .status.already_replicas
-    description: The desired number of pods.
-    name: AlreadyReplicas
-    type: integer
-  - JSONPath: .status.desired_deployment
-    description: The desired number of deployments.
-    name: DesiredDeployment
-    type: integer
-  - JSONPath: .status.already_deployment
-    description: The already replicas number of deployments.
-    name: AlreadyDeployment
-    type: integer
-  - JSONPath: .metadata.creationTimestamp
-    description: CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.
-    name: Age
-    type: date
+    - JSONPath: .status.desired_replicas
+      description: The desired number of pods.
+      name: DesiredReplicas
+      type: integer
+    - JSONPath: .status.already_replicas
+      description: The desired number of pods.
+      name: AlreadyReplicas
+      type: integer
+    - JSONPath: .status.desired_deployment
+      description: The desired number of deployments.
+      name: DesiredDeployment
+      type: integer
+    - JSONPath: .status.already_deployment
+      description: The already replicas number of deployments.
+      name: AlreadyDeployment
+      type: integer
+    - JSONPath: .metadata.creationTimestamp
+      description: CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.
+      name: Age
+      type: date
   group: nuwa.nip.io
   names:
     kind: Water
     listKind: WaterList
     plural: waters
     shortNames:
-    - nuwawts
+      - nuwawts
     singular: water
   scope: Namespaced
   subresources:
@@ -834,9 +834,9 @@ spec:
     status: {}
   version: v1
   versions:
-  - name: v1
-    served: true
-    storage: true
+    - name: v1
+      served: true
+      storage: true
 status:
   acceptedNames:
     kind: ""
@@ -887,8 +887,8 @@ spec:
   allowPrivilegeEscalation: false
   fsGroup:
     ranges:
-    - max: 65535
-      min: 1
+      - max: 65535
+        min: 1
     rule: MustRunAs
   hostIPC: false
   hostNetwork: false
@@ -900,13 +900,13 @@ spec:
     rule: RunAsAny
   supplementalGroups:
     ranges:
-    - max: 65535
-      min: 1
+      - max: 65535
+        min: 1
     rule: MustRunAs
   volumes:
-  - emptyDir
-  - configMap
-  - secret
+    - emptyDir
+    - configMap
+    - secret
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -914,32 +914,32 @@ metadata:
   name: kube-leader-election-role
   namespace: kube-system
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  verbs:
-  - get
-  - list
-  - watch
-  - create
-  - update
-  - patch
-  - delete
-- apiGroups:
-  - ""
-  resources:
-  - configmaps/status
-  verbs:
-  - get
-  - update
-  - patch
-- apiGroups:
-  - ""
-  resources:
-  - events
-  verbs:
-  - create
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps/status
+    verbs:
+      - get
+      - update
+      - patch
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
@@ -947,242 +947,242 @@ metadata:
   creationTimestamp: null
   name: fuxi
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  - services
-  - services/finalizers
-  - endpoints
-  - persistentvolumeclaims
-  - events
-  - configmaps
-  - secrets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - apps
-  resources:
-  - deployments
-  - daemonsets
-  - replicasets
-  - statefulsets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - monitoring.coreos.com
-  resources:
-  - servicemonitors
-  verbs:
-  - get
-  - create
-- apiGroups:
-  - apps
-  resourceNames:
-  - fuxi
-  resources:
-  - deployments/finalizers
-  verbs:
-  - update
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  verbs:
-  - get
-- apiGroups:
-  - apps
-  resources:
-  - replicasets
-  - deployments
-  verbs:
-  - get
-- apiGroups:
-  - fuxi.nip.io
-  resources:
-  - '*'
-  - pages
-  - forms
-  - fields
-  - baseroles
-  - basedepartments
-  - baseusers
-  - baserolegroups
-  - baseroleusers
-  - tektongraphs
-  - tektonwebhooks
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - fuxi.nip.io
-  resources:
-  - '*'
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - services
+      - services/finalizers
+      - endpoints
+      - persistentvolumeclaims
+      - events
+      - configmaps
+      - secrets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+      - daemonsets
+      - replicasets
+      - statefulsets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - monitoring.coreos.com
+    resources:
+      - servicemonitors
+    verbs:
+      - get
+      - create
+  - apiGroups:
+      - apps
+    resourceNames:
+      - fuxi
+    resources:
+      - deployments/finalizers
+    verbs:
+      - update
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+    verbs:
+      - get
+  - apiGroups:
+      - apps
+    resources:
+      - replicasets
+      - deployments
+    verbs:
+      - get
+  - apiGroups:
+      - fuxi.nip.io
+    resources:
+      - "*"
+      - pages
+      - forms
+      - fields
+      - baseroles
+      - basedepartments
+      - baseusers
+      - baserolegroups
+      - baseroleusers
+      - tektongraphs
+      - tektonwebhooks
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - fuxi.nip.io
+    resources:
+      - "*"
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: compass-kube-state-metrics
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - configmaps
-  - secrets
-  - nodes
-  - pods
-  - services
-  - resourcequotas
-  - replicationcontrollers
-  - limitranges
-  - persistentvolumeclaims
-  - persistentvolumes
-  - namespaces
-  - endpoints
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - extensions
-  resources:
-  - daemonsets
-  - deployments
-  - replicasets
-  - ingresses
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - apps
-  resources:
-  - statefulsets
-  - daemonsets
-  - deployments
-  - replicasets
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - batch
-  resources:
-  - cronjobs
-  - jobs
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - autoscaling
-  resources:
-  - horizontalpodautoscalers
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - authentication.k8s.io
-  resources:
-  - tokenreviews
-  verbs:
-  - create
-- apiGroups:
-  - authorization.k8s.io
-  resources:
-  - subjectaccessreviews
-  verbs:
-  - create
-- apiGroups:
-  - policy
-  resources:
-  - poddisruptionbudgets
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - certificates.k8s.io
-  resources:
-  - certificatesigningrequests
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - storage.k8s.io
-  resources:
-  - storageclasses
-  - volumeattachments
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - admissionregistration.k8s.io
-  resources:
-  - mutatingwebhookconfigurations
-  - validatingwebhookconfigurations
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - networking.k8s.io
-  resources:
-  - networkpolicies
-  verbs:
-  - list
-  - watch
-- apiGroups:
-  - coordination.k8s.io
-  resources:
-  - leases
-  verbs:
-  - list
-  - watch
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+      - secrets
+      - nodes
+      - pods
+      - services
+      - resourcequotas
+      - replicationcontrollers
+      - limitranges
+      - persistentvolumeclaims
+      - persistentvolumes
+      - namespaces
+      - endpoints
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - daemonsets
+      - deployments
+      - replicasets
+      - ingresses
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - statefulsets
+      - daemonsets
+      - deployments
+      - replicasets
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - batch
+    resources:
+      - cronjobs
+      - jobs
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - autoscaling
+    resources:
+      - horizontalpodautoscalers
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - authentication.k8s.io
+    resources:
+      - tokenreviews
+    verbs:
+      - create
+  - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - subjectaccessreviews
+    verbs:
+      - create
+  - apiGroups:
+      - policy
+    resources:
+      - poddisruptionbudgets
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - certificates.k8s.io
+    resources:
+      - certificatesigningrequests
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - storage.k8s.io
+    resources:
+      - storageclasses
+      - volumeattachments
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - admissionregistration.k8s.io
+    resources:
+      - mutatingwebhookconfigurations
+      - validatingwebhookconfigurations
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - networking.k8s.io
+    resources:
+      - networkpolicies
+    verbs:
+      - list
+      - watch
+  - apiGroups:
+      - coordination.k8s.io
+    resources:
+      - leases
+    verbs:
+      - list
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: compass-prometheus
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - nodes
-  - nodes/proxy
-  - nodes/metrics
-  - services
-  - endpoints
-  - pods
-  - ingresses
-  - configmaps
-  verbs:
-  - get
-  - list
-  - watch
-- nonResourceURLs:
-  - /metrics
-  verbs:
-  - get
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+      - nodes/proxy
+      - nodes/metrics
+      - services
+      - endpoints
+      - pods
+      - ingresses
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+  - nonResourceURLs:
+      - /metrics
+    verbs:
+      - get
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -1190,93 +1190,93 @@ metadata:
   creationTimestamp: null
   name: kube-manager-role
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  - services
-  - services/finalizers
-  - endpoints
-  - persistentvolumeclaims
-  - events
-  - configmaps
-  - secrets
-  - nodes
-  - namespaces
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - ""
-  resources:
-  - pods/status
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - apps
-  resources:
-  - '*'
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - nuwa.nip.io
-  resources:
-  - '*'
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - batch
-  resources:
-  - '*'
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - services
+      - services/finalizers
+      - endpoints
+      - persistentvolumeclaims
+      - events
+      - configmaps
+      - secrets
+      - nodes
+      - namespaces
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - pods/status
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - "*"
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - nuwa.nip.io
+    resources:
+      - "*"
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - batch
+    resources:
+      - "*"
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: kube-proxy-role
 rules:
-- apiGroups:
-  - authentication.k8s.io
-  resources:
-  - tokenreviews
-  verbs:
-  - create
-- apiGroups:
-  - authorization.k8s.io
-  resources:
-  - subjectaccessreviews
-  verbs:
-  - create
+  - apiGroups:
+      - authentication.k8s.io
+    resources:
+      - tokenreviews
+    verbs:
+      - create
+  - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - subjectaccessreviews
+    verbs:
+      - create
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -1287,33 +1287,33 @@ metadata:
     rbac.authorization.k8s.io/aggregate-to-view: "true"
   name: system:aggregated-metrics-reader
 rules:
-- apiGroups:
-  - metrics.k8s.io
-  resources:
-  - pods
-  - nodes
-  verbs:
-  - get
-  - list
-  - watch
+  - apiGroups:
+      - metrics.k8s.io
+    resources:
+      - pods
+      - nodes
+    verbs:
+      - get
+      - list
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: system:metrics-server
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  - nodes
-  - nodes/stats
-  - namespaces
-  - configmaps
-  verbs:
-  - get
-  - list
-  - watch
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - nodes
+      - nodes/stats
+      - namespaces
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -1323,24 +1323,24 @@ metadata:
     rbac.authorization.k8s.io/aggregate-to-edit: "true"
   name: tekton-aggregate-edit
 rules:
-- apiGroups:
-  - tekton.dev
-  resources:
-  - tasks
-  - taskruns
-  - pipelines
-  - pipelineruns
-  - pipelineresources
-  - conditions
-  verbs:
-  - create
-  - delete
-  - deletecollection
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  - apiGroups:
+      - tekton.dev
+    resources:
+      - tasks
+      - taskruns
+      - pipelines
+      - pipelineruns
+      - pipelineresources
+      - conditions
+    verbs:
+      - create
+      - delete
+      - deletecollection
+      - get
+      - list
+      - patch
+      - update
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
@@ -1349,138 +1349,138 @@ metadata:
     rbac.authorization.k8s.io/aggregate-to-view: "true"
   name: tekton-aggregate-view
 rules:
-- apiGroups:
-  - tekton.dev
-  resources:
-  - tasks
-  - taskruns
-  - pipelines
-  - pipelineruns
-  - pipelineresources
-  - conditions
-  verbs:
-  - get
-  - list
-  - watch
+  - apiGroups:
+      - tekton.dev
+    resources:
+      - tasks
+      - taskruns
+      - pipelines
+      - pipelineruns
+      - pipelineresources
+      - conditions
+    verbs:
+      - get
+      - list
+      - watch
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRole
 metadata:
   name: tekton-pipelines-admin
 rules:
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  - pods/log
-  - namespaces
-  - secrets
-  - events
-  - serviceaccounts
-  - configmaps
-  - persistentvolumeclaims
-  - limitranges
-  verbs:
-  - get
-  - list
-  - create
-  - update
-  - delete
-  - patch
-  - watch
-- apiGroups:
-  - apps
-  resources:
-  - deployments
-  verbs:
-  - get
-  - list
-  - create
-  - update
-  - delete
-  - patch
-  - watch
-- apiGroups:
-  - apps
-  resources:
-  - deployments/finalizers
-  verbs:
-  - get
-  - list
-  - create
-  - update
-  - delete
-  - patch
-  - watch
-- apiGroups:
-  - admissionregistration.k8s.io
-  resources:
-  - mutatingwebhookconfigurations
-  - validatingwebhookconfigurations
-  verbs:
-  - get
-  - list
-  - create
-  - update
-  - delete
-  - patch
-  - watch
-- apiGroups:
-  - tekton.dev
-  resources:
-  - tasks
-  - clustertasks
-  - taskruns
-  - pipelines
-  - pipelineruns
-  - pipelineresources
-  - conditions
-  verbs:
-  - get
-  - list
-  - create
-  - update
-  - delete
-  - patch
-  - watch
-- apiGroups:
-  - tekton.dev
-  resources:
-  - taskruns/finalizers
-  - pipelineruns/finalizers
-  verbs:
-  - get
-  - list
-  - create
-  - update
-  - delete
-  - patch
-  - watch
-- apiGroups:
-  - tekton.dev
-  resources:
-  - tasks/status
-  - clustertasks/status
-  - taskruns/status
-  - pipelines/status
-  - pipelineruns/status
-  - pipelineresources/status
-  verbs:
-  - get
-  - list
-  - create
-  - update
-  - delete
-  - patch
-  - watch
-- apiGroups:
-  - policy
-  resourceNames:
-  - tekton-pipelines
-  resources:
-  - podsecuritypolicies
-  verbs:
-  - use
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+      - pods/log
+      - namespaces
+      - secrets
+      - events
+      - serviceaccounts
+      - configmaps
+      - persistentvolumeclaims
+      - limitranges
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+      - patch
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+      - patch
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - deployments/finalizers
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+      - patch
+      - watch
+  - apiGroups:
+      - admissionregistration.k8s.io
+    resources:
+      - mutatingwebhookconfigurations
+      - validatingwebhookconfigurations
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+      - patch
+      - watch
+  - apiGroups:
+      - tekton.dev
+    resources:
+      - tasks
+      - clustertasks
+      - taskruns
+      - pipelines
+      - pipelineruns
+      - pipelineresources
+      - conditions
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+      - patch
+      - watch
+  - apiGroups:
+      - tekton.dev
+    resources:
+      - taskruns/finalizers
+      - pipelineruns/finalizers
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+      - patch
+      - watch
+  - apiGroups:
+      - tekton.dev
+    resources:
+      - tasks/status
+      - clustertasks/status
+      - taskruns/status
+      - pipelines/status
+      - pipelineruns/status
+      - pipelineresources/status
+    verbs:
+      - get
+      - list
+      - create
+      - update
+      - delete
+      - patch
+      - watch
+  - apiGroups:
+      - policy
+    resourceNames:
+      - tekton-pipelines
+    resources:
+      - podsecuritypolicies
+    verbs:
+      - use
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -1492,9 +1492,9 @@ roleRef:
   kind: Role
   name: kube-leader-election-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: kube-system
+  - kind: ServiceAccount
+    name: default
+    namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -1506,9 +1506,9 @@ roleRef:
   kind: Role
   name: extension-apiserver-authentication-reader
 subjects:
-- kind: ServiceAccount
-  name: metrics-server
-  namespace: kube-system
+  - kind: ServiceAccount
+    name: metrics-server
+    namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -1519,8 +1519,8 @@ roleRef:
   kind: Role
   name: fuxi
 subjects:
-- kind: ServiceAccount
-  name: fuxi
+  - kind: ServiceAccount
+    name: fuxi
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -1531,9 +1531,9 @@ roleRef:
   kind: ClusterRole
   name: compass-kube-state-metrics
 subjects:
-- kind: ServiceAccount
-  name: kube-state-metrics
-  namespace: kube-system
+  - kind: ServiceAccount
+    name: kube-state-metrics
+    namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -1544,9 +1544,9 @@ roleRef:
   kind: ClusterRole
   name: compass-prometheus
 subjects:
-- kind: ServiceAccount
-  name: prometheus
-  namespace: kube-system
+  - kind: ServiceAccount
+    name: prometheus
+    namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -1557,9 +1557,9 @@ roleRef:
   kind: ClusterRole
   name: cluster-admin
 subjects:
-- kind: ServiceAccount
-  name: fuxi-app
-  namespace: kube-system
+  - kind: ServiceAccount
+    name: fuxi-app
+    namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -1570,9 +1570,9 @@ roleRef:
   kind: ClusterRole
   name: kube-manager-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: kube-system
+  - kind: ServiceAccount
+    name: default
+    namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -1583,9 +1583,9 @@ roleRef:
   kind: ClusterRole
   name: kube-proxy-role
 subjects:
-- kind: ServiceAccount
-  name: default
-  namespace: kube-system
+  - kind: ServiceAccount
+    name: default
+    namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -1596,9 +1596,9 @@ roleRef:
   kind: ClusterRole
   name: system:auth-delegator
 subjects:
-- kind: ServiceAccount
-  name: metrics-server
-  namespace: kube-system
+  - kind: ServiceAccount
+    name: metrics-server
+    namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -1609,9 +1609,9 @@ roleRef:
   kind: ClusterRole
   name: system:metrics-server
 subjects:
-- kind: ServiceAccount
-  name: metrics-server
-  namespace: kube-system
+  - kind: ServiceAccount
+    name: metrics-server
+    namespace: kube-system
 ---
 apiVersion: rbac.authorization.k8s.io/v1beta1
 kind: ClusterRoleBinding
@@ -1622,13 +1622,14 @@ roleRef:
   kind: ClusterRole
   name: tekton-pipelines-admin
 subjects:
-- kind: ServiceAccount
-  name: tekton-pipelines-controller
-  namespace: tekton-pipelines
+  - kind: ServiceAccount
+    name: tekton-pipelines-controller
+    namespace: tekton-pipelines
 ---
 apiVersion: v1
 data:
-  put.sh: "#!/bin/bash\n while true\n   do\n     # if [ `ps -ef | grep etcd |grep -v grep | wc -l` -gt 0 ]\n     # then\n     ETCDCTL_API=3\n     /usr/local/bin/etcdctl put /go/micro/jwt \\'{\\\"key\\\":\\\"nishidabendan\\\"}\\' \n     /usr/local/bin/etcdctl put /go/micro/urls \\'{\\\"list\\\":[\\\"/login\\\"]}\\'\n     # fi\n   sleep 100\n   done\n"
+  put.sh:
+    "#!/bin/bash\n while true\n   do\n     # if [ `ps -ef | grep etcd |grep -v grep | wc -l` -gt 0 ]\n     # then\n     ETCDCTL_API=3\n     /usr/local/bin/etcdctl put /go/micro/jwt \\'{\\\"key\\\":\\\"nishidabendan\\\"}\\' \n     /usr/local/bin/etcdctl put /go/micro/urls \\'{\\\"list\\\":[\\\"/login\\\"]}\\'\n     # fi\n   sleep 100\n   done\n"
 kind: ConfigMap
 metadata:
   name: etcd-script-config
@@ -1898,19 +1899,19 @@ metadata:
     kubectl.kubernetes.io/last-applied-configuration: |
       {"apiVersion":"v1","data":{"prometheus.yaml":"# Global config\nglobal:\n  scrape_interval: 15s\n\n\n# Scrape configs for running Prometheus on a Kubernetes cluster.\n# This uses separate scrape configs for cluster components (i.e. API server, node)\n# and services to allow each to use different authentication configs.\n#\n# Kubernetes labels will be added as Prometheus labels on metrics via the\n# `labelmap` relabeling action.\nscrape_configs:\n\n# Scrape config for API servers.\n#\n# Kubernetes exposes API servers as endpoints to the default/kubernetes\n# service so this uses `endpoints` role and uses relabelling to only keep\n# the endpoints associated with the default/kubernetes service using the\n# default named port `https`. This works for single API server deployments as\n# well as HA API server deployments.\n- job_name: 'kubernetes-apiservers'\n  kubernetes_sd_configs:\n  - role: endpoints\n\n  scheme: https\n  tls_config:\n    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt\n    # Using endpoints to discover kube-apiserver targets finds the pod IP\n    # (host IP since apiserver uses host network) which is not used in\n    # the server certificate.\n    insecure_skip_verify: true\n  bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token\n\n  # Keep only the default/kubernetes service endpoints for the https port. This\n  # will add targets for each API server which Kubernetes adds an endpoint to\n  # the default/kubernetes service.\n  relabel_configs:\n  - source_labels: [__meta_kubernetes_namespace, __meta_kubernetes_service_name, __meta_kubernetes_endpoint_port_name]\n    action: keep\n    regex: default;kubernetes;https\n  - replacement: apiserver\n    action: replace\n    target_label: job\n\n# Scrape config for node (i.e. kubelet) /metrics (e.g. 'kubelet_'). Explore\n# metrics from a node by scraping kubelet (127.0.0.1:10250/metrics).\n- job_name: 'kubelet'\n  kubernetes_sd_configs:\n  - role: node\n\n  scheme: https\n  tls_config:\n    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt\n    # Kubelet certs don't have any fixed IP SANs\n    insecure_skip_verify: true\n  bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token\n\n  relabel_configs:\n  - action: labelmap\n    regex: __meta_kubernetes_node_label_(.+)\n  - replacement: 'kube-system'\n    target_label: kubernetes_namespace\n\n  metric_relabel_configs:\n  - source_labels:\n      - namespace\n    action: replace\n    regex: (.+)\n    target_label: kubernetes_namespace\n\n# Scrape config for Kubelet cAdvisor. Explore metrics from a node by\n# scraping kubelet (127.0.0.1:10250/metrics/cadvisor).\n- job_name: 'kubernetes-cadvisor'\n  kubernetes_sd_configs:\n  - role: node\n\n  scheme: https\n  metrics_path: /metrics/cadvisor\n  tls_config:\n    # Kubelet certs don't have any fixed IP SANs\n    insecure_skip_verify: true\n    ca_file: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt\n  bearer_token_file: /var/run/secrets/kubernetes.io/serviceaccount/token\n\n  relabel_configs:\n  - action: labelmap\n    regex: __meta_kubernetes_node_label_(.+)\n  metric_relabel_configs:\n  - source_labels:\n      - namespace\n    action: replace\n    target_label: kubernetes_namespace\n  - source_labels:\n    - pod\n    regex: (.*)\n    replacement: $1\n    action: replace\n    target_label: pod_name\n  - source_labels:\n    - container\n    regex: (.*)\n    replacement: $1\n    action: replace\n    target_label: container_name\n\n# Scrap etcd metrics from masters via etcd-scraper-proxy\n- job_name: 'etcd'\n  kubernetes_sd_configs:\n  - role: pod\n  scheme: http\n  relabel_configs:\n    - source_labels: [__meta_kubernetes_namespace]\n      action: keep\n      regex: 'kube-system'\n    - source_labels: [__meta_kubernetes_pod_label_component]\n      action: keep\n      regex: 'etcd-scraper-proxy'\n    - action: labelmap\n      regex: __meta_kubernetes_pod_label_(.+)\n\n# Scrape config for service endpoints.\n#\n# The relabeling allows the actual service scrape endpoint to be configured\n# via the following annotations:\n#\n# * `prometheus.io/scrape`: Only scrape services that have a value of `true`\n# * `prometheus.io/scheme`: If the metrics endpoint is secured then you will need\n# to set this to `https` \u0026 most likely set the `tls_config` of the scrape config.\n# * `prometheus.io/path`: If the metrics path is not `/metrics` override this.\n# * `prometheus.io/port`: If the metrics are exposed on a different port to the\n# service then set this appropriately.\n- job_name: 'kubernetes-service-endpoints'\n\n  kubernetes_sd_configs:\n  - role: endpoints\n\n  relabel_configs:\n  - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scrape]\n    action: keep\n    regex: true\n  - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_scheme]\n    action: replace\n    target_label: __scheme__\n    regex: (https?)\n  - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_path]\n    action: replace\n    target_label: __metrics_path__\n    regex: (.+)\n  - source_labels: [__address__, __meta_kubernetes_service_annotation_prometheus_io_port]\n    action: replace\n    target_label: __address__\n    regex: ([^:]+)(?::\\d+)?;(\\d+)\n    replacement: $1:$2\n  - action: labelmap\n    regex: __meta_kubernetes_service_label_(.+)\n  - source_labels: [__meta_kubernetes_service_name]\n    action: replace\n    target_label: job\n  - action: replace\n    source_labels:\n    - __meta_kubernetes_pod_node_name\n    target_label: kubernetes_node\n  - source_labels: [__meta_kubernetes_namespace]\n    action: replace\n    target_label: kubernetes_namespace\n  metric_relabel_configs:\n  - source_labels:\n      - namespace\n    action: replace\n    regex: (.+)\n    target_label: kubernetes_namespace\n\n# Example scrape config for probing services via the Blackbox Exporter.\n#\n# The relabeling allows the actual service scrape endpoint to be configured\n# via the following annotations:\n#\n# * `prometheus.io/probe`: Only probe services that have a value of `true`\n- job_name: 'kubernetes-services'\n\n  metrics_path: /probe\n  params:\n    module: [http_2xx]\n\n  kubernetes_sd_configs:\n  - role: service\n\n  relabel_configs:\n  - source_labels: [__meta_kubernetes_service_annotation_prometheus_io_probe]\n    action: keep\n    regex: true\n  - source_labels: [__address__]\n    target_label: __param_target\n  - target_label: __address__\n    replacement: blackbox\n  - source_labels: [__param_target]\n    target_label: instance\n  - action: labelmap\n    regex: __meta_kubernetes_service_label_(.+)\n  - source_labels: [__meta_kubernetes_service_name]\n    target_label: job\n  metric_relabel_configs:\n  - source_labels:\n      - namespace\n    action: replace\n    regex: (.+)\n    target_label: kubernetes_namespace\n\n# Example scrape config for pods\n#\n# The relabeling allows the actual pod scrape endpoint to be configured via the\n# following annotations:\n#\n# * `prometheus.io/scrape`: Only scrape pods that have a value of `true`\n# * `prometheus.io/path`: If the metrics path is not `/metrics` override this.\n# * `prometheus.io/port`: Scrape the pod on the indicated port instead of the\n# pod's declared ports (default is a port-free target if none are declared).\n- job_name: 'kubernetes-pods'\n\n  kubernetes_sd_configs:\n  - role: pod\n\n  relabel_configs:\n  - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_scrape]\n    action: keep\n    regex: true\n  - source_labels: [__meta_kubernetes_pod_annotation_prometheus_io_path]\n    action: replace\n    target_label: __metrics_path__\n    regex: (.+)\n  - source_labels: [__address__, __meta_kubernetes_pod_annotation_prometheus_io_port]\n    action: replace\n    regex: ([^:]+)(?::\\d+)?;(\\d+)\n    replacement: $1:$2\n    target_label: __address__\n  - action: labelmap\n    regex: __meta_kubernetes_pod_label_(.+)\n  - source_labels: [__meta_kubernetes_namespace]\n    action: replace\n    target_label: kubernetes_namespace\n  - source_labels: [__meta_kubernetes_pod_name]\n    action: replace\n    target_label: kubernetes_pod_name\n  metric_relabel_configs:\n  - source_labels:\n      - namespace\n    action: replace\n    regex: (.+)\n    target_label: kubernetes_namespace\n\n# Rule files\nrule_files:\n  - \"/etc/prometheus/rules/*.rules\"\n  - \"/etc/prometheus/rules/*.yaml\"\n  - \"/etc/prometheus/rules/*.yml\""},"kind":"ConfigMap","metadata":{"annotations":{},"name":"prometheus-config","namespace":"kube-system"}}
   managedFields:
-  - apiVersion: v1
-    fieldsType: FieldsV1
-    fieldsV1:
-      f:data:
-        .: {}
-        f:prometheus.yaml: {}
-      f:metadata:
-        f:annotations:
+    - apiVersion: v1
+      fieldsType: FieldsV1
+      fieldsV1:
+        f:data:
           .: {}
-          f:kubectl.kubernetes.io/last-applied-configuration: {}
-    manager: kubectl
-    operation: Update
-    time: "2020-04-25T04:25:53Z"
+          f:prometheus.yaml: {}
+        f:metadata:
+          f:annotations:
+            .: {}
+            f:kubectl.kubernetes.io/last-applied-configuration: {}
+      manager: kubectl
+      operation: Update
+      time: "2020-04-25T04:25:53Z"
   name: prometheus-config
   namespace: kube-system
 ---
@@ -2593,9 +2594,9 @@ metadata:
   namespace: kube-system
 spec:
   ports:
-  - name: "80"
-    port: 80
-    targetPort: 80
+    - name: "80"
+      port: 80
+      targetPort: 80
   selector:
     app: compass
   type: NodePort
@@ -2609,9 +2610,9 @@ metadata:
   namespace: kube-system
 spec:
   ports:
-  - name: "2379"
-    port: 2379
-    targetPort: 2379
+    - name: "2379"
+      port: 2379
+      targetPort: 2379
   selector:
     app: etcd
 ---
@@ -2624,9 +2625,9 @@ metadata:
   namespace: kube-system
 spec:
   ports:
-  - name: "8080"
-    port: 8080
-    targetPort: 8080
+    - name: "8080"
+      port: 8080
+      targetPort: 8080
   selector:
     app: gateway
 ---
@@ -2639,9 +2640,9 @@ metadata:
   namespace: kube-system
 spec:
   ports:
-  - name: https
-    port: 8443
-    targetPort: https
+    - name: https
+      port: 8443
+      targetPort: https
   selector:
     control-plane: controller-manager
 ---
@@ -2656,10 +2657,10 @@ metadata:
   namespace: kube-system
 spec:
   ports:
-  - name: metrics
-    port: 8080
-    protocol: TCP
-    targetPort: 8080
+    - name: metrics
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
   selector:
     name: kube-state-metrics
 ---
@@ -2672,8 +2673,8 @@ metadata:
   namespace: kube-system
 spec:
   ports:
-  - port: 1443
-    targetPort: 1443
+    - port: 1443
+      targetPort: 1443
   selector:
     control-plane: nuwa-controller
   type: ClusterIP
@@ -2688,9 +2689,9 @@ metadata:
   namespace: kube-system
 spec:
   ports:
-  - port: 443
-    protocol: TCP
-    targetPort: main-port
+    - port: 443
+      protocol: TCP
+      targetPort: main-port
   selector:
     k8s-app: metrics-server
 ---
@@ -2703,9 +2704,9 @@ metadata:
   namespace: kube-system
 spec:
   ports:
-  - name: "8082"
-    port: 8082
-    targetPort: 8082
+    - name: "8082"
+      port: 8082
+      targetPort: 8082
   selector:
     app: microweb
 ---
@@ -2719,10 +2720,10 @@ metadata:
 spec:
   clusterIP: None
   ports:
-  - name: metrics
-    port: 80
-    protocol: TCP
-    targetPort: 9100
+    - name: metrics
+      port: 80
+      protocol: TCP
+      targetPort: 9100
   selector:
     name: node-exporter
     phase: prod
@@ -2737,10 +2738,10 @@ metadata:
   namespace: kube-system
 spec:
   ports:
-  - name: web
-    port: 80
-    protocol: TCP
-    targetPort: 9090
+    - name: web
+      port: 80
+      protocol: TCP
+      targetPort: 9090
   selector:
     name: prometheus
   type: ClusterIP
@@ -2756,10 +2757,10 @@ metadata:
   namespace: tekton-pipelines
 spec:
   ports:
-  - name: http-metrics
-    port: 9090
-    protocol: TCP
-    targetPort: 9090
+    - name: http-metrics
+      port: 9090
+      protocol: TCP
+      targetPort: 9090
   selector:
     app: tekton-pipelines-controller
 ---
@@ -2775,15 +2776,15 @@ metadata:
   namespace: tekton-pipelines
 spec:
   ports:
-  - name: http-metrics
-    port: 9090
-    targetPort: 9090
-  - name: http-profiling
-    port: 8008
-    targetPort: 8008
-  - name: https-webhook
-    port: 443
-    targetPort: 8443
+    - name: http-metrics
+      port: 9090
+      targetPort: 9090
+    - name: http-profiling
+      port: 8008
+      targetPort: 8008
+    - name: https-webhook
+      port: 443
+      targetPort: 8443
   selector:
     app: tekton-pipelines-webhook
     role: webhook
@@ -2807,18 +2808,18 @@ spec:
         fuxiapp: base
     spec:
       containers:
-      - args:
-        - --registry
-        - etcd
-        - --registry_address
-        - etcd.kube-system.svc.cluster.local:2379
-        - --etcd_address
-        - etcd.kube-system.svc.cluster.local:2379
-        - --in_cluster
-        - "true"
-        image: yametech/base:v0.1.0
-        imagePullPolicy: Always
-        name: base
+        - args:
+            - --registry
+            - etcd
+            - --registry_address
+            - etcd.kube-system.svc.cluster.local:2379
+            - --etcd_address
+            - etcd.kube-system.svc.cluster.local:2379
+            - --in_cluster
+            - "true"
+          image: yametech/base:v0.1.0
+          imagePullPolicy: Always
+          name: base
       restartPolicy: Always
       serviceAccount: fuxi-app
 ---
@@ -2841,11 +2842,11 @@ spec:
         app: compass
     spec:
       containers:
-      - image: yametech/compass:v0.1.0
-        imagePullPolicy: Always
-        name: compass
-        ports:
-        - containerPort: 80
+        - image: yametech/compass:v0.1.0
+          imagePullPolicy: Always
+          name: compass
+          ports:
+            - containerPort: 80
       restartPolicy: Always
 ---
 apiVersion: apps/v1
@@ -2864,37 +2865,37 @@ spec:
         app: etcd
     spec:
       containers:
-      - args:
-        - etcd
-        - -name
-        - etcd1
-        - -advertise-client-urls=http://0.0.0.0:2379
-        - -listen-client-urls=http://0.0.0.0:2379
-        - -initial-cluster-state
-        - new
-        env:
-        - name: ETCDCTL_API
-          value: "3"
-        image: yametech/etcd:20200627
-        imagePullPolicy: IfNotPresent
-        name: etcd-server
-      - args:
-        - sh
-        - /script/put.sh
-        env:
-        - name: ETCDCTL_API
-          value: "3"
-        image: yametech/etcd:20200627
-        imagePullPolicy: IfNotPresent
-        name: etcd-client
-        volumeMounts:
-        - mountPath: /script/put.sh
-          name: script-config
-          subPath: put.sh
+        - args:
+            - etcd
+            - -name
+            - etcd1
+            - -advertise-client-urls=http://0.0.0.0:2379
+            - -listen-client-urls=http://0.0.0.0:2379
+            - -initial-cluster-state
+            - new
+          env:
+            - name: ETCDCTL_API
+              value: "3"
+          image: yametech/etcd:20200627
+          imagePullPolicy: IfNotPresent
+          name: etcd-server
+        - args:
+            - sh
+            - /script/put.sh
+          env:
+            - name: ETCDCTL_API
+              value: "3"
+          image: yametech/etcd:20200627
+          imagePullPolicy: IfNotPresent
+          name: etcd-client
+          volumeMounts:
+            - mountPath: /script/put.sh
+              name: script-config
+              subPath: put.sh
       volumes:
-      - configMap:
-          name: etcd-script-config
-        name: script-config
+        - configMap:
+            name: etcd-script-config
+          name: script-config
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -2914,22 +2915,22 @@ spec:
         app: gateway
     spec:
       containers:
-      - args:
-        - --registry
-        - etcd
-        - --registry_address
-        - etcd.kube-system.svc.cluster.local:2379
-        - --etcd_address
-        - etcd.kube-system.svc.cluster.local:2379
-        - --in_cluster
-        - "true"
-        - api
-        - --handler=http
-        image: yametech/gateway:v0.1.0
-        imagePullPolicy: Always
-        name: gateway
-        ports:
-        - containerPort: 8080
+        - args:
+            - --registry
+            - etcd
+            - --registry_address
+            - etcd.kube-system.svc.cluster.local:2379
+            - --etcd_address
+            - etcd.kube-system.svc.cluster.local:2379
+            - --in_cluster
+            - "true"
+            - api
+            - --handler=http
+          image: yametech/gateway:v0.1.0
+          imagePullPolicy: Always
+          name: gateway
+          ports:
+            - containerPort: 8080
       restartPolicy: Always
       serviceAccount: fuxi-app
 ---
@@ -2951,32 +2952,32 @@ spec:
         control-plane: nuwa-controller
     spec:
       containers:
-      - args:
-        - --secure-listen-address=0.0.0.0:8443
-        - --upstream=http://127.0.0.1:8080/
-        - --logtostderr=true
-        - --v=10
-        image: yametech/kube-rbac-proxy:v0.5.0
-        name: kube-rbac-proxy
-        ports:
-        - containerPort: 8443
-          name: https
-      - args:
-        - --metrics-addr=127.0.0.1:8080
-        - --enable-leader-election
-        command:
-        - /manager
-        image: yametech/nuwa-controller:v1.0.1
-        name: manager
-        volumeMounts:
-        - mountPath: /ssl
-          name: ssl
-          readOnly: true
+        - args:
+            - --secure-listen-address=0.0.0.0:8443
+            - --upstream=http://127.0.0.1:8080/
+            - --logtostderr=true
+            - --v=10
+          image: yametech/kube-rbac-proxy:v0.5.0
+          name: kube-rbac-proxy
+          ports:
+            - containerPort: 8443
+              name: https
+        - args:
+            - --metrics-addr=127.0.0.1:8080
+            - --enable-leader-election
+          command:
+            - /manager
+          image: yametech/nuwa-controller:v1.0.1
+          name: manager
+          volumeMounts:
+            - mountPath: /ssl
+              name: ssl
+              readOnly: true
       terminationGracePeriodSeconds: 10
       volumes:
-      - name: ssl
-        secret:
-          secretName: kube-nuwa-secret
+        - name: ssl
+          secret:
+            secretName: kube-nuwa-secret
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -3005,43 +3006,43 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/os
-                operator: In
-                values:
-                - linux
-            - matchExpressions:
-              - key: beta.kubernetes.io/os
-                operator: In
-                values:
-                - linux
+              - matchExpressions:
+                  - key: kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
+              - matchExpressions:
+                  - key: beta.kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
       containers:
-      - image: yametech/prometheus-kube-state-metrics:v1.6.0
-        imagePullPolicy: IfNotPresent
-        name: kube-state-metrics
-        ports:
-        - containerPort: 8080
-          name: metrics
-          protocol: TCP
-        readinessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /healthz
-            port: 8080
-            scheme: HTTP
-          initialDelaySeconds: 5
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 5
-        resources:
-          limits:
-            cpu: 200m
-            memory: 150Mi
-          requests:
-            cpu: 10m
-            memory: 150Mi
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
+        - image: yametech/prometheus-kube-state-metrics:v1.6.0
+          imagePullPolicy: IfNotPresent
+          name: kube-state-metrics
+          ports:
+            - containerPort: 8080
+              name: metrics
+              protocol: TCP
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 5
+          resources:
+            limits:
+              cpu: 200m
+              memory: 150Mi
+            requests:
+              cpu: 10m
+              memory: 150Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -3068,32 +3069,32 @@ spec:
       name: metrics-server
     spec:
       containers:
-      - args:
-        - --cert-dir=/tmp
-        - --secure-port=4443
-        - --kubelet-insecure-tls
-        - --kubelet-preferred-address-types=InternalIP
-        image: yametech/metrics-server-amd64:v0.3.6
-        imagePullPolicy: IfNotPresent
-        name: metrics-server
-        ports:
-        - containerPort: 4443
-          name: main-port
-          protocol: TCP
-        securityContext:
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          runAsUser: 1000
-        volumeMounts:
-        - mountPath: /tmp
-          name: tmp-dir
+        - args:
+            - --cert-dir=/tmp
+            - --secure-port=4443
+            - --kubelet-insecure-tls
+            - --kubelet-preferred-address-types=InternalIP
+          image: yametech/metrics-server-amd64:v0.3.6
+          imagePullPolicy: IfNotPresent
+          name: metrics-server
+          ports:
+            - containerPort: 4443
+              name: main-port
+              protocol: TCP
+          securityContext:
+            readOnlyRootFilesystem: true
+            runAsNonRoot: true
+            runAsUser: 1000
+          volumeMounts:
+            - mountPath: /tmp
+              name: tmp-dir
       nodeSelector:
         kubernetes.io/arch: amd64
         kubernetes.io/os: linux
       serviceAccountName: metrics-server
       volumes:
-      - emptyDir: {}
-        name: tmp-dir
+        - emptyDir: {}
+          name: tmp-dir
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -3114,18 +3115,18 @@ spec:
         app: microweb
     spec:
       containers:
-      - args:
-        - --registry
-        - etcd
-        - --registry_address
-        - etcd.kube-system.svc.cluster.local:2379
-        - web
-        image: yametech/micro:v0.1.0
-        imagePullPolicy: IfNotPresent
-        name: microweb
-        ports:
-        - containerPort: 8082
-        resources: {}
+        - args:
+            - --registry
+            - etcd
+            - --registry_address
+            - etcd.kube-system.svc.cluster.local:2379
+            - web
+          image: yametech/micro:v0.1.0
+          imagePullPolicy: IfNotPresent
+          name: microweb
+          ports:
+            - containerPort: 8082
+          resources: {}
       restartPolicy: Always
 ---
 apiVersion: apps/v1
@@ -3147,18 +3148,18 @@ spec:
         app: webhook
     spec:
       containers:
-      - args:
-        - --registry
-        - etcd
-        - --registry_address
-        - etcd.kube-system.svc.cluster.local:2379
-        - --etcd_address
-        - etcd.kube-system.svc.cluster.local:2379
-        - --in_cluster
-        - "true"
-        image: yametech/webhook:v0.1.0
-        imagePullPolicy: Always
-        name: webhook
+        - args:
+            - --registry
+            - etcd
+            - --registry_address
+            - etcd.kube-system.svc.cluster.local:2379
+            - --etcd_address
+            - etcd.kube-system.svc.cluster.local:2379
+            - --in_cluster
+            - "true"
+          image: yametech/webhook:v0.1.0
+          imagePullPolicy: Always
+          name: webhook
       restartPolicy: Always
       serviceAccount: fuxi-app
 ---
@@ -3181,18 +3182,18 @@ spec:
         app: workload
     spec:
       containers:
-      - args:
-        - --registry
-        - etcd
-        - --registry_address
-        - etcd.kube-system.svc.cluster.local:2379
-        - --etcd_address
-        - etcd.kube-system.svc.cluster.local:2379
-        - --in_cluster
-        - "true"
-        image: yametech/workload:v0.1.0
-        imagePullPolicy: Always
-        name: workload
+        - args:
+            - --registry
+            - etcd
+            - --registry_address
+            - etcd.kube-system.svc.cluster.local:2379
+            - --etcd_address
+            - etcd.kube-system.svc.cluster.local:2379
+            - --in_cluster
+            - "true"
+          image: yametech/workload:v0.1.0
+          imagePullPolicy: Always
+          name: workload
       restartPolicy: Always
       serviceAccount: fuxi-app
 ---
@@ -3223,52 +3224,52 @@ spec:
         version: v0.11.1
     spec:
       containers:
-      - args:
-        - -kubeconfig-writer-image
-        - yametech/pipeline-kubeconfigwriter:v0.11.1
-        - -creds-image
-        - yametech/pipeline-creds-init:v0.11.1
-        - -git-image
-        - yametech/pipeline-git-init:v0.11.1
-        - -nop-image
-        - tianon/true
-        - -shell-image
-        - busybox
-        - -gsutil-image
-        - google/cloud-sdk
-        - -entrypoint-image
-        - yametech/pipeline-entrypoint:v0.11.1
-        - -imagedigest-exporter-image
-        - yametech/pipeline-imagedigestexporter:v0.11.1
-        - -pr-image
-        - yametech/pipeline-pullrequest-init:v0.11.1
-        - -build-gcs-fetcher-image
-        - yametech/pipeline-gcs-fetcher:v0.11.1
-        env:
-        - name: SYSTEM_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        - name: CONFIG_LOGGING_NAME
-          value: config-logging
-        - name: CONFIG_OBSERVABILITY_NAME
-          value: config-observability
-        - name: CONFIG_ARTIFACT_BUCKET_NAME
-          value: config-artifact-bucket
-        - name: CONFIG_ARTIFACT_PVC_NAME
-          value: config-artifact-pvc
-        - name: METRICS_DOMAIN
-          value: tekton.dev/pipeline
-        image: yametech/pipeline-controller:v0.11.1
-        name: tekton-pipelines-controller
-        volumeMounts:
-        - mountPath: /etc/config-logging
-          name: config-logging
+        - args:
+            - -kubeconfig-writer-image
+            - yametech/pipeline-kubeconfigwriter:v0.11.1
+            - -creds-image
+            - yametech/pipeline-creds-init:v0.11.1
+            - -git-image
+            - yametech/pipeline-git-init:v0.11.1
+            - -nop-image
+            - tianon/true
+            - -shell-image
+            - busybox
+            - -gsutil-image
+            - google/cloud-sdk
+            - -entrypoint-image
+            - yametech/pipeline-entrypoint:v0.11.1
+            - -imagedigest-exporter-image
+            - yametech/pipeline-imagedigestexporter:v0.11.1
+            - -pr-image
+            - yametech/pipeline-pullrequest-init:v0.11.1
+            - -build-gcs-fetcher-image
+            - yametech/pipeline-gcs-fetcher:v0.11.1
+          env:
+            - name: SYSTEM_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: CONFIG_LOGGING_NAME
+              value: config-logging
+            - name: CONFIG_OBSERVABILITY_NAME
+              value: config-observability
+            - name: CONFIG_ARTIFACT_BUCKET_NAME
+              value: config-artifact-bucket
+            - name: CONFIG_ARTIFACT_PVC_NAME
+              value: config-artifact-pvc
+            - name: METRICS_DOMAIN
+              value: tekton.dev/pipeline
+          image: yametech/pipeline-controller:v0.11.1
+          name: tekton-pipelines-controller
+          volumeMounts:
+            - mountPath: /etc/config-logging
+              name: config-logging
       serviceAccountName: tekton-pipelines-controller
       volumes:
-      - configMap:
+        - configMap:
+            name: config-logging
           name: config-logging
-        name: config-logging
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -3299,30 +3300,30 @@ spec:
         version: v0.11.1
     spec:
       containers:
-      - env:
-        - name: SYSTEM_NAMESPACE
-          valueFrom:
-            fieldRef:
-              fieldPath: metadata.namespace
-        - name: CONFIG_LOGGING_NAME
-          value: config-logging
-        - name: CONFIG_OBSERVABILITY_NAME
-          value: config-observability
-        - name: WEBHOOK_SERVICE_NAME
-          value: tekton-pipelines-webhook
-        - name: METRICS_DOMAIN
-          value: tekton.dev/pipeline
-        image: yametech/pipeline-webhook:v0.11.1
-        name: webhook
-        ports:
-        - containerPort: 9090
-          name: metrics
-        - containerPort: 8008
-          name: profiling
-        - containerPort: 8443
-          name: https-webhook
-        securityContext:
-          allowPrivilegeEscalation: false
+        - env:
+            - name: SYSTEM_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+            - name: CONFIG_LOGGING_NAME
+              value: config-logging
+            - name: CONFIG_OBSERVABILITY_NAME
+              value: config-observability
+            - name: WEBHOOK_SERVICE_NAME
+              value: tekton-pipelines-webhook
+            - name: METRICS_DOMAIN
+              value: tekton.dev/pipeline
+          image: yametech/pipeline-webhook:v0.11.1
+          name: webhook
+          ports:
+            - containerPort: 9090
+              name: metrics
+            - containerPort: 8008
+              name: profiling
+            - containerPort: 8443
+              name: https-webhook
+          securityContext:
+            allowPrivilegeEscalation: false
       serviceAccountName: tekton-pipelines-controller
 ---
 apiVersion: apps/v1
@@ -3345,84 +3346,84 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/os
-                operator: In
-                values:
-                - linux
-            - matchExpressions:
-              - key: beta.kubernetes.io/os
-                operator: In
-                values:
-                - linux
+              - matchExpressions:
+                  - key: kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
+              - matchExpressions:
+                  - key: beta.kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
       containers:
-      - args:
-        - --web.listen-address=0.0.0.0:9090
-        - --config.file=/etc/prometheus/prometheus.yaml
-        - --storage.tsdb.path=/var/lib/prometheus
-        - --storage.tsdb.retention.time=15d
-        - --storage.tsdb.retention.size=20GB
-        - --storage.tsdb.min-block-duration=2h
-        - --storage.tsdb.max-block-duration=2h
-        image: docker.io/prom/prometheus:v2.17.2
-        livenessProbe:
-          httpGet:
-            path: /-/healthy
-            port: 9090
-          initialDelaySeconds: 10
-          timeoutSeconds: 10
-        name: prometheus
-        ports:
-        - containerPort: 9090
-          name: web
-        readinessProbe:
-          httpGet:
-            path: /-/ready
-            port: 9090
-          initialDelaySeconds: 10
-          timeoutSeconds: 10
-        resources:
-          requests:
-            cpu: 100m
-            memory: 512Mi
-        volumeMounts:
-        - mountPath: /etc/prometheus
-          name: config
-        - mountPath: /etc/prometheus/rules
-          name: rules
-        - mountPath: /var/lib/prometheus
-          name: data
+        - args:
+            - --web.listen-address=0.0.0.0:9090
+            - --config.file=/etc/prometheus/prometheus.yaml
+            - --storage.tsdb.path=/var/lib/prometheus
+            - --storage.tsdb.retention.time=15d
+            - --storage.tsdb.retention.size=20GB
+            - --storage.tsdb.min-block-duration=2h
+            - --storage.tsdb.max-block-duration=2h
+          image: docker.io/prom/prometheus:v2.17.2
+          livenessProbe:
+            httpGet:
+              path: /-/healthy
+              port: 9090
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
+          name: prometheus
+          ports:
+            - containerPort: 9090
+              name: web
+          readinessProbe:
+            httpGet:
+              path: /-/ready
+              port: 9090
+            initialDelaySeconds: 10
+            timeoutSeconds: 10
+          resources:
+            requests:
+              cpu: 100m
+              memory: 512Mi
+          volumeMounts:
+            - mountPath: /etc/prometheus
+              name: config
+            - mountPath: /etc/prometheus/rules
+              name: rules
+            - mountPath: /var/lib/prometheus
+              name: data
       initContainers:
-      - command:
-        - chown
-        - -R
-        - 65534:65534
-        - /var/lib/prometheus
-        image: docker.io/alpine:3.9
-        name: chown
-        volumeMounts:
-        - mountPath: /var/lib/prometheus
-          name: data
+        - command:
+            - chown
+            - -R
+            - 65534:65534
+            - /var/lib/prometheus
+          image: docker.io/alpine:3.9
+          name: chown
+          volumeMounts:
+            - mountPath: /var/lib/prometheus
+              name: data
       serviceAccountName: prometheus
       terminationGracePeriodSeconds: 30
       volumes:
-      - configMap:
-          name: prometheus-config
-        name: config
-      - configMap:
-          name: prometheus-rules
-        name: rules
+        - configMap:
+            name: prometheus-config
+          name: config
+        - configMap:
+            name: prometheus-rules
+          name: rules
   volumeClaimTemplates:
-  - metadata:
-      annotations:
-        volume.alpha.kubernetes.io/storage-class: default
-      name: data
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 100G
+    - metadata:
+        annotations:
+          volume.alpha.kubernetes.io/storage-class: default
+        name: data
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100G
 ---
 apiVersion: apiregistration.k8s.io/v1beta1
 kind: APIService
@@ -3462,49 +3463,49 @@ spec:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
-            - matchExpressions:
-              - key: kubernetes.io/os
-                operator: In
-                values:
-                - linux
-            - matchExpressions:
-              - key: beta.kubernetes.io/os
-                operator: In
-                values:
-                - linux
+              - matchExpressions:
+                  - key: kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
+              - matchExpressions:
+                  - key: beta.kubernetes.io/os
+                    operator: In
+                    values:
+                      - linux
       containers:
-      - args:
-        - --path.procfs=/host/proc
-        - --path.sysfs=/host/sys
-        - --path.rootfs=/host/root
-        - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker|var/lib/containers/.+)($|/)
-        - --collector.filesystem.ignored-fs-types=^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs)$
-        image: yametech/prometheus-node-exporter:v0.18.0
-        imagePullPolicy: IfNotPresent
-        name: node-exporter
-        ports:
-        - containerPort: 9100
-          name: metrics
-          protocol: TCP
-        resources:
-          limits:
-            cpu: 200m
-            memory: 100Mi
-          requests:
-            cpu: 10m
-            memory: 50Mi
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-        volumeMounts:
-        - mountPath: /host/proc
-          name: proc
-          readOnly: true
-        - mountPath: /host/sys
-          name: sys
-          readOnly: true
-        - mountPath: /host/root
-          name: root
-          readOnly: true
+        - args:
+            - --path.procfs=/host/proc
+            - --path.sysfs=/host/sys
+            - --path.rootfs=/host/root
+            - --collector.filesystem.ignored-mount-points=^/(dev|proc|sys|var/lib/docker|var/lib/containers/.+)($|/)
+            - --collector.filesystem.ignored-fs-types=^(autofs|binfmt_misc|cgroup|configfs|debugfs|devpts|devtmpfs|fusectl|hugetlbfs|mqueue|overlay|proc|procfs|pstore|rpc_pipefs|securityfs|sysfs|tracefs)$
+          image: yametech/prometheus-node-exporter:v0.18.0
+          imagePullPolicy: IfNotPresent
+          name: node-exporter
+          ports:
+            - containerPort: 9100
+              name: metrics
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 200m
+              memory: 100Mi
+            requests:
+              cpu: 10m
+              memory: 50Mi
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          volumeMounts:
+            - mountPath: /host/proc
+              name: proc
+              readOnly: true
+            - mountPath: /host/sys
+              name: sys
+              readOnly: true
+            - mountPath: /host/root
+              name: root
+              readOnly: true
       dnsPolicy: ClusterFirst
       hostPID: true
       restartPolicy: Always
@@ -3514,21 +3515,21 @@ spec:
         runAsUser: 65534
       terminationGracePeriodSeconds: 30
       tolerations:
-      - effect: NoSchedule
-        operator: Exists
+        - effect: NoSchedule
+          operator: Exists
       volumes:
-      - hostPath:
-          path: /proc
-          type: ""
-        name: proc
-      - hostPath:
-          path: /sys
-          type: ""
-        name: sys
-      - hostPath:
-          path: /
-          type: ""
-        name: root
+        - hostPath:
+            path: /proc
+            type: ""
+          name: proc
+        - hostPath:
+            path: /sys
+            type: ""
+          name: sys
+        - hostPath:
+            path: /
+            type: ""
+          name: root
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 1
@@ -3550,64 +3551,64 @@ spec:
         app: debug-agent
     spec:
       containers:
-      - image: aylei/debug-agent:latest
-        imagePullPolicy: Always
-        livenessProbe:
-          failureThreshold: 3
-          httpGet:
-            path: /healthz
-            port: 10027
-            scheme: HTTP
-          initialDelaySeconds: 10
-          periodSeconds: 10
-          successThreshold: 1
-          timeoutSeconds: 1
-        name: debug-agent
-        ports:
-        - containerPort: 10027
-          hostPort: 10027
-          name: http
-          protocol: TCP
-        securityContext:
-          privileged: true
-        volumeMounts:
-        - mountPath: /sys/fs/cgroup
-          name: cgroup
-        - mountPath: /var/lib/lxc
-          mountPropagation: Bidirectional
-          name: lxcfs
-        - mountPath: /var/run/docker.sock
-          name: docker
-        - mountPath: /run/containerd
-          name: runcontainerd
-        - mountPath: /run/runc
-          name: runrunc
-        - mountPath: /var/data
-          name: vardata
+        - image: yametech/debug-agent:latest
+          imagePullPolicy: Always
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /healthz
+              port: 10027
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: debug-agent
+          ports:
+            - containerPort: 10027
+              hostPort: 10027
+              name: http
+              protocol: TCP
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - mountPath: /sys/fs/cgroup
+              name: cgroup
+            - mountPath: /var/lib/lxc
+              mountPropagation: Bidirectional
+              name: lxcfs
+            - mountPath: /var/run/docker.sock
+              name: docker
+            - mountPath: /run/containerd
+              name: runcontainerd
+            - mountPath: /run/runc
+              name: runrunc
+            - mountPath: /var/data
+              name: vardata
       hostPID: true
       tolerations:
-      - effect: NoSchedule
-        key: node-role.kubernetes.io/master
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
       volumes:
-      - hostPath:
-          path: /sys/fs/cgroup
-        name: cgroup
-      - hostPath:
-          path: /var/lib/lxc
-          type: DirectoryOrCreate
-        name: lxcfs
-      - hostPath:
-          path: /var/run/docker.sock
-        name: docker
-      - hostPath:
-          path: /var/data
-        name: vardata
-      - hostPath:
-          path: /run/containerd
-        name: runcontainerd
-      - hostPath:
-          path: /run/runc
-        name: runrunc
+        - hostPath:
+            path: /sys/fs/cgroup
+          name: cgroup
+        - hostPath:
+            path: /var/lib/lxc
+            type: DirectoryOrCreate
+          name: lxcfs
+        - hostPath:
+            path: /var/run/docker.sock
+          name: docker
+        - hostPath:
+            path: /var/data
+          name: vardata
+        - hostPath:
+            path: /run/containerd
+          name: runcontainerd
+        - hostPath:
+            path: /run/runc
+          name: runrunc
   updateStrategy:
     rollingUpdate:
       maxUnavailable: 5
@@ -3620,13 +3621,13 @@ metadata:
   namespace: kube-system
 spec:
   rules:
-  - host: compass.ym
-    http:
-      paths:
-      - backend:
-          serviceName: compass
-          servicePort: 80
-        path: /
+    - host: compass.ym
+      http:
+        paths:
+          - backend:
+              serviceName: compass
+              servicePort: 80
+            path: /
 ---
 apiVersion: fuxi.nip.io/v1
 kind: BaseDepartment
@@ -3651,60 +3652,60 @@ kind: MutatingWebhookConfiguration
 metadata:
   name: kube-nuwa-webhook
 webhooks:
-- admissionReviewVersions:
-  - v1
-  - v1beta1
-  clientConfig:
-    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUV0akNDQTU2Z0F3SUJBZ0lVRXYvWHpReTgya2drWlJLL0xmYkhycUFpaFFzd0RRWUpLb1pJaHZjTkFRRUwKQlFBd2NqRUxNQWtHQTFVRUJoTUNRMDR4RWpBUUJnTlZCQWdUQ1VkMVlXNW5XbWh2ZFRFU01CQUdBMVVFQnhNSgpSM1ZoYm1kYWFHOTFNUXd3Q2dZRFZRUUtFd05yT0hNeER6QU5CZ05WQkFzVEJsTjVjM1JsYlRFY01Cb0dBMVVFCkF4TVRhM1ZpWlhKdVpYUmxjeTFUYjNWc2JXRjBaVEFlRncweU1EQTFNRE14TURJek1EQmFGdzAwTURBME1qZ3gKTURJek1EQmFNR014Q3pBSkJnTlZCQVlUQWtOT01SSXdFQVlEVlFRSUV3bEhkV0Z1WjFwb2IzVXhFakFRQmdOVgpCQWNUQ1VkMVlXNW5XbWh2ZFRFTU1Bb0dBMVVFQ2hNRGF6aHpNUTh3RFFZRFZRUUxFd1pUZVhOMFpXMHhEVEFMCkJnTlZCQU1UQkc1MWQyRXdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFEUzZvSUEKWnZjNnJlb0lCdHpSUmdXcGF2OFFnQk93d0FLdnlzYmlDTkVpenNZNmkwVWxrV0gyYVFvZHozb3Nrc2ZDTlpxdApRRWtGeHV1SHMvcmRJaW44UzlreFc5UVZEMmZQbldGcFYwcHdTYXpJR0ZwbitwWHBnNGJDYi9acGJvTWdsM1cvClhXNEQvYVRBOE92N3NHOHkwblVldDh5VXRGWHk2eWJ5TnFkY2o4Y2g5TlF5dnhGT2E5anByME9CdURTVEE1a08Kd2lHTm94ZitpVTRUeXZNNGlXUjBwVTV0Y0M1VGYraU9mT0dHNXpaRjg0cEJFYWFFOXRYRVNnVFZhU2swby9BUApSbzJGRFE4dHl6QmJOMWJUUmQvcTNLYVh6UnlmYkdqazNlTTBlRHNFOEo2eXJwUHlNeTdvUHZ3b2VuUStDV3c5ClFabFMzb2hFQVJPcy9rK1ZBZ01CQUFHamdnRlJNSUlCVFRBT0JnTlZIUThCQWY4RUJBTUNCYUF3SFFZRFZSMGwKQkJZd0ZBWUlLd1lCQlFVSEF3RUdDQ3NHQVFVRkJ3TUNNQXdHQTFVZEV3RUIvd1FDTUFBd0hRWURWUjBPQkJZRQpGRmgzZithV0NRM2pWaG9TOFBDb1pFblR3eTVmTUI4R0ExVWRJd1FZTUJhQUZGSHJpN3JvNVdsRTBOelJsS0NhCnNPcG9YOU4yTUlITkJnTlZIUkVFZ2NVd2djS0NGR3QxWW1VdGQyVmlhRzl2YXkxelpYSjJhV05sZ2lCcmRXSmwKTFhkbFltaHZiMnN0YzJWeWRtbGpaUzVyZFdKbExYTjVjM1JsYllJa2EzVmlaUzEzWldKb2IyOXJMWE5sY25acApZMlV1YTNWaVpTMXplWE4wWlcwdWMzWmpnamRyZFdKbExXTnZiblJ5YjJ4c1pYSXRiV0Z1WVdkbGNpMXRaWFJ5CmFXTnpMWE5sY25acFkyVXVhM1ZpWlMxemVYTjBaVzB1YzNaamhpbHJkV0psTFhkbFltaHZiMnN0YzJWeWRtbGoKWlM1cmRXSmxMWE41YzNSbGJTNXpkbU02TVRRME16QU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FRRUFSa2ZZMExseQpDMzdKQmM4TGZ4amI4RDN6bVZ6UEZXRFF0UXMwOFFEc1Jtd2s4eSt4M2h4OTU4QW5hWmV1WGV6aEVZT3B6ZDZxCm1BODBwamVYR0hNS0x4SXlQOUtJNm1qUlVkZHNwVkNtUVpoS3pOUkpidVRQbnowT3ppanp4SWRjZi9ZK2xGbW8KSDhVcUNvOHNzblA0RmVqTi9hcCsvNTZ2R2JWTFRUZUxVQlF1UE1KRHg0MXpiZ045QlY0bmtyd0JWdkFOeHZzNgowYzRiMFYyR2I5UVVRYXBZTkYvS054c0RTSTl0dEtwcnNGY2VmNmx0akxHTGQreGpIUCsxRGtxcCtna1hYZS9sCkNGVFQvVnpsV1htVTN3QTdNMjlJZTBsT2thY25vQXVDSWwwN2l6d04wbEN6ZDlBM2RzWktmTFJ5ZUZaQnF4QmkKM1lDVnhrM3FjSmZGYkE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
-    service:
-      name: kube-webhook-service
-      namespace: kube-system
-      path: /injector-mutating-pods
-      port: 1443
-  failurePolicy: Ignore
-  name: injector.nuwa.nip.io
-  rules:
-  - apiGroups:
-    - ""
-    apiVersions:
-    - v1
-    operations:
-    - CREATE
-    resources:
-    - pods
-    scope: Namespaced
-  sideEffects: NoneOnDryRun
-- admissionReviewVersions:
-  - v1
-  - v1beta1
-  clientConfig:
-    caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUV0akNDQTU2Z0F3SUJBZ0lVRXYvWHpReTgya2drWlJLL0xmYkhycUFpaFFzd0RRWUpLb1pJaHZjTkFRRUwKQlFBd2NqRUxNQWtHQTFVRUJoTUNRMDR4RWpBUUJnTlZCQWdUQ1VkMVlXNW5XbWh2ZFRFU01CQUdBMVVFQnhNSgpSM1ZoYm1kYWFHOTFNUXd3Q2dZRFZRUUtFd05yT0hNeER6QU5CZ05WQkFzVEJsTjVjM1JsYlRFY01Cb0dBMVVFCkF4TVRhM1ZpWlhKdVpYUmxjeTFUYjNWc2JXRjBaVEFlRncweU1EQTFNRE14TURJek1EQmFGdzAwTURBME1qZ3gKTURJek1EQmFNR014Q3pBSkJnTlZCQVlUQWtOT01SSXdFQVlEVlFRSUV3bEhkV0Z1WjFwb2IzVXhFakFRQmdOVgpCQWNUQ1VkMVlXNW5XbWh2ZFRFTU1Bb0dBMVVFQ2hNRGF6aHpNUTh3RFFZRFZRUUxFd1pUZVhOMFpXMHhEVEFMCkJnTlZCQU1UQkc1MWQyRXdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFEUzZvSUEKWnZjNnJlb0lCdHpSUmdXcGF2OFFnQk93d0FLdnlzYmlDTkVpenNZNmkwVWxrV0gyYVFvZHozb3Nrc2ZDTlpxdApRRWtGeHV1SHMvcmRJaW44UzlreFc5UVZEMmZQbldGcFYwcHdTYXpJR0ZwbitwWHBnNGJDYi9acGJvTWdsM1cvClhXNEQvYVRBOE92N3NHOHkwblVldDh5VXRGWHk2eWJ5TnFkY2o4Y2g5TlF5dnhGT2E5anByME9CdURTVEE1a08Kd2lHTm94ZitpVTRUeXZNNGlXUjBwVTV0Y0M1VGYraU9mT0dHNXpaRjg0cEJFYWFFOXRYRVNnVFZhU2swby9BUApSbzJGRFE4dHl6QmJOMWJUUmQvcTNLYVh6UnlmYkdqazNlTTBlRHNFOEo2eXJwUHlNeTdvUHZ3b2VuUStDV3c5ClFabFMzb2hFQVJPcy9rK1ZBZ01CQUFHamdnRlJNSUlCVFRBT0JnTlZIUThCQWY4RUJBTUNCYUF3SFFZRFZSMGwKQkJZd0ZBWUlLd1lCQlFVSEF3RUdDQ3NHQVFVRkJ3TUNNQXdHQTFVZEV3RUIvd1FDTUFBd0hRWURWUjBPQkJZRQpGRmgzZithV0NRM2pWaG9TOFBDb1pFblR3eTVmTUI4R0ExVWRJd1FZTUJhQUZGSHJpN3JvNVdsRTBOelJsS0NhCnNPcG9YOU4yTUlITkJnTlZIUkVFZ2NVd2djS0NGR3QxWW1VdGQyVmlhRzl2YXkxelpYSjJhV05sZ2lCcmRXSmwKTFhkbFltaHZiMnN0YzJWeWRtbGpaUzVyZFdKbExYTjVjM1JsYllJa2EzVmlaUzEzWldKb2IyOXJMWE5sY25acApZMlV1YTNWaVpTMXplWE4wWlcwdWMzWmpnamRyZFdKbExXTnZiblJ5YjJ4c1pYSXRiV0Z1WVdkbGNpMXRaWFJ5CmFXTnpMWE5sY25acFkyVXVhM1ZpWlMxemVYTjBaVzB1YzNaamhpbHJkV0psTFhkbFltaHZiMnN0YzJWeWRtbGoKWlM1cmRXSmxMWE41YzNSbGJTNXpkbU02TVRRME16QU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FRRUFSa2ZZMExseQpDMzdKQmM4TGZ4amI4RDN6bVZ6UEZXRFF0UXMwOFFEc1Jtd2s4eSt4M2h4OTU4QW5hWmV1WGV6aEVZT3B6ZDZxCm1BODBwamVYR0hNS0x4SXlQOUtJNm1qUlVkZHNwVkNtUVpoS3pOUkpidVRQbnowT3ppanp4SWRjZi9ZK2xGbW8KSDhVcUNvOHNzblA0RmVqTi9hcCsvNTZ2R2JWTFRUZUxVQlF1UE1KRHg0MXpiZ045QlY0bmtyd0JWdkFOeHZzNgowYzRiMFYyR2I5UVVRYXBZTkYvS054c0RTSTl0dEtwcnNGY2VmNmx0akxHTGQreGpIUCsxRGtxcCtna1hYZS9sCkNGVFQvVnpsV1htVTN3QTdNMjlJZTBsT2thY25vQXVDSWwwN2l6d04wbEN6ZDlBM2RzWktmTFJ5ZUZaQnF4QmkKM1lDVnhrM3FjSmZGYkE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
-    service:
-      name: kube-webhook-service
-      namespace: kube-system
-      path: /namespace-mutating-resource
-      port: 1443
-  failurePolicy: Ignore
-  name: namespace.nuwa.nip.io
-  rules:
-  - apiGroups:
-    - ""
-    - apps
-    - batch
-    apiVersions:
-    - v1
-    - v1beta1
-    operations:
-    - CREATE
-    resources:
-    - replicationcontrollers
-    - replicasets
-    - jobs
-    - cronjobs
-    - deployments
-    - statefulset
-    scope: Namespaced
-  sideEffects: NoneOnDryRun
+  - admissionReviewVersions:
+      - v1
+      - v1beta1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUV0akNDQTU2Z0F3SUJBZ0lVRXYvWHpReTgya2drWlJLL0xmYkhycUFpaFFzd0RRWUpLb1pJaHZjTkFRRUwKQlFBd2NqRUxNQWtHQTFVRUJoTUNRMDR4RWpBUUJnTlZCQWdUQ1VkMVlXNW5XbWh2ZFRFU01CQUdBMVVFQnhNSgpSM1ZoYm1kYWFHOTFNUXd3Q2dZRFZRUUtFd05yT0hNeER6QU5CZ05WQkFzVEJsTjVjM1JsYlRFY01Cb0dBMVVFCkF4TVRhM1ZpWlhKdVpYUmxjeTFUYjNWc2JXRjBaVEFlRncweU1EQTFNRE14TURJek1EQmFGdzAwTURBME1qZ3gKTURJek1EQmFNR014Q3pBSkJnTlZCQVlUQWtOT01SSXdFQVlEVlFRSUV3bEhkV0Z1WjFwb2IzVXhFakFRQmdOVgpCQWNUQ1VkMVlXNW5XbWh2ZFRFTU1Bb0dBMVVFQ2hNRGF6aHpNUTh3RFFZRFZRUUxFd1pUZVhOMFpXMHhEVEFMCkJnTlZCQU1UQkc1MWQyRXdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFEUzZvSUEKWnZjNnJlb0lCdHpSUmdXcGF2OFFnQk93d0FLdnlzYmlDTkVpenNZNmkwVWxrV0gyYVFvZHozb3Nrc2ZDTlpxdApRRWtGeHV1SHMvcmRJaW44UzlreFc5UVZEMmZQbldGcFYwcHdTYXpJR0ZwbitwWHBnNGJDYi9acGJvTWdsM1cvClhXNEQvYVRBOE92N3NHOHkwblVldDh5VXRGWHk2eWJ5TnFkY2o4Y2g5TlF5dnhGT2E5anByME9CdURTVEE1a08Kd2lHTm94ZitpVTRUeXZNNGlXUjBwVTV0Y0M1VGYraU9mT0dHNXpaRjg0cEJFYWFFOXRYRVNnVFZhU2swby9BUApSbzJGRFE4dHl6QmJOMWJUUmQvcTNLYVh6UnlmYkdqazNlTTBlRHNFOEo2eXJwUHlNeTdvUHZ3b2VuUStDV3c5ClFabFMzb2hFQVJPcy9rK1ZBZ01CQUFHamdnRlJNSUlCVFRBT0JnTlZIUThCQWY4RUJBTUNCYUF3SFFZRFZSMGwKQkJZd0ZBWUlLd1lCQlFVSEF3RUdDQ3NHQVFVRkJ3TUNNQXdHQTFVZEV3RUIvd1FDTUFBd0hRWURWUjBPQkJZRQpGRmgzZithV0NRM2pWaG9TOFBDb1pFblR3eTVmTUI4R0ExVWRJd1FZTUJhQUZGSHJpN3JvNVdsRTBOelJsS0NhCnNPcG9YOU4yTUlITkJnTlZIUkVFZ2NVd2djS0NGR3QxWW1VdGQyVmlhRzl2YXkxelpYSjJhV05sZ2lCcmRXSmwKTFhkbFltaHZiMnN0YzJWeWRtbGpaUzVyZFdKbExYTjVjM1JsYllJa2EzVmlaUzEzWldKb2IyOXJMWE5sY25acApZMlV1YTNWaVpTMXplWE4wWlcwdWMzWmpnamRyZFdKbExXTnZiblJ5YjJ4c1pYSXRiV0Z1WVdkbGNpMXRaWFJ5CmFXTnpMWE5sY25acFkyVXVhM1ZpWlMxemVYTjBaVzB1YzNaamhpbHJkV0psTFhkbFltaHZiMnN0YzJWeWRtbGoKWlM1cmRXSmxMWE41YzNSbGJTNXpkbU02TVRRME16QU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FRRUFSa2ZZMExseQpDMzdKQmM4TGZ4amI4RDN6bVZ6UEZXRFF0UXMwOFFEc1Jtd2s4eSt4M2h4OTU4QW5hWmV1WGV6aEVZT3B6ZDZxCm1BODBwamVYR0hNS0x4SXlQOUtJNm1qUlVkZHNwVkNtUVpoS3pOUkpidVRQbnowT3ppanp4SWRjZi9ZK2xGbW8KSDhVcUNvOHNzblA0RmVqTi9hcCsvNTZ2R2JWTFRUZUxVQlF1UE1KRHg0MXpiZ045QlY0bmtyd0JWdkFOeHZzNgowYzRiMFYyR2I5UVVRYXBZTkYvS054c0RTSTl0dEtwcnNGY2VmNmx0akxHTGQreGpIUCsxRGtxcCtna1hYZS9sCkNGVFQvVnpsV1htVTN3QTdNMjlJZTBsT2thY25vQXVDSWwwN2l6d04wbEN6ZDlBM2RzWktmTFJ5ZUZaQnF4QmkKM1lDVnhrM3FjSmZGYkE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+      service:
+        name: kube-webhook-service
+        namespace: kube-system
+        path: /injector-mutating-pods
+        port: 1443
+    failurePolicy: Ignore
+    name: injector.nuwa.nip.io
+    rules:
+      - apiGroups:
+          - ""
+        apiVersions:
+          - v1
+        operations:
+          - CREATE
+        resources:
+          - pods
+        scope: Namespaced
+    sideEffects: NoneOnDryRun
+  - admissionReviewVersions:
+      - v1
+      - v1beta1
+    clientConfig:
+      caBundle: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUV0akNDQTU2Z0F3SUJBZ0lVRXYvWHpReTgya2drWlJLL0xmYkhycUFpaFFzd0RRWUpLb1pJaHZjTkFRRUwKQlFBd2NqRUxNQWtHQTFVRUJoTUNRMDR4RWpBUUJnTlZCQWdUQ1VkMVlXNW5XbWh2ZFRFU01CQUdBMVVFQnhNSgpSM1ZoYm1kYWFHOTFNUXd3Q2dZRFZRUUtFd05yT0hNeER6QU5CZ05WQkFzVEJsTjVjM1JsYlRFY01Cb0dBMVVFCkF4TVRhM1ZpWlhKdVpYUmxjeTFUYjNWc2JXRjBaVEFlRncweU1EQTFNRE14TURJek1EQmFGdzAwTURBME1qZ3gKTURJek1EQmFNR014Q3pBSkJnTlZCQVlUQWtOT01SSXdFQVlEVlFRSUV3bEhkV0Z1WjFwb2IzVXhFakFRQmdOVgpCQWNUQ1VkMVlXNW5XbWh2ZFRFTU1Bb0dBMVVFQ2hNRGF6aHpNUTh3RFFZRFZRUUxFd1pUZVhOMFpXMHhEVEFMCkJnTlZCQU1UQkc1MWQyRXdnZ0VpTUEwR0NTcUdTSWIzRFFFQkFRVUFBNElCRHdBd2dnRUtBb0lCQVFEUzZvSUEKWnZjNnJlb0lCdHpSUmdXcGF2OFFnQk93d0FLdnlzYmlDTkVpenNZNmkwVWxrV0gyYVFvZHozb3Nrc2ZDTlpxdApRRWtGeHV1SHMvcmRJaW44UzlreFc5UVZEMmZQbldGcFYwcHdTYXpJR0ZwbitwWHBnNGJDYi9acGJvTWdsM1cvClhXNEQvYVRBOE92N3NHOHkwblVldDh5VXRGWHk2eWJ5TnFkY2o4Y2g5TlF5dnhGT2E5anByME9CdURTVEE1a08Kd2lHTm94ZitpVTRUeXZNNGlXUjBwVTV0Y0M1VGYraU9mT0dHNXpaRjg0cEJFYWFFOXRYRVNnVFZhU2swby9BUApSbzJGRFE4dHl6QmJOMWJUUmQvcTNLYVh6UnlmYkdqazNlTTBlRHNFOEo2eXJwUHlNeTdvUHZ3b2VuUStDV3c5ClFabFMzb2hFQVJPcy9rK1ZBZ01CQUFHamdnRlJNSUlCVFRBT0JnTlZIUThCQWY4RUJBTUNCYUF3SFFZRFZSMGwKQkJZd0ZBWUlLd1lCQlFVSEF3RUdDQ3NHQVFVRkJ3TUNNQXdHQTFVZEV3RUIvd1FDTUFBd0hRWURWUjBPQkJZRQpGRmgzZithV0NRM2pWaG9TOFBDb1pFblR3eTVmTUI4R0ExVWRJd1FZTUJhQUZGSHJpN3JvNVdsRTBOelJsS0NhCnNPcG9YOU4yTUlITkJnTlZIUkVFZ2NVd2djS0NGR3QxWW1VdGQyVmlhRzl2YXkxelpYSjJhV05sZ2lCcmRXSmwKTFhkbFltaHZiMnN0YzJWeWRtbGpaUzVyZFdKbExYTjVjM1JsYllJa2EzVmlaUzEzWldKb2IyOXJMWE5sY25acApZMlV1YTNWaVpTMXplWE4wWlcwdWMzWmpnamRyZFdKbExXTnZiblJ5YjJ4c1pYSXRiV0Z1WVdkbGNpMXRaWFJ5CmFXTnpMWE5sY25acFkyVXVhM1ZpWlMxemVYTjBaVzB1YzNaamhpbHJkV0psTFhkbFltaHZiMnN0YzJWeWRtbGoKWlM1cmRXSmxMWE41YzNSbGJTNXpkbU02TVRRME16QU5CZ2txaGtpRzl3MEJBUXNGQUFPQ0FRRUFSa2ZZMExseQpDMzdKQmM4TGZ4amI4RDN6bVZ6UEZXRFF0UXMwOFFEc1Jtd2s4eSt4M2h4OTU4QW5hWmV1WGV6aEVZT3B6ZDZxCm1BODBwamVYR0hNS0x4SXlQOUtJNm1qUlVkZHNwVkNtUVpoS3pOUkpidVRQbnowT3ppanp4SWRjZi9ZK2xGbW8KSDhVcUNvOHNzblA0RmVqTi9hcCsvNTZ2R2JWTFRUZUxVQlF1UE1KRHg0MXpiZ045QlY0bmtyd0JWdkFOeHZzNgowYzRiMFYyR2I5UVVRYXBZTkYvS054c0RTSTl0dEtwcnNGY2VmNmx0akxHTGQreGpIUCsxRGtxcCtna1hYZS9sCkNGVFQvVnpsV1htVTN3QTdNMjlJZTBsT2thY25vQXVDSWwwN2l6d04wbEN6ZDlBM2RzWktmTFJ5ZUZaQnF4QmkKM1lDVnhrM3FjSmZGYkE9PQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+      service:
+        name: kube-webhook-service
+        namespace: kube-system
+        path: /namespace-mutating-resource
+        port: 1443
+    failurePolicy: Ignore
+    name: namespace.nuwa.nip.io
+    rules:
+      - apiGroups:
+          - ""
+          - apps
+          - batch
+        apiVersions:
+          - v1
+          - v1beta1
+        operations:
+          - CREATE
+        resources:
+          - replicationcontrollers
+          - replicasets
+          - jobs
+          - cronjobs
+          - deployments
+          - statefulset
+        scope: Namespaced
+    sideEffects: NoneOnDryRun
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: MutatingWebhookConfiguration
@@ -3713,15 +3714,15 @@ metadata:
     pipeline.tekton.dev/release: devel
   name: webhook.pipeline.tekton.dev
 webhooks:
-- admissionReviewVersions:
-  - v1beta1
-  clientConfig:
-    service:
-      name: tekton-pipelines-webhook
-      namespace: tekton-pipelines
-  failurePolicy: Fail
-  name: webhook.pipeline.tekton.dev
-  sideEffects: None
+  - admissionReviewVersions:
+      - v1beta1
+    clientConfig:
+      service:
+        name: tekton-pipelines-webhook
+        namespace: tekton-pipelines
+    failurePolicy: Fail
+    name: webhook.pipeline.tekton.dev
+    sideEffects: None
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: ValidatingWebhookConfiguration
@@ -3730,19 +3731,19 @@ metadata:
     pipeline.tekton.dev/release: devel
   name: config.webhook.pipeline.tekton.dev
 webhooks:
-- admissionReviewVersions:
-  - v1beta1
-  clientConfig:
-    service:
-      name: tekton-pipelines-webhook
-      namespace: tekton-pipelines
-  failurePolicy: Fail
-  name: config.webhook.pipeline.tekton.dev
-  namespaceSelector:
-    matchExpressions:
-    - key: pipeline.tekton.dev/release
-      operator: Exists
-  sideEffects: None
+  - admissionReviewVersions:
+      - v1beta1
+    clientConfig:
+      service:
+        name: tekton-pipelines-webhook
+        namespace: tekton-pipelines
+    failurePolicy: Fail
+    name: config.webhook.pipeline.tekton.dev
+    namespaceSelector:
+      matchExpressions:
+        - key: pipeline.tekton.dev/release
+          operator: Exists
+    sideEffects: None
 ---
 apiVersion: admissionregistration.k8s.io/v1beta1
 kind: ValidatingWebhookConfiguration
@@ -3751,12 +3752,12 @@ metadata:
     pipeline.tekton.dev/release: devel
   name: validation.webhook.pipeline.tekton.dev
 webhooks:
-- admissionReviewVersions:
-  - v1beta1
-  clientConfig:
-    service:
-      name: tekton-pipelines-webhook
-      namespace: tekton-pipelines
-  failurePolicy: Fail
-  name: validation.webhook.pipeline.tekton.dev
-  sideEffects: None
+  - admissionReviewVersions:
+      - v1beta1
+    clientConfig:
+      service:
+        name: tekton-pipelines-webhook
+        namespace: tekton-pipelines
+    failurePolicy: Fail
+    name: validation.webhook.pipeline.tekton.dev
+    sideEffects: None

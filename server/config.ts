@@ -18,7 +18,7 @@ export const config = {
     TERMINAL: '/api-kube', // terminal api
     KUBE_BASE: '/api-kube', // kubernetes cluster api
     KUBE_USERS: '/api-users', // users & groups api
-    KUBE_HELM: '/api-helm', // helm charts api middleware
+    KUBE_HELM: '/api', // helm charts api middleware
     KUBE_RESOURCE_APPLIER: "/api-kube",
   },
 

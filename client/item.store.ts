@@ -11,7 +11,13 @@ export interface ItemObject {
 export abstract class ItemStore<T extends ItemObject = ItemObject> {
   abstract loadAll(): Promise<void>;
 
-  protected defaultSorting = (item: T) => item.getCreationTime();
+  protected defaultSorting = (item: T) => {
+    let ele:any = item;
+    if (ele?.metadata?.creationTimestamp !== undefined) {
+      return item?.getCreationTime();
+    }
+    
+  };
 
   @observable isLoading = false;
   @observable isLoaded = false;
@@ -33,7 +39,7 @@ export abstract class ItemStore<T extends ItemObject = ItemObject> {
     sorting?: ((item: T) => any)[],
     order?: "asc" | "desc" 
   ): T[] {
-    return orderBy(items, sorting || this.defaultSorting, order = "desc");
+    return  orderBy(items, sorting || this.defaultSorting, order = "desc");
   }
 
   protected async createItem(...args: any[]): Promise<any>;
