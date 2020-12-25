@@ -27,7 +27,6 @@ export class PipelineResources extends React.Component<Props> {
     return (
       <>
         <KubeObjectListLayout
-          isClusterScoped
           className="PipelineResources" store={pipelineResourceStore}
           sortingCallbacks={{
             [sortBy.name]: (pipelineResource: PipelineResource) => pipelineResource.getName(),

@@ -124,7 +124,6 @@ export class TaskRuns extends React.Component<Props> {
   render() {
     return (
       <KubeObjectListLayout
-        isClusterScoped
         className="TaskRuns"
         store={taskRunStore}
         sortingCallbacks={{

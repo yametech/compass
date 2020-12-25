@@ -65,7 +65,6 @@ export class TektonStoreLayout extends React.Component<Props> {
     return (
       <>
         <KubeObjectListLayout
-          isClusterScoped
           className="TektonStores"
           store={tektonStore}
           dependentStores={[taskStore, pipelineStore, tektonGraphStore]} // other

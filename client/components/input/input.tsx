@@ -21,8 +21,8 @@ export type InputProps<T = string> = Omit<InputElementProps, "onChange"> & {
   maxRows?: number; // when multiLine={true} define max rows size
   dirty?: boolean; // show validation errors even if the field wasn't touched yet
   showValidationLine?: boolean; // show animated validation line for async validators
-  iconLeft?: string | React.ReactNode; // material-icon name in case of string-type
-  iconRight?: string | React.ReactNode;
+  iconleft?: string | React.ReactNode; // material-icon name in case of string-type
+  iconright?: string | React.ReactNode;
   validators?: Validator | Validator[];
   onChange?(value: T, evt: React.ChangeEvent<InputElement>): void;
 }
@@ -244,7 +244,7 @@ export class Input extends React.Component<InputProps, State> {
 
   render() {
     const { multiLine, showValidationLine, validators, theme, maxRows, children, ...inputProps } = this.props;
-    let { className, iconLeft, iconRight } = this.props;
+    let { className, iconleft, iconright } = this.props;
     const { maxLength, rows, disabled } = this.props;
     const { focused, dirty, valid, validating, errors } = this.state;
 
@@ -259,8 +259,8 @@ export class Input extends React.Component<InputProps, State> {
     });
 
     // normalize icons
-    if (isString(iconLeft)) iconLeft = <Icon material={iconLeft}/>
-    if (isString(iconRight)) iconRight = <Icon material={iconRight}/>
+    if (isString(iconleft)) iconleft = <Icon material={iconleft}/>
+    if (isString(iconright)) iconright = <Icon material={iconright}/>
 
     // prepare input props
     Object.assign(inputProps, {
@@ -275,9 +275,9 @@ export class Input extends React.Component<InputProps, State> {
     return (
       <div className={className}>
         <label className="input-area flex gaps align-center">
-          {iconLeft}
+          {iconleft}
           {multiLine ? <textarea {...inputProps as any}/> : <input {...inputProps as any}/>}
-          {iconRight}
+          {iconright}
         </label>
         <div className="input-info flex gaps">
           {!valid && dirty && (

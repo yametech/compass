@@ -75,7 +75,13 @@ export class PipelineRunVisualDialog extends React.Component<Props> {
         this.nodeData = defaultInitData;
       }
 
+      this.nodeData.nodes.map((item: any, index: number) => {
+        this.nodeData.nodes[index].status = NodeStatus.Pending;
+        this.nodeData.nodes[index].showtime = true;
+      })
+
       if (this.graph == null) {
+        
         this.pipelineGraphConfig = defaultInitConfig(this.width, this.height);
         this.graph = new PipelineGraph(this.pipelineGraphConfig);
         this.graph.data(this.nodeData);
@@ -139,9 +145,10 @@ export class PipelineRunVisualDialog extends React.Component<Props> {
               this.nodeData.nodes[index].id
             );
             //dynimic set the state: missing notreay
-            if (currentTaskRun?.status?.conditions[0]?.reason == undefined) {
-              return;
-            }
+
+            // if (currentTaskRun?.status?.conditions[0]?.reason == undefined) {
+            //   return;
+            // }
 
             this.graph.setItemState(
               currentItem,
@@ -150,7 +157,7 @@ export class PipelineRunVisualDialog extends React.Component<Props> {
             );
 
             //when show pipeline will use current date time  less start time and then self-increment。
-            let completionTime = currentTaskRun.status.completionTime;
+            let completionTime = currentTaskRun.status?.completionTime;
             let totalTime: string;
             const currentStartTime = currentTaskRun.metadata.creationTimestamp;
             const st = new Date(currentStartTime).getTime();

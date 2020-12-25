@@ -74,7 +74,7 @@ export class SearchInput extends React.Component<Props> {
         value={inputVal}
         onChange={this.onChange}
         onKeyDown={this.onKeyDown}
-        iconRight={icon}
+        iconright={icon}
       />
     )
   }

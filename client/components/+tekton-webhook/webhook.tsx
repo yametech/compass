@@ -60,7 +60,6 @@ export class WebHook extends React.Component<Props> {
     return (
       <>
         <KubeObjectListLayout
-          isClusterScoped
           className="WebHook"
           store={tektonWebHookStore}
           sortingCallbacks={{

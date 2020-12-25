@@ -50,7 +50,6 @@ export class Tasks extends React.Component<Props> {
     return (
       <>
         <KubeObjectListLayout
-          isClusterScoped
           className="Tasks"
           store={taskStore}
           sortingCallbacks={{
