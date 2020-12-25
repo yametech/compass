@@ -9,7 +9,7 @@ import { _i18n } from "../../i18n";
 import { Notifications } from "../notifications";
 import { Namespace } from "../../api/endpoints"
 import { NetworkAttachmentDefinitionSelect } from "../+ovn-network-attachment-definition/network-attachment-definition-select";
-import { apiManager } from "../../../client/api/api-manager";
+import { apiBase } from "../../../client/api";
 
 interface Props extends Partial<DialogProps> {
 }
@@ -47,11 +47,15 @@ export class Namespace2Layernet extends React.Component<Props> {
         };
 
         try {
-            await apiManager.getApi(Namespace2Layernet.namespace.selfLink).
-                updateAnnotation({ name: Namespace2Layernet.namespace.getName() }, { data })
+            // await apiManager.getApi(Namespace2Layernet.namespace.selfLink).
+            //     updateAnnotation({ name: Namespace2Layernet.namespace.getName() }, { data })
+
+            await apiBase.post("/namespaces/annotation/networkattachment", { data });
+
             Notifications.ok(
                 <> {Namespace2Layernet.namespace.getName()} annotation NetworkAttachmentDefinition succeeded </>
             );
+
         } catch (err) {
             Notifications.error(err);
         }

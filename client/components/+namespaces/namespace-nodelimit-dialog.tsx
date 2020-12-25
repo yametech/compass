@@ -12,7 +12,6 @@ import { apiBase } from "../../api";
 import { Notifications } from "../notifications";
 import { Namespace } from "../../api/endpoints"
 import { SelectOption } from "../select/select";
-import { namespaceStore } from "./namespace.store";
 
 
 interface NodeResourceLimit {
@@ -79,8 +78,8 @@ export class NamespaceNodeRangeLimitDialog extends React.Component<Props> {
                     this.close();
                 })
             Notifications.ok(
-                <>{NamespaceNodeRangeLimitDialog.namespace.getName()} annotation succeeded</>)
-            ;
+                <>{NamespaceNodeRangeLimitDialog.namespace.getName()} annotation node succeeded</>)
+                ;
         } catch (err) {
             Notifications.error(err);
         }
