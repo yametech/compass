@@ -30,13 +30,15 @@ html {
       cursor: not-allowed;
       pointer-events: auto;
     }
-    &.NamespaceSelect {
+
+    &.isFilter {
       .Select__control {
         background: transparent;
         box-shadow: 0 0 0 1px $halfGray;
         padding: 0;
       }
     }
+
     &__control {
       padding: 2px;
       background: #ececec;

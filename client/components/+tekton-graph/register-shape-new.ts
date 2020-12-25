@@ -167,7 +167,7 @@ function drawNodeStatus(cfg: PipelineGraphConfig, group: Group): IShape {
 
     case NodeStatus.Failed:
       // set status
-      drawStatus(group, NodeStatus.Failed, "failed");
+      drawStatus(group, NodeStatusColor.Failed, "failed");
       //status for text
       return drawTextShape(group, NodeStatus.Failed, "Failed.");
   }

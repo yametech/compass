@@ -70,7 +70,7 @@ export class AddRoleDialog extends React.Component<Props> {
             <Input
               required autoFocus
               placeholder={_i18n._(t`Role name`)}
-              iconLeft="supervisor_account"
+              iconleft="supervisor_account"
               value={this.roleName}
               onChange={v => this.roleName = v}
             />

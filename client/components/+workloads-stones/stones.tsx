@@ -40,11 +40,11 @@ export class Stones extends React.Component<Props> {
   renderStoneName(stone: Stone) {
     const name = stone.getName();
     return (
-      <Link  onClick={(event) => { stopPropagation(event); ConfigStoneDialog.open(stone) }} to={null}>
+      <a onClick={(event) => { stopPropagation(event); ConfigStoneDialog.open(stone) }}>
         <Tooltip title={name} placement="top-start">
           <span>{name}</span>
         </Tooltip>
-      </Link>
+      </a>
     );
   }
 
@@ -59,7 +59,7 @@ export class Stones extends React.Component<Props> {
   hasPodIssues(stone: Stone) {
     return stoneStore.getChildPods(stone).map(pod => {
       return pod.hasIssues()
-    }).filter(bool => bool === false).length == 0;
+    }).filter(bool => bool === true).length !== 0;
   }
 
   render() {

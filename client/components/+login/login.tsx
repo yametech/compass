@@ -94,7 +94,7 @@ class LoginComponet extends React.Component<Props> {
               maxLength={30}
               placeholder={_i18n._(t`Input your username`)}
               value={this.username}
-              iconLeft="person"
+              iconleft="person"
               validators={systemName}
               onChange={v => this.username = v}
             />
@@ -103,7 +103,7 @@ class LoginComponet extends React.Component<Props> {
               maxLength={30}
               placeholder={_i18n._(t`Input your password`)}
               value={this.password}
-              iconLeft="lock"
+              iconleft="lock"
               onChange={v => this.password = v}
               onKeyDown={e => this.onKeyDown(e)}
               type="password"

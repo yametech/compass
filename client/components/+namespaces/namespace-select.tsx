@@ -93,6 +93,7 @@ export class NamespaceSelectFilter extends React.Component {
     if (contextNs.length >= 2) placeholder = <Trans>Namespaces: {contextNs.join(", ")}</Trans>
     return (
       <NamespaceSelect
+        className="isFilter" 
         placeholder={placeholder}
         isOptionSelected={() => false}
         controlShouldRenderValue={false}

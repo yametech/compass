@@ -54,6 +54,8 @@ export class TaskRunLogsDialog extends React.Component<Props> {
   ];
 
   onOpen = async () => {
+    let taskRun = taskRunStore.getByName(TaskRunLogsDialog.taskRunName)
+    this.selectedContainerName = taskRun.getContainerName()[0] || "";
     await this.load();
     this.refresher.start();
   };
@@ -72,9 +74,6 @@ export class TaskRunLogsDialog extends React.Component<Props> {
     let taskRun = taskRunStore.getByName(TaskRunLogsDialog.taskRunName);
     this.podName = taskRun.getPodName();
     this.containers = taskRun.getContainerName();
-    if (this.selectedContainerName == undefined) {
-      this.selectedContainerName = this.containers[0] || "";
-    }
 
     if (!this.podName) return;
     if (!this.containers) return;

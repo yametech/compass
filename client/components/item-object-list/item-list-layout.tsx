@@ -399,7 +399,7 @@ export class ItemListLayout extends React.Component<ItemListLayoutProps> {
       info: this.renderInfo(),
       filterTags: <>{isShowTag && <PageFiltersTag />}</>,
       filters: <>
-        {!isClusterScoped && <NamespaceSelectFilter/>}
+        {!isClusterScoped && <NamespaceSelectFilter />}
         <PageFiltersSelect allowEmpty disableFilters={{
           [FilterType.NAMESPACE]: true, // namespace-select used instead
         }}/>
