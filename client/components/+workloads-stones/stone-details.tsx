@@ -17,6 +17,7 @@ import { PodCharts, podMetricTabs } from "../+workloads-pods/pod-charts";
 import { PodDetailsList } from "../+workloads-pods/pod-details-list";
 import { apiManager } from "../../api/api-manager";
 import { KubeObjectMeta } from "../kube-object/kube-object-meta";
+import { BookTabs } from '../tabs'
 
 interface Props extends KubeObjectDetailsProps<Stone> {
 }
@@ -50,56 +51,64 @@ export class StoneDetails extends React.Component<Props> {
     const statefulsets = stoneStore.getChildEnhanceStatefulset(stone);
     return (
       <div className="StoneDetails">
-        {podsStore.isLoaded && (
-          <ResourceMetrics
-            loader={() => stoneStore.loadMetrics(stone)}
-            tabs={podMetricTabs} object={stone} params={{ metrics }}
-          >
-            <PodCharts />
-          </ResourceMetrics>
-        )}
-        <KubeObjectMeta object={stone} />
-        {selectors.length &&
-          <DrawerItem name={<Trans>Selector</Trans>} labelsOnly>
-            {
-              selectors.map(label => <Badge key={label} label={label} />)
+        <BookTabs>
+          <div className="Home">
+            {podsStore.isLoaded && (
+              <ResourceMetrics
+                loader={() => stoneStore.loadMetrics(stone)}
+                tabs={podMetricTabs} object={stone} params={{ metrics }}
+              >
+                <PodCharts />
+              </ResourceMetrics>
+            )}
+            <KubeObjectMeta object={stone} />
+            {selectors.length &&
+              <DrawerItem name={<Trans>Selector</Trans>} labelsOnly>
+                {
+                  selectors.map(label => <Badge key={label} label={label} />)
+                }
+              </DrawerItem>
             }
-          </DrawerItem>
-        }
-        {nodeSelector.length > 0 &&
-          <DrawerItem name={<Trans>Node Selector</Trans>} labelsOnly>
-            {
-              nodeSelector.map(label => (
-                <Badge key={label} label={label} />
-              ))
+            {nodeSelector.length > 0 &&
+              <DrawerItem name={<Trans>Node Selector</Trans>} labelsOnly>
+                {
+                  nodeSelector.map(label => (
+                    <Badge key={label} label={label} />
+                  ))
+                }
+              </DrawerItem>
             }
-          </DrawerItem>
-        }
-        {images.length > 0 &&
-          <DrawerItem name={<Trans>Images</Trans>}>
-            {
-              images.map(image => <p key={image}>{image}</p>)
+            {images.length > 0 &&
+              <DrawerItem name={<Trans>Images</Trans>}>
+                {
+                  images.map(image => <p key={image}>{image}</p>)
+                }
+              </DrawerItem>
             }
-          </DrawerItem>
-        }
-        <DrawerItem name={<Trans>Pod Status</Trans>} className="pod-status">
-          <PodDetailsStatuses pods={childPods} />
-        </DrawerItem>
-        <ResourceMetricsText metrics={metrics} />
-        <PodDetailsList pods={childPods} owner={stone} />
-        <KubeEventDetails object={stone} />
+            <DrawerItem name={<Trans>Pod Status</Trans>} className="pod-status">
+              <PodDetailsStatuses pods={childPods} />
+            </DrawerItem>
+            <ResourceMetricsText metrics={metrics} />
+          </div>
+          <div className="Pods">
+            <PodDetailsList pods={childPods} owner={stone} />
+          </div>
+          <div className="Event">
+            <KubeEventDetails object={stone} />
 
-        {statefulsets.length > 0 &&
-          <>
-            {statefulsets.map(statefulset => <KubeEventDetails object={statefulset} title={"Event:statefulset-" + statefulset.getName()} />)}
-          </>
-        }
+            {statefulsets.length > 0 &&
+              <>
+                {statefulsets.map((statefulset, index) => <KubeEventDetails key={`state${index}`} object={statefulset} title={"Event:statefulset-" + statefulset.getName()} />)}
+              </>
+            }
 
-        {childPods.length > 0 &&
-          <>
-            {childPods.map(pod => <KubeEventDetails object={pod} title={"Event:pod-" + pod.getName()} />)}
-          </>
-        }
+            {childPods.length > 0 &&
+              <>
+                {childPods.map((pod, index) => <KubeEventDetails key={`child${index}`} object={pod} title={"Event:pod-" + pod.getName()} />)}
+              </>
+            }
+          </div>
+        </BookTabs>
       </div>
     )
   }

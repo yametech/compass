@@ -108,7 +108,7 @@ export class KubeObjectDetails extends React.Component {
     }
     return (
       <Drawer
-        className="KubeObjectDetails flex column"
+        className="KubeObjectDetails flex"
         open={isOpen}
         title={title}
         toolbar={
