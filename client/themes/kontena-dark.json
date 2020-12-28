@@ -100,6 +100,7 @@
     "selectOptionHoveredColor": "#87909c",
     "lineProgressBackground": "#414448",
     "radioActiveBackground": "#36393e",
-    "menuActiveBackground": "#36393e"
+    "menuActiveBackground": "#36393e",
+    "bookBoxShadow": "#302f2f"
   }
 }
