@@ -58,8 +58,9 @@ export class Namespace2Layernet extends React.Component<Props> {
 
         } catch (err) {
             Notifications.error(err);
+        } finally {
+            this.close();
         }
-
     }
 
     render() {

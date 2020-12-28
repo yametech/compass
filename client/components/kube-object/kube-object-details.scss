@@ -1,7 +1,7 @@
 .KubeObjectDetails {
   z-index: $zIndex-drawer + 1 !important;
   --spacing: - #{$padding * 3};
-  .StoneDetails {
+  .StoneDetails, .PodDetails {
     .DrawerTitle {
       margin-top: -24px;
     }
