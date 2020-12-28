@@ -47,6 +47,7 @@
 
   .drawer-wrapper {
     height: 100%;
+    width: 100%;
     min-height: 100%;
   }
 
@@ -56,7 +57,7 @@
     padding: $padding $padding * 2.5;
     word-break: break-all;
     position: relative;
-    min-height: 54px;
+    min-height: 44px;
 
     .drawer-title-text {
       font-weight: bold;
