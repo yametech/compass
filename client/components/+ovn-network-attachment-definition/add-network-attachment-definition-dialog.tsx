@@ -143,6 +143,7 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
           <Grid item xs zeroMinWidth>
             <Icon
               small
+              ripple="secondary"
               tooltip={`Remove`}
               className="remove-icon"
               material="clear"
@@ -174,6 +175,7 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
           <Grid item xs zeroMinWidth>
             <Icon
               small
+              ripple="secondary"
               tooltip={`Remove`}
               className="remove-icon"
               material="clear"
@@ -277,7 +279,7 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
                       <>
                         AddRoutes
                         &nbsp;&nbsp;
-                        <Icon material={"edit"} className={"editIcon"} onClick={event => {
+                        <Icon material={"add_circle"} className={"add_circle"} onClick={event => {
                           this.addRoutes(index);
                           stopPropagation(event);
                         }} small/>
@@ -292,7 +294,7 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
                       <>
                         DelRoutes
                         &nbsp;&nbsp;
-                        <Icon material={"edit"} className={"editIcon"} onClick={event => {
+                        <Icon material={"add_circle"} className={"add_circle"} onClick={event => {
                           this.addDelRoutes(index);
                           stopPropagation(event);
                         }} small/>
@@ -308,6 +310,7 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
           <Grid item xs zeroMinWidth>
             <Icon
               small
+              ripple="secondary"
               tooltip={`Remove`}
               className="remove-icon"
               material="clear"
@@ -345,7 +348,7 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
                   <>
                     Plugins
                     &nbsp;&nbsp;
-                    <Icon material={"edit"} className={"editIcon"} onClick={event => {
+                    <Icon material={"add_circle"} className={"add_circle"} onClick={event => {
                       this.add();
                       stopPropagation(event);
                     }} small/>
