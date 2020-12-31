@@ -57,6 +57,9 @@ export class BookTabs extends React.Component {
     this.setState({
       isExpand: true,
       activedName: name
+    }, () => {
+      let ele = this.contentElem.parentNode.parentNode as any;
+      ele.scrollTop = 0;
     })
     this.clearTimeout();
     this.state.timer = window.setTimeout(() => {

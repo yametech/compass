@@ -31,8 +31,10 @@ export class TektonsOverview extends React.Component<Props> {
             pipelineResourceStore,
         ];
         this.isReady = stores.every(store => store.isLoaded);
-        await Promise.all(stores.map(store => store.loadAll()));
-        this.isReady = true;
+        if (!this.isReady) {
+          await Promise.all(stores.map(store => store.loadAll()));
+          this.isReady = true;
+        }
         const unsubscribeList = stores.map(store => store.subscribe());
         await when(() => this.isUnmounting);
         unsubscribeList.forEach(dispose => dispose());
