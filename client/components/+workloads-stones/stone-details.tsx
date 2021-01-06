@@ -62,7 +62,7 @@ export class StoneDetails extends React.Component<Props> {
               </ResourceMetrics>
             )}
             <KubeObjectMeta object={stone} />
-            {selectors.length &&
+            {selectors.length > 0 &&
               <DrawerItem name={<Trans>Selector</Trans>} labelsOnly>
                 {
                   selectors.map(label => <Badge key={label} label={label} />)

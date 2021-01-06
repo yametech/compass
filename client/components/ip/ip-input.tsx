@@ -16,7 +16,7 @@ interface IPInputProps<T = any> {
 @observer
 export class IPInput extends React.Component<IPInputProps> {
 
-  @observable IP: number[] = [0, 0, 0, 0];
+  @observable IP: number [] = [0, 0, 0, 0];
   @observable IPRefs: any[] = [null, null, null, null];
   @observable Mask: number = 0;
   @observable.ref MaskRef: any = null;
@@ -115,6 +115,17 @@ export class IPInput extends React.Component<IPInputProps> {
     this.onMaskDirty();
   }
 
+  private handleIPKeyDown(e: React.KeyboardEvent<any>, index: number) {
+    if (e.keyCode === 190 && index < 3) {
+      this.IP[index] = this.IP[index] + 1;
+      setTimeout(() => {
+        this.IP[index] = this.IP[index] - 1;
+        // this.forceUpdate();
+        this.IPRefs[index + 1].focus();
+      });
+    }
+  }
+
   private handleIPChange(value: string, index: number) {
     this.IP[index] = Number(value) <= 255 ? Number(value) : 255;
     this.dirty();
@@ -156,6 +167,7 @@ export class IPInput extends React.Component<IPInputProps> {
               validators={this.isValidClass}
               ref={(ref) => this.IPRefs[0] = ref}
               value={this.IP[0]?.toString()}
+              onKeyDown={(e) => this.handleIPKeyDown(e, 0)}
               onChange={(value) => {
                 this.handleIPChange(value, 0)
               }}/>
@@ -169,6 +181,7 @@ export class IPInput extends React.Component<IPInputProps> {
               validators={this.isValidClass}
               ref={(ref) => this.IPRefs[1] = ref}
               value={this.IP[1]?.toString()}
+              onKeyDown={(e) => this.handleIPKeyDown(e, 1)}
               onChange={(value) => {
                 this.handleIPChange(value, 1)
               }}/>
@@ -182,6 +195,7 @@ export class IPInput extends React.Component<IPInputProps> {
               validators={this.isValidClass}
               ref={(ref) => this.IPRefs[2] = ref}
               value={this.IP[2]?.toString()}
+              onKeyDown={(e) => this.handleIPKeyDown(e, 2)}
               onChange={(value) => {
                 this.handleIPChange(value, 2)
               }}/>
@@ -195,6 +209,7 @@ export class IPInput extends React.Component<IPInputProps> {
               validators={this.isValidClass}
               ref={(ref) => this.IPRefs[3] = ref}
               value={this.IP[3]?.toString()}
+              onKeyDown={(e) => this.handleIPKeyDown(e, 3)}
               onChange={(value) => {
                 this.handleIPChange(value, 3)
               }}/>
