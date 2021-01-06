@@ -77,7 +77,7 @@ export class DaemonSetDetails extends React.Component<Props> {
         {images.length > 0 &&
         <DrawerItem name={<Trans>Images</Trans>}>
           {
-            images.map(image => <p key={image}>{image}</p>)
+            images.map((image, index) => <p key={`${image}-${index}`}>{image}</p>)
           }
         </DrawerItem>
         }

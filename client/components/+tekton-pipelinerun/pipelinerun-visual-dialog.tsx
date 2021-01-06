@@ -8,7 +8,7 @@ import { Dialog } from "../dialog";
 import { Wizard, WizardStep } from "../wizard";
 import { observer } from "mobx-react";
 import { PipelineRun } from "../../api/endpoints";
-import { graphId, PipelineGraph } from "../+tekton-graph/graph-new";
+import { PipelineGraph } from "../+tekton-graph/graph-new";
 import { secondsToHms } from "../../api/endpoints";
 import { pipelineRunStore } from "./pipelinerun.store";
 import { TaskRunLogsDialog } from "../+tekton-taskrun/task-run-logs-dialog";
@@ -17,6 +17,7 @@ import { taskName, NodeStatus } from "../+constant/tekton-constants";
 
 const wizardSpacing = parseInt(styles.wizardSpacing, 10) * 2;
 const wizardContentMaxHeight = parseInt(styles.wizardContentMaxHeight);
+const graphId = 'runContainer';
 
 interface Props extends Partial<Props> {}
 
@@ -82,7 +83,7 @@ export class PipelineRunVisualDialog extends React.Component<Props> {
 
       if (this.graph == null) {
         
-        this.pipelineGraphConfig = defaultInitConfig(this.width, this.height);
+        this.pipelineGraphConfig = defaultInitConfig(this.width, this.height, graphId);
         this.graph = new PipelineGraph(this.pipelineGraphConfig);
         this.graph.data(this.nodeData);
 

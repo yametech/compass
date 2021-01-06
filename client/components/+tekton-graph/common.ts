@@ -15,7 +15,6 @@ import {
   defaultTaskName,
 } from "../+constant/tekton-constants";
 
-export const graphId = "container";
 export const pipelineNode: string = "pipeline-node";
 export const spacingY = 60;
 export const spacingX = 300;
@@ -196,42 +195,10 @@ export const defaultInitData: PipelineGraphData = {
   nodes: [defaultInitGraphNode],
 };
 
-export const defaultCfg: PipelineGraphOptions = {
-  container: graphId,
-  width: 2200,
-  height: 1200,
-  renderer: "canvas",
-  autoPaint: true,
-
-  layout: {
-    direction: "LR",
-    preventOverlap: true, // 防止节点重叠
-  },
-
-  modes: {
-    default: ["drag-canvas", "zoom-canvas", "drag-node"], // 允许拖拽画布、放缩画布、拖拽节点
-  },
-
-  defaultEdge: {
-    type: "line",
-    style: {
-      stroke: "#959DA5",
-      lineWidth: 2,
-    },
-  },
-
-  defaultNode: {
-    type: pipelineNode,
-    linkPoints: {
-      right: true,
-      left: true,
-    },
-  },
-};
-
 export function defaultInitConfig(
   width: number,
-  height: number
+  height: number,
+  graphId: string
 ): PipelineGraphOptions {
   const defaultCfg: PipelineGraphOptions = {
     container: graphId,

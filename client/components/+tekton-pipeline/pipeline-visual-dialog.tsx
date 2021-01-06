@@ -8,7 +8,7 @@ import { Dialog } from "../dialog";
 import { Wizard, WizardStep } from "../wizard";
 import { observer } from "mobx-react";
 import { Pipeline, PipelineTask, TektonGraph } from "../../api/endpoints";
-import { graphId, PipelineGraph } from "../+tekton-graph/graph-new";
+import { PipelineGraph } from "../+tekton-graph/graph-new";
 import { CopyTaskDialog } from "../+tekton-task/copy-task-dialog";
 import { PipelineSaveDialog } from "./pipeline-save-dialog";
 import { tektonGraphStore } from "../+tekton-graph/tekton-graph.store";
@@ -20,6 +20,8 @@ import { OwnerReferences } from '../../api/kube-object'
 
 const wizardSpacing = parseInt(styles.wizardSpacing, 10) * 2;
 const wizardContentMaxHeight = parseInt(styles.wizardContentMaxHeight);
+
+const graphId = 'container';
 
 interface Props extends Partial<Props> {
 }
@@ -73,13 +75,12 @@ export class PipelineVisualDialog extends React.Component<Props> {
     this.initTimeout = null;
 
     this.initTimeout = setTimeout(() => {
-
       const anchor = document.getElementsByClassName("Wizard")[0];
       this.width = anchor.clientWidth - wizardSpacing;
       this.height = wizardContentMaxHeight - wizardSpacing;
 
       if (this.graph == null) {
-        const pipelineGraphConfig = defaultInitConfig(this.width, this.height);
+        const pipelineGraphConfig = defaultInitConfig(this.width, this.height, graphId);
         this.graph = new PipelineGraph(pipelineGraphConfig);
 
         this.graph.bindClickOnNode((currentNode: any) => {
@@ -95,7 +96,6 @@ export class PipelineVisualDialog extends React.Component<Props> {
       if (this.nodeData == null) {
         this.nodeData = pipelineStore.getNodeData(this.pipeline);
       }
-
       this.graph.renderPipelineGraph(this.nodeData);
       this.setSize();
 
@@ -163,10 +163,6 @@ export class PipelineVisualDialog extends React.Component<Props> {
   updateTektonGraph = async (data: string) => {
     const graphName =
       this.pipeline.getName() + "-" + new Date().getTime().toString();
-
-
-
-
 
     const tektonGraph: Partial<TektonGraph> = {
       metadata: {
