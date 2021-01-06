@@ -63,12 +63,18 @@ function drawPipeline(cfg: PipelineGraphConfig, group: Group): IShape {
 function drawBase(cfg: PipelineGraphConfig, group: Group): IShape {
   const shape = group.addShape("rect", {
     attrs: {
-      x: 2,
-      y: 2,
+      x: 1,
+      y: 1,
       width: 180,
-      height: 42,
-      radius: 8,
+      height: 45,
+      radius: 5,
       fill: "#fff",
+      stroke: '#dbdada',
+      strokeOpacity: 0.2,
+      shadowOffsetX: 3,
+      shadowOffsetY: 3,
+      shadowColor: '#dbdada',
+      shadowBlur: 8,
     },
     name: "main-box",
     draggable: true,
@@ -78,8 +84,8 @@ function drawBase(cfg: PipelineGraphConfig, group: Group): IShape {
   group.addShape("text", {
     labels: defaultTaskName,
     attrs: {
-      y: 20,
-      x: 5,
+      y: cfg.status ? 20 : 25,
+      x: 10,
       height: 16,
       width: 16,
       text: fittingString(String(cfg.taskName), 50, 5),
@@ -93,7 +99,7 @@ function drawBase(cfg: PipelineGraphConfig, group: Group): IShape {
 
   group.addShape("image", {
     attrs: {
-      x: 140,
+      x: 145,
       y: 10,
       width: 25,
       height: 25,
@@ -103,6 +109,69 @@ function drawBase(cfg: PipelineGraphConfig, group: Group): IShape {
     name: "image-shape",
   });
 
+  if (!cfg.status) {
+    group.addShape('circle', {
+      attrs: {
+        x: 180,
+        y: 22.5,
+        r: 6,
+        fill: '#fff',
+        stroke: '#dbdada',
+        strokeOpacity: 0.6,
+      },
+      name: 'right-circle-path1',
+    });
+    group.addShape('rect', {
+      attrs: {
+        x: 173,
+        y: 16,
+        width: 8,
+        height: 13,
+        fill: '#fff'
+      },
+      name: 'right-circle-path2',
+    });
+    group.addShape('circle', {
+      attrs: {
+        x: 180,
+        y: 22.5,
+        r: 3,
+        fill: '#959DA5'
+      },
+      name: 'right-circle-path3',
+    });
+  
+    group.addShape('circle', {
+      attrs: {
+        x: 0,
+        y: 22.5,
+        r: 6,
+        fill: '#fff',
+        stroke: '#dbdada',
+        strokeOpacity: 0.6,
+      },
+      name: 'left-circle-path1',
+    });
+    group.addShape('rect', {
+      attrs: {
+        x: 1,
+        y: 16,
+        width: 6,
+        height: 13,
+        fill: '#fff'
+      },
+      name: 'left-circle-path2',
+    });
+    group.addShape('circle', {
+      attrs: {
+        x: 0,
+        y: 22.5,
+        r: 3,
+        fill: '#959DA5',
+      },
+      name: 'left-circle-path3',
+    });
+  }
   return shape;
 }
 
@@ -110,7 +179,7 @@ function drawStatus(group: Group, color: string, name: string): IShape {
   return group.addShape(circle, {
     attrs: {
       x: 20,
-      y: 36,
+      y: 35,
       r: 3.5,
       fill: color,
     },
@@ -180,7 +249,7 @@ function drawTime(cfg: PipelineGraphConfig, group: Group) {
       labels: "timeimage",
       attrs: {
         x: 90,
-        y: 30,
+        y: 27,
         width: 15,
         height: 15,
         img:
@@ -192,7 +261,7 @@ function drawTime(cfg: PipelineGraphConfig, group: Group) {
     return group.addShape("text", {
       labels: "time",
       attrs: {
-        y: 42,
+        y: 40,
         x: 103,
         text: cfg.time ?? "0s",
         fill: "gray",
@@ -204,14 +273,14 @@ function drawTime(cfg: PipelineGraphConfig, group: Group) {
 }
 
 function drawAddNode(group: Group) {
-  const color = "#bbfdec";
+  const color = "#2196f3";
   group.addShape("circle", {
     name: "test",
     labels: "addond",
     attrs: {
-      x: 192.5,
+      x: 186.5,
       y: 23,
-      r: 10.3,
+      r: 9,
       stroke: color,
       fill: color,
       isCollapseShape: true,
@@ -222,14 +291,17 @@ function drawAddNode(group: Group) {
     name: "right-plus",
     labels: "addond",
     attrs: {
-      x: 192.5,
-      y: 23,
-      width: 20,
-      height: 20,
+      x: 187,
+      y: 23.5,
+      width: 18,
+      height: 18,
+      lineHeight: 18,
       textAlign: "center",
       textBaseline: "middle",
-      text: "✚",
-      fill: "#51863d",
+      text: "+", //✚
+      fontSize: 16,
+      fontWeight: 600,
+      fill: "#fff",
       cursor: "pointer",
       isCollapseShape: true,
     },
@@ -237,34 +309,18 @@ function drawAddNode(group: Group) {
 }
 
 function drawSubNode(group: Group) {
-  const color = "#f1978b";
-  group.addShape("circle", {
-    name: "left-circle",
+  group.addShape("image", {
     labels: "addond",
     attrs: {
-      x: -9.1,
-      y: 23,
-      r: 10.3,
-      stroke: color,
-      fill: color,
-      isCollapseShape: true,
-    },
-  });
-  group.addShape("text", {
-    name: "left-plus",
-    labels: "addond",
-    attrs: {
-      x: -9.1,
-      y: 23,
-      width: 20,
-      height: 20,
-      textAlign: "center",
-      textBaseline: "middle",
-      text: "⎼",
-      fill: "#51863d",
+      x: -15,
+      y: 14,
+      width: 18,
+      height: 18,
+      img: 'data:img/jpg;base64,iVBORw0KGgoAAAANSUhEUgAAACQAAAAkCAYAAADhAJiYAAACpklEQVRYR82YTWgTQRTH/283TdZD6cVcBS2Cgu1B8KIxbqVu0FZvAcW7VrD4dejBs4ce6gcV/DgrCrlpqzSKxli9FD2oYEBF8BovpYds0uw+ma0JSbq7s2kbmLnOe29+8z5m3gyhy8FWemeVtAwzUgTay8Q7iNEvzDBhhZj+MPg7ERYT7C5Qvvi7myUoijBns3ptuZx1gYsADgKIpCcYAXzUgLvxgWSOcjlHtp7UsJ0xR5kxC2CPzJhkvkSESWOh8DpMLhCITdOoxnEbwDmO7pFQJlrz2MNEDZepULD9hH2BVo4fTsZcfR6MA5v0ir86YamuOWP9L9+XOwXWAQmYPkcv8uZDJPNWaVV30p1QbUAiTHYCxZ55Zr07lowq0q3hawOyLfM+A+d7EqYAowQ8MPKFicZ0E0hUExj5rUrgqJvyEp1gNarPAxLnjL1c/rYFpR2Vo1OuZAwk94lzygOqWuZpF3gSnoUEbewktMHdcN68An/9Ei4+NAz96DG4v37AnX8OsKj44KEBZxL5wlMPqGKZiwAOhSqMn0J88oonwo6D1ekbcN+99VXRjoygb+o6SNe9+drsLbhzz2Te+7AtX0iRPZraxVrsp+w6iF26htiJ8abRIKhOGKFQfzGH+p0ZGRAbcAfJzpgTzLgnk6ahYcSnbzZ37ecpPxgBXpu6Kg2xsEeEC1SxzEcAzsqAxHzQgiJ8YrSGKUpofdZ8TLY18onB+6MAhUF5O/yfMxuEAYE+UyVjlsHYHhUoCKpVX5b0gWsR/pJtmTYDiW6AwqA2DLNWVVX1gBQMmWpJrVzZq3YwKnd1KHe5CiDl2g/lGjThJaVa2Ma1oVST793Qqj2DBJRSD8VG6JR6SjeglPpsaO2NlPmOaesAVfqw6uwkxd0HPWb16kvvHz8/8OLQfgf0AAAAAElFTkSuQmCC',
       cursor: "pointer",
       isCollapseShape: true,
     },
+    name: "left-plus",
   });
 }
 const setState = (group: Group, fill: string, text: string) => {

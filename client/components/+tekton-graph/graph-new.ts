@@ -14,14 +14,13 @@ import {
   spacingX,
   hasSubNode,
   groupNodes,
-  hasRightNeighborNode,
+  hasRightNeighborNode
 } from "./common";
 import { Algorithm } from "@antv/g6";
 import { IGraph } from "@antv/g6/lib/interface/graph";
 import { maxBy } from "lodash";
 
 const { depthFirstSearch } = Algorithm;
-export const graphId = "container";
 
 declare type SearchAlgorithm0 = (graph: IGraph) => void;
 declare type SearchAlgorithm1 = (
@@ -46,7 +45,7 @@ export class PipelineGraph extends Graph {
   ) {
     search(this, id, {
       enter: ({ current, previous }) => {
-        console.log("current==>", current, "previous=>", previous);
+        // console.log("current==>", current, "previous=>", previous);
       },
       leave: ({ current, previous }) => {
         // 遍历完节点的回调
