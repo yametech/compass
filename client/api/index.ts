@@ -20,6 +20,11 @@ export const apiTenant = new KubeJsonApi({
     apiPrefix: clientVars.TENANT_PREFIX.TENANT
 });
 
+export const apiIstio = new KubeJsonApi({
+    debug: !clientVars.IS_PRODUCTION,
+    apiPrefix: clientVars.TENANT_PREFIX.ISTIO
+});
+
 export const apiKube = new KubeJsonApi({
     debug: !clientVars.IS_PRODUCTION,
     apiPrefix: clientVars.API_PREFIX.KUBE_BASE,

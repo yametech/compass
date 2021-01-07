@@ -1,6 +1,8 @@
 import { autobind } from "../../utils";
 import { KubeObject } from "../kube-object";
 import { KubeApi } from "../kube-api";
+import config from "server/config";
+import { apiIstio } from "..";
 
 // Port describes the properties of a specific port of a service.
 export interface Port {
@@ -215,4 +217,5 @@ export const gateWayApi = new KubeApi({
   apiBase: "/apis/networking.istio.io/v1beta1/gateways",
   isNamespaced: true,
   objectConstructor: Gateway,
+  request: apiIstio,
 });
