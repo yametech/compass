@@ -1,7 +1,7 @@
-import { autobind } from "../../utils";
-import { KubeObject } from "../kube-object";
-import { KubeApi } from "../kube-api";
-import { number, boolean } from "yargs";
+import {autobind} from "../../utils";
+import {KubeObject} from "../kube-object";
+import {KubeApi} from "../kube-api";
+import {apiIstio} from "../index";
 
 export interface DestinationRuleSpec {
   // The name of a service from the service registry. Service
@@ -366,4 +366,5 @@ export const destinationRuleApi = new KubeApi({
   apiBase: "/apis/networking.istio.io/v1beta1/destinationrules",
   isNamespaced: true,
   objectConstructor: DestinationRule,
+  request: apiIstio,
 });

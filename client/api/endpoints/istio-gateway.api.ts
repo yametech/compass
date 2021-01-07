@@ -1,8 +1,7 @@
-import { autobind } from "../../utils";
-import { KubeObject } from "../kube-object";
-import { KubeApi } from "../kube-api";
-import config from "server/config";
-import { apiIstio } from "..";
+import {autobind} from "../../utils";
+import {KubeObject} from "../kube-object";
+import {KubeApi} from "../kube-api";
+import {apiIstio} from "../index";
 
 // Port describes the properties of a specific port of a service.
 export interface Port {
