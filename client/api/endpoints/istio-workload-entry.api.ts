@@ -1,6 +1,7 @@
-import { autobind } from "../../utils";
-import { KubeObject } from "../kube-object";
-import { KubeApi } from "../kube-api";
+import {autobind} from "../../utils";
+import {KubeObject} from "../kube-object";
+import {KubeApi} from "../kube-api";
+import {apiIstio} from "../index";
 
 export interface WorkloadEntrySpec {
   // Address associated with the network endpoint without the
@@ -82,4 +83,5 @@ export const workloadEntryApi = new KubeApi({
   apiBase: "/apis/networking.istio.io/v1beta1/workloadentries",
   isNamespaced: true,
   objectConstructor: WorkloadEntry,
+  request: apiIstio,
 });

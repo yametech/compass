@@ -4,6 +4,7 @@ import { KubeApi } from "../kube-api";
 import { WorkloadSelector } from "./istio-service-entry.api";
 import { Port } from "./istio-gateway.api";
 import { Destination } from "./istio-virtual-service.api";
+import {apiIstio} from "../index";
 
 export interface SidecarSpec {
   // Criteria used to select the specific set of pods/VMs on which this
@@ -191,4 +192,5 @@ export const sidecarApi = new KubeApi({
   apiBase: "/apis/networking.istio.io/v1beta1/sidecars",
   isNamespaced: true,
   objectConstructor: Sidecar,
+  request: apiIstio,
 });
