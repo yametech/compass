@@ -1,8 +1,7 @@
-import { autobind } from "../../utils";
-import { KubeObject } from "../kube-object";
-import { KubeApi } from "../kube-api";
-import { number, boolean } from "yargs";
-import {apiIstio} from "..";
+import {autobind} from "../../utils";
+import {KubeObject} from "../kube-object";
+import {KubeApi} from "../kube-api";
+import {apiIstio} from "../index";
 
 export interface DestinationRuleSpec {
   // The name of a service from the service registry. Service

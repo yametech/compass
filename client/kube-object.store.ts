@@ -176,7 +176,11 @@ export abstract class KubeObjectStore<
       await itemApi.delete({ name: item.getName(), namespace: item.getNs() })
           .then((res) => {
              Notifications.ok(item.kind + " " + item.getName() +" delete succeeded")
-          }).finally(() => { });
+          }).catch((err)=>{
+            console.error(err)
+            Notifications.error(item.kind + " " + item.getName() +" delete failed")
+          })
+          .finally(() => { });
       return
     }
 
