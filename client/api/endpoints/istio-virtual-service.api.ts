@@ -1,6 +1,7 @@
 import { autobind } from "../../utils";
 import { KubeObject } from "../kube-object";
 import { KubeApi } from "../kube-api";
+import {apiIstio} from "../index";
 
 export interface VirtualServiceSpec {
   // The destination hosts to which traffic is being sent. Could
@@ -530,4 +531,5 @@ export const virtualServiceApi = new KubeApi({
   apiBase: "/apis/networking.istio.io/v1beta1/virtualservices",
   isNamespaced: true,
   objectConstructor: VirtualService,
+  request: apiIstio,
 });
