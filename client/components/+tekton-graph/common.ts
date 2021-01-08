@@ -158,6 +158,21 @@ export function subNodes(node: INode): INode[] {
   );
 }
 
+export const initData = {
+  nodes: [
+    {
+      id: "1-1",
+      x: 0,
+      y: 0,
+      taskName: "",
+      anchorPoints: [
+        [0, 0.5],
+        [1, 0.5],
+      ],
+    },
+  ],
+}
+
 export function buildNodeConfig(
   id: string,
   x: number,

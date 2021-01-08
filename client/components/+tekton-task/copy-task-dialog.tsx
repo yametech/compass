@@ -31,7 +31,7 @@ import { systemName } from "../input/input.validators";
 import { configStore } from "../../config.store";
 import { WorkspaceDeclaration as Workspace } from "../../api/endpoints/tekton-task.api";
 import { Collapse } from "../collapse";
-import { PipelineGraph } from "../+tekton-graph/graph-new";
+import { PipelineGraph } from "../+tekton-graph/graph";
 import { INode } from "@antv/g6/lib/interface/item";
 import { taskName } from "../+constant";
 import { taskApi } from "../../api/endpoints";

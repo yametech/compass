@@ -1,4 +1,4 @@
-import "./register-shape-new";
+import "./register-shape";
 import { Graph } from "@antv/g6";
 import { Item, IAlgorithmCallbacks } from "@antv/g6/lib/types";
 import { INode, IEdge } from "@antv/g6/lib/interface/item";
@@ -18,9 +18,20 @@ import {
 } from "./common";
 import { Algorithm } from "@antv/g6";
 import { IGraph } from "@antv/g6/lib/interface/graph";
+import { PipelineParams, PipelineResources } from "../+tekton-common";
 import { maxBy } from "lodash";
 
 const { depthFirstSearch } = Algorithm;
+
+export interface PipelineResult {
+  pipelineResources: PipelineResources[];
+  pipelineParams: PipelineParams[];
+}
+
+export const pipelineResult: PipelineResult = {
+  pipelineResources: [],
+  pipelineParams: [],
+};
 
 declare type SearchAlgorithm0 = (graph: IGraph) => void;
 declare type SearchAlgorithm1 = (

@@ -8,7 +8,7 @@ import { Dialog } from "../dialog";
 import { Wizard, WizardStep } from "../wizard";
 import { observer } from "mobx-react";
 import { Pipeline, PipelineTask, TektonGraph } from "../../api/endpoints";
-import { PipelineGraph } from "../+tekton-graph/graph-new";
+import { PipelineGraph } from "../+tekton-graph/graph";
 import { CopyTaskDialog } from "../+tekton-task/copy-task-dialog";
 import { PipelineSaveDialog } from "./pipeline-save-dialog";
 import { tektonGraphStore } from "../+tekton-graph/tekton-graph.store";
@@ -24,6 +24,8 @@ const wizardContentMaxHeight = parseInt(styles.wizardContentMaxHeight);
 const graphId = 'container';
 
 interface Props extends Partial<Props> {
+  G6Render: boolean,
+  stopRender: () => void
 }
 
 @observer
@@ -73,16 +75,16 @@ export class PipelineVisualDialog extends React.Component<Props> {
   onOpen = async () => {
     clearTimeout(this.initTimeout);
     this.initTimeout = null;
-
     this.initTimeout = setTimeout(() => {
       const anchor = document.getElementsByClassName("Wizard")[0];
+      if (!anchor) return;
       this.width = anchor.clientWidth - wizardSpacing;
       this.height = wizardContentMaxHeight - wizardSpacing;
 
-      if (this.graph == null) {
+      if (this.graph == null && this.props.G6Render) {
         const pipelineGraphConfig = defaultInitConfig(this.width, this.height, graphId);
         this.graph = new PipelineGraph(pipelineGraphConfig);
-
+        this.props.stopRender();
         this.graph.bindClickOnNode((currentNode: any) => {
           this.currentNode = currentNode;
           CopyTaskDialog.open(
