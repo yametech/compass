@@ -54,21 +54,22 @@ export class Pipelines extends React.Component<Props> {
   @observable task: TaskResult = task;
   @observable pipelineResources: [];
   @observable pipeResult: PipelineResult = pipelineResult;
+  @observable G6Render: boolean = false; //是否能实例化G6
 
   renderPipelineName(pipeline: Pipeline) {
     const name = pipeline.getName();
     return (
-      <Link
+      <a
         onClick={(event) => {
           stopPropagation(event);
+          this.G6Render = true;
           PipelineVisualDialog.open(pipeline);
         }}
-        to={null}
       >
         <Tooltip title={name} placement="top-start">
           <span>{name}</span>
         </Tooltip>
-      </Link>
+      </a>
     );
   }
 
@@ -130,7 +131,12 @@ export class Pipelines extends React.Component<Props> {
             },
           }}
         />
-        <PipelineVisualDialog />
+        <PipelineVisualDialog
+          G6Render={this.G6Render}
+          stopRender={() => {
+            this.G6Render = false;
+          }} 
+        />
         <CopyTaskDialog />
         <AddPipelineDialog />
         <PipelineSaveDialog />
