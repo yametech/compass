@@ -8,7 +8,7 @@ import { Dialog } from "../dialog";
 import { Wizard, WizardStep } from "../wizard";
 import { observer } from "mobx-react";
 import { PipelineRun } from "../../api/endpoints";
-import { PipelineGraph } from "../+tekton-graph/graph-new";
+import { PipelineGraph } from "../+tekton-graph/graph";
 import { secondsToHms } from "../../api/endpoints";
 import { pipelineRunStore } from "./pipelinerun.store";
 import { TaskRunLogsDialog } from "../+tekton-taskrun/task-run-logs-dialog";
@@ -19,7 +19,10 @@ const wizardSpacing = parseInt(styles.wizardSpacing, 10) * 2;
 const wizardContentMaxHeight = parseInt(styles.wizardContentMaxHeight);
 const graphId = 'runContainer';
 
-interface Props extends Partial<Props> {}
+interface Props extends Partial<Props> {
+  G6Render: boolean,
+  stopRender: () => void
+}
 
 @observer
 export class PipelineRunVisualDialog extends React.Component<Props> {
@@ -69,6 +72,7 @@ export class PipelineRunVisualDialog extends React.Component<Props> {
   initGraph = async () => {
     this.initTimeout = setTimeout(() => {
       const anchor = document.getElementsByClassName("Wizard")[0];
+      if (!anchor) return;
       this.width = anchor.clientWidth - wizardSpacing;
       this.height = wizardContentMaxHeight - wizardSpacing;
 
@@ -81,12 +85,12 @@ export class PipelineRunVisualDialog extends React.Component<Props> {
         this.nodeData.nodes[index].showtime = true;
       })
 
-      if (this.graph == null) {
+      if (this.graph == null && this.props.G6Render) {
         
         this.pipelineGraphConfig = defaultInitConfig(this.width, this.height, graphId);
         this.graph = new PipelineGraph(this.pipelineGraphConfig);
+        this.props.stopRender();
         this.graph.data(this.nodeData);
-
         this.graph.bindClickOnNode((currentNode: any) => {
           const name = currentNode.getModel()[taskName] || "";
           const names = pipelineRunStore.getTaskRunName(this.pipelineRun);
@@ -106,6 +110,7 @@ export class PipelineRunVisualDialog extends React.Component<Props> {
 
   renderGraphData = async () => {
     this.pendingTimeInterval = setInterval(() => {
+      if (!this.pipelineRun) return;
       const names = this.pipelineRun.getTaskRunName();
       if (names.length > 0) {
         const currentTaskRunMap = pipelineRunStore.getTaskRun(names);
@@ -121,8 +126,10 @@ export class PipelineRunVisualDialog extends React.Component<Props> {
           this.nodeData.nodes[index].showtime = true;
         });
 
-        this.graph.clear();
-        this.graph.changeData(this.nodeData);
+        if (this.graph) {
+          this.graph.clear();
+          this.graph.changeData(this.nodeData);
+        }
       }
     }, 500);
   };
@@ -130,6 +137,7 @@ export class PipelineRunVisualDialog extends React.Component<Props> {
   renderTimeInterval = async () => {
     //Interval 1s update status and time in graph
     this.updateTimeInterval = setInterval(() => {
+      if (!this.pipelineRun || !this.graph) return;
       const names = pipelineRunStore
         .getByName(this.pipelineRun.getName())
         .getTaskRunName();

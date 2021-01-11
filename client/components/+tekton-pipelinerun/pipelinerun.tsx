@@ -48,6 +48,7 @@ export class PipelineRuns extends React.Component<Props> {
   @observable isHiddenPipelineGraph: boolean = true;
   @observable graph: any = null;
   @observable pipelineRun: any;
+  @observable G6Render: boolean = false; //是否能实例化G6
 
   renderTasks(pipelineRun: PipelineRun) {
     let names: string[];
@@ -123,17 +124,17 @@ export class PipelineRuns extends React.Component<Props> {
   renderPipelineName(pipelineRun: PipelineRun) {
     const name = pipelineRun.getName();
     return (
-      <Link
+      <a
         onClick={(event) => {
           stopPropagation(event);
+          this.G6Render = true;
           PipelineRunVisualDialog.open(pipelineRun);
         }}
-        to={null}
       >
         <Tooltip title={name} placement="top-start">
           <span>{name}</span>
         </Tooltip>
-      </Link>
+      </a>
     );
   }
 
@@ -268,7 +269,12 @@ export class PipelineRuns extends React.Component<Props> {
             return <PipelineRunMenu object={item} />;
           }}
         />
-        <PipelineRunVisualDialog />
+        <PipelineRunVisualDialog
+          G6Render={this.G6Render}
+          stopRender={() => {
+            this.G6Render = false;
+          }}
+        />
         <TaskRunLogsDialog />
       </>
     );
