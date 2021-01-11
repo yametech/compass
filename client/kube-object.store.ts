@@ -1,13 +1,14 @@
-import { action, observable, reaction } from "mobx";
-import { autobind } from "./utils";
-import { KubeObject } from "./api/kube-object";
-import { IKubeWatchEvent, kubeWatchApi } from "./api/kube-watch-api";
-import { ItemStore } from "./item.store";
-import { configStore } from "./config.store";
-import { apiManager } from "./api/api-manager";
-import { IKubeApiQueryParams, KubeApi } from "./api/kube-api";
-import { KubeJsonApiData } from "./api/kube-json-api";
+import {action, observable, reaction} from "mobx";
+import {autobind} from "./utils";
+import {KubeObject} from "./api/kube-object";
+import {IKubeWatchEvent, kubeWatchApi} from "./api/kube-watch-api";
+import {ItemStore} from "./item.store";
+import {configStore} from "./config.store";
+import {apiManager} from "./api/api-manager";
+import {IKubeApiQueryParams, KubeApi} from "./api/kube-api";
+import {KubeJsonApiData} from "./api/kube-json-api";
 import store from "store";
+import {Notifications} from "./components/notifications";
 
 @autobind()
 export abstract class KubeObjectStore<
@@ -170,6 +171,19 @@ export abstract class KubeObjectStore<
   }
 
   async remove(item: T) {
+    if (item.selfLink.startsWith("/apis/networking.istio.io/v1beta1")) {
+      const itemApi = apiManager.getApi(item.selfLink)
+      await itemApi.delete({ name: item.getName(), namespace: item.getNs() })
+          .then((res) => {
+             Notifications.ok(item.kind + " " + item.getName() +" delete succeeded")
+          }).catch((err)=>{
+            console.error(err)
+            Notifications.error(item.kind + " " + item.getName() +" delete failed")
+          })
+          .finally(() => { });
+      return
+    }
+
     await item.delete();
     this.items.remove(item);
     this.selectedItemsIds.delete(item.getId());

@@ -3,6 +3,7 @@ import { KubeObject } from "../kube-object";
 import { KubeApi } from "../kube-api";
 import { WorkloadEntrySpec } from "./istio-workload-entry.api";
 import { Port } from "./istio-gateway.api";
+import {apiIstio} from "../index";
 
 export interface ServiceEntrySpec {
   // The hosts associated with the ServiceEntry. Could be a DNS
@@ -169,4 +170,5 @@ export const serviceEntryApi = new KubeApi({
   apiBase: "/apis/networking.istio.io/v1beta1/serviceentries",
   isNamespaced: true,
   objectConstructor: ServiceEntry,
+  request: apiIstio,
 });

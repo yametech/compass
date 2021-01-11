@@ -21,6 +21,7 @@ export interface IKubeApiOptions<T extends KubeObject> {
   isNamespaced: boolean;
   objectConstructor?: IKubeObjectConstructor<T>;
   request?: KubeJsonApi;
+  resource?: string;
 }
 
 export interface IKubeApiQueryParams {
