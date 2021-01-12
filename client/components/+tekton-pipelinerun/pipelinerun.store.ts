@@ -7,7 +7,7 @@ import {
 } from "../../api/endpoints";
 import { apiManager } from "../../api/api-manager";
 import { tektonGraphStore } from "../+tekton-graph/tekton-graph.store";
-import { initData } from "../+tekton-graph/graphs";
+import { initData } from "../+tekton-graph/common";
 import { taskRunStore } from "../+tekton-taskrun";
 
 @autobind()
