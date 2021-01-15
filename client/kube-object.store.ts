@@ -171,7 +171,12 @@ export abstract class KubeObjectStore<
   }
 
   async remove(item: T) {
-    if (item.selfLink.startsWith("/apis/networking.istio.io/v1beta1")) {
+    if (item.selfLink.startsWith("/apis/networking.istio.io/v1beta1")
+      || item.selfLink.startsWith("/apis/tekton.dev/v1alpha1")
+      || item.kind === "TektonStore"
+      || item.kind === "TektonWebHook"
+      || item.kind === "TektonGraph"
+    ) {
       const itemApi = apiManager.getApi(item.selfLink)
       await itemApi.delete({ name: item.getName(), namespace: item.getNs() })
           .then((res) => {

@@ -1,7 +1,8 @@
-import { autobind } from "../../utils";
-import { KubeObject } from "../kube-object";
-import { KubeApi } from "../kube-api";
-import { PipelineResourceSpec } from "./tekton-pipelinerun.api";
+import {autobind} from "../../utils";
+import {KubeObject} from "../kube-object";
+import {KubeApi} from "../kube-api";
+import {PipelineResourceSpec} from "./tekton-pipelinerun.api";
+import {apiTekton} from "../index";
 
 @autobind()
 export class PipelineResource extends KubeObject {
@@ -19,4 +20,5 @@ export const pipelineResourceApi = new KubeApi({
   apiBase: "/apis/tekton.dev/v1alpha1/pipelineresources",
   isNamespaced: true,
   objectConstructor: PipelineResource,
+  request: apiTekton,
 });

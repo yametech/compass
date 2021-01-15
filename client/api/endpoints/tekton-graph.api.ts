@@ -1,6 +1,7 @@
-import { autobind } from "../../utils";
-import { KubeObject } from "../kube-object";
-import { KubeApi } from "../kube-api";
+import {autobind} from "../../utils";
+import {KubeObject} from "../kube-object";
+import {KubeApi} from "../kube-api";
+import {apiTekton} from "../index";
 
 export interface GraphNode {
   id: string; // 1-1 => group index
@@ -127,6 +128,7 @@ export const tektonGraphApi = new KubeApi({
   apiBase: "/apis/fuxi.nip.io/v1/tektongraphs",
   isNamespaced: true,
   objectConstructor: TektonGraph,
+  request: apiTekton,
 });
 
 export function secondsToHms(seconds: number) {
