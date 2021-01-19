@@ -28,10 +28,10 @@ export class PipelineRunDetailsTaskRun extends React.Component<Props> {
     return (
       <div className="PipelineRunDetailsTaskRun">
         {
-          this.taskRuns.map(taskRun => {
+          this.taskRuns.map((taskRun, index) => {
             return (
-              <p>
-                <Link key={taskRun.getId()} to={getDetailsUrl(taskRun.selfLink)}>
+              <p key={`${taskRun.getId()}${index}`}>
+                <Link key={`${taskRun.getId()}${index}`} to={getDetailsUrl(taskRun.selfLink)}>
                   {taskRun.getName()}
                 </Link>
               </p>

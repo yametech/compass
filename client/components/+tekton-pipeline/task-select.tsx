@@ -66,7 +66,7 @@ export class TaskSelect extends React.Component<Props> {
     return (
       label || (
         <>
-          {showIcons && <Icon small material="layers" />}
+          {showIcons && <Icon small material="layers" className="primary" />}
           {value}
         </>
       )

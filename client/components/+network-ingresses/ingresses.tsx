@@ -28,11 +28,11 @@ interface Props extends RouteComponentProps<IngressRouteParams> {
 export function nameRender(ingress: Ingress) {
   const name = ingress.getName();
   return (
-    <Link onClick={(event) => { stopPropagation(event); ConfigIngressDialog.open(ingress) }} to={null}>
+    <a onClick={(event) => { stopPropagation(event); ConfigIngressDialog.open(ingress) }}>
       <Tooltip title={name} placement="top-start">
         <span>{name}</span>
       </Tooltip>
-    </Link>
+    </a>
   );
 }
 

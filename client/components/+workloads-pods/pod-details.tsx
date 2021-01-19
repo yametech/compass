@@ -25,7 +25,7 @@ import { PodCharts, podMetricTabs } from "./pod-charts";
 import { lookupApiLink } from "../../api/kube-api";
 import { apiManager } from "../../api/api-manager";
 import { KubeObjectMeta } from "../kube-object/kube-object-meta";
-import { BookTabs } from '../tabs'
+import { BookTabs, BookTabsNode } from '../tabs'
 
 interface Props extends KubeObjectDetailsProps<Pod> {
 }
@@ -73,7 +73,7 @@ export class PodDetails extends React.Component<Props> {
     return (
       <div className="PodDetails">
         <BookTabs>
-          <div className="Home">
+          <BookTabsNode name="Home" iconName="home">
             <ResourceMetrics
               loader={() => podsStore.loadMetrics(pod)}
               tabs={podMetricTabs} object={pod} params={{ metrics }}
@@ -149,8 +149,8 @@ export class PodDetails extends React.Component<Props> {
                 <PodDetailsSecrets pod={pod}/>
               </DrawerItem>
             )}
-          </div>
-          <div className="Init Containers">
+          </BookTabsNode>
+          <BookTabsNode name="Init Containers" iconName="mail">
             {pod.getInitContainers() && pod.getInitContainers().length > 0 &&
             <DrawerTitle title={<Trans>Init Containers</Trans>}/>
             }
@@ -159,8 +159,8 @@ export class PodDetails extends React.Component<Props> {
                 return <PodDetailsContainer key={container.name} pod={pod} container={container}/>
               })
             }
-          </div>
-          <div className="Containers">
+          </BookTabsNode>
+          <BookTabsNode name="Containers" iconName="view_stream">
             <DrawerTitle title={<Trans>Containers</Trans>}/>
             {
               pod.getContainers().map(container => {
@@ -176,8 +176,8 @@ export class PodDetails extends React.Component<Props> {
                 )
               })
             }
-          </div>
-          <div className="Volumes">
+          </BookTabsNode>
+          <BookTabsNode name="Volumes" iconName="storage">
             {volumes.length > 0 && (
               <>
                 <DrawerTitle title={<Trans>Volumes</Trans>}/>
@@ -204,10 +204,10 @@ export class PodDetails extends React.Component<Props> {
                 })}
               </>
             )}
-          </div>
-          <div className="Events">
+          </BookTabsNode>
+          <BookTabsNode name="Events" iconName="access_time">
             <KubeEventDetails object={pod}/>
-          </div>
+          </BookTabsNode>
         </BookTabs>
       </div>
     )

@@ -154,13 +154,13 @@ export class Sidebar extends React.Component<Props> {
               icon={<Icon svg="storage" />}
               text={<Trans>Storage</Trans>}
             />
-            <SidebarNavItem
+            {/* <SidebarNavItem
               id="events"
               url={eventsURL({ query })}
               routePath={eventRoute.path}
               icon={<Icon material="access_time" />}
               text={<Trans>Events</Trans>}
-            />
+            /> */}
             <SidebarNavItem
               isHidden={!isClusterAdmin}
               id="namespaces"

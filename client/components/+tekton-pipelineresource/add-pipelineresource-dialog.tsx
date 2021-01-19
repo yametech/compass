@@ -59,7 +59,7 @@ export class AddPipelineResourceDialog extends React.Component<Props> {
     return (
       label || (
         <>
-          <Icon small material="layers" />
+          <Icon small material="layers" className="primary" />
           {value}
         </>
       )

@@ -78,6 +78,12 @@ export class Select extends React.Component<SelectProps> {
 
   @autobind()
   onChange(value: SelectOption, meta: ActionMeta<any>) {
+    if (!value) {
+      value = {
+        value: null,
+        label: null
+      }
+    }
     if (this.props.onChange) {
       this.props.onChange(value, meta);
     }
@@ -98,7 +104,7 @@ export class Select extends React.Component<SelectProps> {
       value, options, components = {}, ...props
     } = this.props;
     const themeClass = `theme-${this.theme}`;
-
+    
     const selectProps: Partial<SelectProps> = {
       ...props,
       styles: this.styles,

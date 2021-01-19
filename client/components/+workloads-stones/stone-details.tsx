@@ -17,7 +17,7 @@ import { PodCharts, podMetricTabs } from "../+workloads-pods/pod-charts";
 import { PodDetailsList } from "../+workloads-pods/pod-details-list";
 import { apiManager } from "../../api/api-manager";
 import { KubeObjectMeta } from "../kube-object/kube-object-meta";
-import { BookTabs } from '../tabs'
+import { BookTabs, BookTabsNode } from '../tabs'
 
 interface Props extends KubeObjectDetailsProps<Stone> {
 }
@@ -52,7 +52,7 @@ export class StoneDetails extends React.Component<Props> {
     return (
       <div className="StoneDetails">
         <BookTabs>
-          <div className="Home">
+          <BookTabsNode name="Home" iconName="home">
             {podsStore.isLoaded && (
               <ResourceMetrics
                 loader={() => stoneStore.loadMetrics(stone)}
@@ -89,11 +89,11 @@ export class StoneDetails extends React.Component<Props> {
               <PodDetailsStatuses pods={childPods} />
             </DrawerItem>
             <ResourceMetricsText metrics={metrics} />
-          </div>
-          <div className="Pods">
+          </BookTabsNode>
+          <BookTabsNode name="Pods" iconName="mail">
             <PodDetailsList pods={childPods} owner={stone} />
-          </div>
-          <div className="Event">
+          </BookTabsNode>
+          <BookTabsNode name="Events" iconName="view_stream">
             <KubeEventDetails object={stone} />
 
             {statefulsets.length > 0 &&
@@ -107,7 +107,7 @@ export class StoneDetails extends React.Component<Props> {
                 {childPods.map((pod, index) => <KubeEventDetails key={`child${index}`} object={pod} title={"Event:pod-" + pod.getName()} />)}
               </>
             }
-          </div>
+          </BookTabsNode>
         </BookTabs>
       </div>
     )

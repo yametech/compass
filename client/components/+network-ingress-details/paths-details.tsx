@@ -55,6 +55,7 @@ export class PathsDetails extends React.Component<Props> {
               <Icon
                 style={{margin: "0.8vw, 0.9vh"}}
                 small
+                ripple="secondary"
                 tooltip={_i18n._(t`Remove`)}
                 className="remove-icon"
                 material="clear"
@@ -79,7 +80,7 @@ export class PathsDetails extends React.Component<Props> {
             <>
               <Trans>HTTP.paths</Trans>
               &nbsp;&nbsp;
-              <Icon material={"edit"} className={"editIcon"} onClick={event => {
+              <Icon material="add_circle" className="add_circle" onClick={event => {
                 stopPropagation(event);
                 this.add()
               }} small/>
