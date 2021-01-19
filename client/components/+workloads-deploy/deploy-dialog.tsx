@@ -123,6 +123,7 @@ export class DeployDialog extends React.Component<Props> {
             <div className="namespace">
               <SubTitle title={<Trans>Namespace</Trans>} />
               <NamespaceSelect
+                isClearable
                 value={this.namespace}
                 placeholder={_i18n._(t`Namespace`)}
                 themeName="light"
@@ -132,6 +133,7 @@ export class DeployDialog extends React.Component<Props> {
 
               <SubTitle title={<Trans>Multus NetWorkcat</Trans>} />
               <MultusCniNameSelect
+                isClearable
                 namespace={this.namespace}
                 placeholder={_i18n._(t`Multus NetWorkCat`)}
                 themeName="light"
@@ -146,6 +148,7 @@ export class DeployDialog extends React.Component<Props> {
 
               <SubTitle title={<Trans>StorageClass</Trans>} />
               <NamespaceAllowStorageClassSelect
+                isClearable
                 themeName="light"
                 className="box grow"
                 placeholder={_i18n._(t`StorageClass`)}

@@ -15,7 +15,6 @@ html {
   .Select {
     position: relative;
     min-width: 14vw;
-
     * {
       color: inherit;
     }
@@ -47,9 +46,23 @@ html {
       border: none;
       border-radius: $radius;
       min-height: 0;
-
+      cursor: text;
+      &:after {
+        content: "";
+        position: absolute;
+        top: calc(100% - 1px);
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background: var(--primary);
+        transition: width 250ms;
+      }
       &--is-focused {
-        box-shadow: 0 0 0 2px $primary;
+        // box-shadow: 0 0 0 2px $primary;
+        &:after {
+          width: 100%;
+        }
       }
     }
 
@@ -57,8 +70,14 @@ html {
       margin-bottom: 1px;
     }
 
+    &__placeholder {
+      color: #8f8d8d;
+      opacity: .75;
+    }
+
     &__indicator {
-      padding: $padding /2;
+      // padding: $padding /2;
+      padding: 0;
       opacity: .55;
 
       &:hover {
@@ -69,6 +88,11 @@ html {
       &-separator {
         display: none;
       }
+
+      svg {
+        cursor: pointer;
+      }
+
     }
 
     &__dropdown {
@@ -133,12 +157,34 @@ html {
 
       &__remove {
         background: inherit;
-
+        cursor: pointer;
         &:hover {
           background: $colorError;
           color: $textColorAccent;
         }
       }
+    }
+  }
+  .show {
+    .Select__dropdown-indicator {
+      display: none;
+    }
+  }
+
+  .select-clear {
+    position: absolute;
+    right: 6px;
+    top: 50%;
+    margin-top: -7px;
+    height: 14px;
+    width: 14px;
+    font-size: 14px;
+    cursor: pointer;
+    >span {
+      line-height: 14px;
+    }
+    &.hide {
+      display: none;
     }
   }
 
@@ -157,11 +203,14 @@ html {
       .Select {
         &__menu-list {
           @include custom-scrollbar($theme: dark);
+            padding-right: 0;
+            padding-left: 0;
         }
 
         &__multi-value {
           background: none;
-          box-shadow: 0 0 0 1px $textColorSecondary;
+          // box-shadow: 0 0 0 1px $textColorSecondary;
+          box-shadow: 0 0 0 1px #9f9d9d
         }
 
         &__option {

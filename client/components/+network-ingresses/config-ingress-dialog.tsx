@@ -10,13 +10,21 @@ import {Notifications} from "../notifications";
 import {Collapse} from "../collapse";
 import {SubTitle} from "../layout/sub-title";
 import {Input} from "../input";
-import {Backend, backend, BackendDetails, MultiRuleDetails, Rule, TlsDetails, Tls} from "../+network-ingress-details";
+import {Backend, backend, BackendDetails, MultiRuleDetails, Rule, TlsDetails, Tls, AnnotationsDetails} from "../+network-ingress-details";
 import {Ingress, ingressApi} from "../../api/endpoints";
 import {NamespaceSelect} from "../+namespaces/namespace-select";
 import {ingressStore} from "./ingress.store";
 import { IKubeObjectMetadata } from "client/api/kube-object";
+import Grid from '@material-ui/core/Grid';
+import {Button} from '../button';
+import {Annotation} from '../+network-ingress-details/common';
+
 
 interface Props extends Partial<DialogProps> {
+}
+
+interface annotationsProps  {
+  [annotation: string]: string
 }
 
 @observer
@@ -28,7 +36,9 @@ export class ConfigIngressDialog extends React.Component<Props> {
   @observable namespace = "";
   @observable tls: Tls[] = [];
   @observable rules: Rule[] = [];
-  @observable backend: Backend = backend
+  @observable backend: Backend = backend;
+  @observable annotations: annotationsProps;
+  @observable annotationArr: Annotation[];
 
   static open(object:Ingress) {
     ConfigIngressDialog.isOpen = true;
@@ -56,7 +66,7 @@ export class ConfigIngressDialog extends React.Component<Props> {
     this.rules=[]
     this.backend.serviceName=""
     this.backend.servicePort=0
-
+    this.annotationArr = []
   }
 
   onOpen = async () => {
@@ -64,6 +74,14 @@ export class ConfigIngressDialog extends React.Component<Props> {
     this.namespace = this.ingress.getNs()
     this.rules = this.ingress.spec.rules
     this.backend = this.ingress.spec.backend||{serviceName:'',servicePort:0}
+    this.annotationArr = this.ingress.getAnnotations().map(annotation => {
+      const annotationKeyValue = annotation.split("=");
+      return {
+        name: annotationKeyValue[0],
+        type: annotationKeyValue[1]
+      }
+    })
+    // 'nginx.ingress.kubernetes.io/server-snippet': 'test'
   }
 
   updateIngress = () => {
@@ -79,14 +97,19 @@ export class ConfigIngressDialog extends React.Component<Props> {
     if (backend && backend.serviceName != "" && backend.servicePort != 0) {
       data.spec.backend = JSON.parse(JSON.stringify(backend))
     }
-      ingressStore.update(this.ingress, {...data}).then(res=>{
-        Notifications.ok(
-          <>Ingress {name} save succeeded</>
-        );
-        this.close();
-      }).catch(err=>{
-        Notifications.error(err);
-      })
+    let annotations: annotationsProps = {};
+    this.annotationArr.map(item => {
+      annotations[item.name] = item.type;
+    })
+    this.ingress.metadata.annotations = annotations;
+    ingressStore.update(this.ingress, {...data}).then(res=>{
+      Notifications.ok(
+        <>Ingress {name} save succeeded</>
+      );
+      this.close();
+    }).catch(err=>{
+      Notifications.error(err);
+    })
 
   }
 
@@ -119,6 +142,9 @@ export class ConfigIngressDialog extends React.Component<Props> {
               title={"namespace"}
               value={this.namespace}
               onChange={({value}) => this.namespace = value}
+            />
+            <AnnotationsDetails
+              value={this.annotationArr}
             />
             <Collapse panelName={<Trans>Rules</Trans>} key={"rules"}>
               <MultiRuleDetails

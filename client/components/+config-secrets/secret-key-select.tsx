@@ -66,7 +66,7 @@ export class SecretKeySelect extends React.Component<Props> {
     const { value, label } = option;
     return label || (
       <>
-        {showIcons && <Icon small material="layers" />}
+        {showIcons && <Icon small material="layers" className="primary" />}
         {value}
       </>
     );

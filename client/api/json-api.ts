@@ -111,27 +111,28 @@ export class JsonApi<D = JsonApiData, P extends JsonApiParams = JsonApiParams> {
     });
   }
 
-  protected parseResponse<D>(res: Response, log: JsonApiLog): Promise<D> {
+  protected async parseResponse<D>(res: Response, log: JsonApiLog): Promise<D> {
     const { status } = res;
-    return res.text().then(text => {
-      let data;
-      try {
-        data = text ? JSON.parse(text) : ""; // DELETE-requests might not have response-body
-      } catch (e) {
-        data = text;
+    let text = await res.text();
+    let data;
+    try {
+      data = text ? JSON.parse(text) : ""; // DELETE-requests might not have response-body
+    } catch (e) {
+      data = text;
+    }
+    if (status >= 200 && status < 300) {
+      if (data && data.code === 200 && data.errors) { // handle server error
+        return Promise.reject(data.errors);
       }
-      if (status >= 200 && status < 300) {
-        this.onData.emit(data, res);
-        this.writeLog({ ...log, data });
-        return data;
-      }
-      else {
-        const error = new JsonApiErrorParsed(data, this.parseError(data, res));
-        this.onError.emit(error, res);
-        this.writeLog({ ...log, error })
-        throw error;
-      }
-    })
+      this.onData.emit(data, res);
+      this.writeLog({ ...log, data });
+      return Promise.resolve(data);
+    } else {
+      const error = new JsonApiErrorParsed(data, this.parseError(data, res));
+      this.onError.emit(error, res);
+      this.writeLog({ ...log, error })
+      throw error;
+    }
   }
 
   protected parseError(error: JsonApiError | string, res: Response): string[] {

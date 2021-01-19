@@ -18,7 +18,7 @@ import { defaultInitConfig } from "../+tekton-graph/common";
 import { graphAnnotationKey } from '../+constant/tekton-constants'
 import { OwnerReferences } from '../../api/kube-object'
 
-const wizardSpacing = parseInt(styles.wizardSpacing, 10) * 2;
+const wizardSpacing = parseInt(styles.wizardSpacing, 10) * 6;
 const wizardContentMaxHeight = parseInt(styles.wizardContentMaxHeight);
 
 const graphId = 'container';

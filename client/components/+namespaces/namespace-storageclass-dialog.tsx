@@ -89,6 +89,7 @@ export class NamespaceStorageClasslimit extends React.Component<Props> {
                             <SubTitle title={<Trans>Annotate StorageClass</Trans>} />
                             <StorageClassSelect
                                 // isMulti
+                                isClearable
                                 value={this.storageClasses}
                                 placeholder={_i18n._(t`StorageClass`)}
                                 themeName="light"

@@ -18,45 +18,27 @@
   .tab-chunk {
     position: absolute;
     top: 0;
-    margin-left: -26px;
-    transform-origin: top left;
-    transform: rotate(90deg);
-
+    margin-left: -59px;
+    box-shadow: -2px -1px 3px $bookBoxShadow;
     .chunk {
-      display: inline-block;
       background-color: #ffffff;
-      border-top: 1px solid #ccc;
-      margin-left: 3px;
-      padding: 0 10px;
-      height: 25px;
-      line-height: 25px;
-      letter-spacing: 1.2px;
+      height: 34px;
+      width: 34px;
+      line-height: 34px;
       font-weight: 500;
       cursor: pointer;
-      text-align: left;
+      text-align: center;
       text-decoration: none;
-      box-shadow: -2px -1px 3px $bookBoxShadow;
-      transform: rotate(180deg);
+      border-bottom: 1px solid #bcbcbc;
       &.active {
-        background-color: #3d90ce;
-        border-top: 1px solid #4d9cd7;
-        color: #fff;
+        // background-color: #3d90ce;
+        border-bottom: 2px solid #2d98ed;
+        color: #2d98ed;
       }
     }
-    .chunk:first-child {
-      margin-left: 0;
-    }
-  }
-  .slide-chunk {
-    &.hide {
-      &:not(.firstClick) {
-        animation: slide-up 0.2s ease-out;
-      }
-      transform: rotate(90deg) scale(0, 1);
-    }
-    &:not(.hide) {
-      animation: slide-down 0.2s ease-in;
-      transform: rotate(90deg) scale(1, 1);
+
+    .chunk:first-of-type {
+      margin-top: 0;
     }
   }
 }

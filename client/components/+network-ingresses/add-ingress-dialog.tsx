@@ -10,12 +10,18 @@ import {Notifications} from "../notifications";
 import {Collapse} from "../collapse";
 import {SubTitle} from "../layout/sub-title";
 import {Input} from "../input";
-import {Backend, backend, BackendDetails, MultiRuleDetails, Rule, TlsDetails, Tls} from "../+network-ingress-details";
+import {Backend, backend, BackendDetails, MultiRuleDetails, Rule, TlsDetails, Tls, AnnotationsDetails} from "../+network-ingress-details";
 import {Ingress} from "../../api/endpoints";
 import {NamespaceSelect} from "../+namespaces/namespace-select";
 import {ingressStore} from "./ingress.store";
+import {Annotation} from '../+network-ingress-details/common';
+import { IKubeObjectMetadata } from "../../api/kube-object";
 
 interface Props extends Partial<DialogProps> {
+}
+
+interface annotationsProps  {
+  [annotation: string]: string
 }
 
 @observer
@@ -27,6 +33,12 @@ export class AddIngressDialog extends React.Component<Props> {
   @observable tls: Tls[] = [];
   @observable rules: Rule[] = [];
   @observable backend: Backend = backend
+  @observable annotations: annotationsProps;
+  @observable annotationArr: Annotation[];
+
+  componentDidMount() {
+    this.annotationArr = [];
+  }
 
   static open() {
     AddIngressDialog.isOpen = true;
@@ -38,11 +50,29 @@ export class AddIngressDialog extends React.Component<Props> {
 
   close = () => {
     AddIngressDialog.close();
+    this.reset();
+  }
+
+  reset = () => {
+    this.name = "";
+    this.namespace = "";
+    this.tls = [];
+    this.rules = [];
+    this.backend = backend;
+    this.annotationArr = [];
   }
 
   createIngress = () => {
     const {name, namespace, tls, rules, backend} = this;
+    let annotations: annotationsProps = {};
+    this.annotationArr.map(item => {
+      annotations[item.name] = item.type;
+    });
+
     let data: Partial<Ingress> = {
+      metadata: {
+        annotations: annotations
+      } as IKubeObjectMetadata,
       spec: {
         tls: tls.map(item => {
           return {hosts: item.hosts, secretName: item.secretName};
@@ -90,6 +120,9 @@ export class AddIngressDialog extends React.Component<Props> {
               title={"namespace"}
               value={this.namespace}
               onChange={({value}) => this.namespace = value}
+            />
+            <AnnotationsDetails
+              value={this.annotationArr}
             />
             <Collapse panelName={<Trans>Rules</Trans>} key={"rules"}>
               <MultiRuleDetails

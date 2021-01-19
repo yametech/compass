@@ -22,6 +22,11 @@ export interface Tls {
   secretName: string;
 }
 
+export interface Annotation {
+  name: string;
+  type: string;
+}
+
 export const tls: Tls = {
   hosts: [""],
   secretName: "",
@@ -46,4 +51,9 @@ export const http: Http = {
 export const rule: Rule = {
   host: "",
   http: http
+}
+
+export const annotation: Annotation = {
+  name: "",
+  type: ""
 }

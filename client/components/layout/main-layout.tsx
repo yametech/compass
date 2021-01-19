@@ -3,7 +3,7 @@ import "./main-layout.scss";
 import * as React from "react";
 import { observable, reaction } from "mobx";
 import { disposeOnUnmount, observer } from "mobx-react";
-import { matchPath, RouteProps } from "react-router-dom";
+import { matchPath, RouteProps, NavLink } from "react-router-dom";
 import { Trans } from "@lingui/macro";
 import { createStorage, cssNames, isElectron } from "../../utils";
 import { Tab, Tabs } from "../tabs";
@@ -17,10 +17,14 @@ import { MenuActions } from "../menu/menu-actions";
 import { navigate, navigation } from "../../navigation";
 import { i18nStore } from "../../i18n";
 import { themeStore } from "../../theme.store";
+import { namespaceStore } from "../+namespaces/namespace.store";
+import { eventRoute, eventsURL } from "../+events";
 import {withRouter,RouteComponentProps } from 'react-router';
 import {kubeWatchApi } from '../../api/kube-watch-api'
 import store from 'store'
 import {Notifications} from "../notifications";
+import { Tooltip, Badge } from '@material-ui/core';
+
 
 export interface TabRoute extends RouteProps {
   title: React.ReactNode;
@@ -101,24 +105,39 @@ export class Layout extends React.Component<Props,State> {
   renderUserMenu(){
     const userConfig = store.get('u_config')
     let userName = userConfig?userConfig.userName:''
+    const query = namespaceStore.getContextParams();
+    let eventUrl = eventsURL({ query });
+    // let routePath = eventRoute.path;
+    // const { pathname } = navigation.location;
+    // let isActive = !!matchPath(pathname, {
+    //   path: routePath || eventUrl
+    // });
     return (
       <div className="header-right">
+          <NavLink to={eventUrl}>
+            <Tooltip arrow title="Events">
+              <Badge color="secondary" variant="dot">
+                <Icon material="access_time" style={{ fontSize: 23 }} />
+              </Badge>
+            </Tooltip>
+          </NavLink>
+          {/* <Divider orientation="vertical" /> |*/}
+          <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>
           <span>{userName}</span>
-          <MenuActions
-            >
-              <MenuItem onClick={this.changeTheme}>
-                  <Icon material="brightness_medium" />
-                  <span className="title"><Trans>Theme</Trans></span>
-              </MenuItem>
-              <MenuItem onClick={this.changeLanguage}>
-                  <Icon material="g_translate" />
-                  <span className="title"><Trans>Language</Trans></span>
-              </MenuItem>
-              <MenuItem onClick={this.loginout}>
-                  <Icon material="exit_to_app" />
-                  <span className="title"><Trans>Logout</Trans></span>
-              </MenuItem>
-            </MenuActions>
+          <MenuActions>
+            <MenuItem onClick={this.changeTheme}>
+                <Icon material="brightness_medium" />
+                <span className="title"><Trans>Theme</Trans></span>
+            </MenuItem>
+            <MenuItem onClick={this.changeLanguage}>
+                <Icon material="g_translate" />
+                <span className="title"><Trans>Language</Trans></span>
+            </MenuItem>
+            <MenuItem onClick={this.loginout}>
+                <Icon material="exit_to_app" />
+                <span className="title"><Trans>Logout</Trans></span>
+            </MenuItem>
+          </MenuActions>
       </div>
     )
   }
