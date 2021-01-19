@@ -114,7 +114,7 @@ export class PageFiltersTag extends React.Component<Props> {
               if (type=== 'inner' && index < 3) {
                 return null
               }
-              return <>
+              return (
                 <span
                   key={`span${index}`}
                   className={cssNames({inner: type === 'inner', active: item.active})}
@@ -122,7 +122,7 @@ export class PageFiltersTag extends React.Component<Props> {
                 >
                   {item.name}
                 </span>
-              </>
+              )
             })}
           </div>
         </div>

@@ -115,7 +115,7 @@ export class ConfigSubNetDialog extends React.Component<Props> {
         const { value, label } = option;
         return label || (
             <>
-                <Icon small material="layers" />
+                <Icon small material="layers" className="primary" />
                 {value}
             </>
         );
