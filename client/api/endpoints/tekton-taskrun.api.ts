@@ -9,6 +9,7 @@ import {
   PipelineResourceBinding,
   PodTemplate,
 } from "./tekton-pipelinerun.api";
+import {apiTekton} from "../index";
 
 export interface Conditions {
   type: string;
@@ -203,4 +204,5 @@ export const taskRunApi = new KubeApi({
   apiBase: "/apis/tekton.dev/v1alpha1/taskruns",
   isNamespaced: true,
   objectConstructor: TaskRun,
+  request: apiTekton,
 });

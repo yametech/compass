@@ -1,7 +1,8 @@
-import { autobind } from "../../utils";
-import { KubeObject } from "../kube-object";
-import { KubeApi } from "../kube-api";
-import { TaskSpec, Params } from "./tekton-task.api";
+import {autobind} from "../../utils";
+import {KubeObject} from "../kube-object";
+import {KubeApi} from "../kube-api";
+import {TaskSpec} from "./tekton-task.api";
+import {apiTekton} from "../index";
 
 export interface TaskRef {
   name: string;
@@ -163,4 +164,5 @@ export const pipelineApi = new KubeApi({
   apiBase: "/apis/tekton.dev/v1alpha1/pipelines",
   isNamespaced: true,
   objectConstructor: Pipeline,
+  request: apiTekton,
 });

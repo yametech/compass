@@ -3,7 +3,7 @@ import * as MiniCssExtractPlugin from "mini-css-extract-plugin";
 import * as path from "path";
 import * as TerserWebpackPlugin from "terser-webpack-plugin";
 import * as webpack from "webpack";
-import { BUILD_DIR, clientVars, CLIENT_DIR, config } from "./server/config";
+import {BUILD_DIR, CLIENT_DIR, clientVars, config} from "./server/config";
 
 const os = require('os');
 
@@ -51,6 +51,11 @@ export default () => {
           secure: false,
           changeOrigin: true,
           // pathRewrite: { '^/base': '' }
+        },
+        '/tekton': {
+          target: 'http://127.0.0.1:8080/',
+          secure: false,
+          changeOrigin: true,
         },
         '/api-kube': {
           target: 'http://127.0.0.1:8080/',

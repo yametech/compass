@@ -1,36 +1,27 @@
 import "./pipeline-run-dialog.scss";
-import { observer } from "mobx-react";
+import {observer} from "mobx-react";
 import React from "react";
-import { computed, observable } from "mobx";
-import { SubTitle } from "../layout/sub-title";
-import { Input } from "../input";
-import { _i18n } from "../../i18n";
-import { ActionMeta } from "react-select/src/types";
-import { Trans } from "@lingui/macro";
-import { Dialog } from "../dialog";
-import { Wizard, WizardStep } from "../wizard";
+import {observable} from "mobx";
+import {SubTitle} from "../layout/sub-title";
+import {Input} from "../input";
+import {_i18n} from "../../i18n";
+import {ActionMeta} from "react-select/src/types";
+import {Trans} from "@lingui/macro";
+import {Dialog} from "../dialog";
+import {Wizard, WizardStep} from "../wizard";
 import {
-  pipelineRunApi,
-  PipelineResourceBinding,
-  PipelineRef,
-  WorkspaceBinding,
-  Pipeline,
   Param,
-  PipelineRun,
+  Pipeline,
+  PipelineRef,
+  PipelineResourceBinding,
+  pipelineRunApi,
+  WorkspaceBinding,
 } from "../../api/endpoints";
-import { Notifications } from "../notifications";
-import { PipelineRunResourceDetails } from "./pipeline-run-resource-details";
-import { systemName } from "../input/input.validators";
-import { configStore } from "../../config.store";
-import { pipelineStore } from "../+tekton-pipeline/pipeline.store";
-import {
-  PipelineRunWorkspaces,
-  ParamsDetails,
-} from "../+tekton-common";
-import { tektonGraphStore } from "../+tekton-graph/tekton-graph.store";
-import { IKubeObjectMetadata } from "../../api/kube-object";
-import { OwnerReferences } from '../../api/kube-object'
-import { runGraphAnnotationKey } from '../+constant/tekton-constants'
+import {Notifications} from "../notifications";
+import {PipelineRunResourceDetails} from "./pipeline-run-resource-details";
+import {systemName} from "../input/input.validators";
+import {ParamsDetails, PipelineRunWorkspaces,} from "../+tekton-common";
+import {IKubeObjectMetadata} from "../../api/kube-object";
 
 interface Props<T = any> extends Partial<Props> {
   value?: T;
@@ -121,7 +112,7 @@ export class PipelineRunDialog extends React.Component<Props> {
 
   submit = async () => {
     try {
-      // create a pipeline run
+      /*// create a pipeline run
       const runNodeData = pipelineStore.getNodeData(this.pipeline);
       let width = 1000;
       let height = 1000;
@@ -167,7 +158,8 @@ export class PipelineRunDialog extends React.Component<Props> {
         { ...pipelineRun }
       );
 
-      const currentPipelineRun = resultObject["Object"] as PipelineRun
+      // const currentPipelineRun = resultObject["Object"] as PipelineRun
+      const currentPipelineRun = resultObject as PipelineRun
       const ownerReferences: OwnerReferences = {
         apiVersion: currentPipelineRun.metadata.resourceVersion,
         kind: currentPipelineRun.kind,
@@ -177,7 +169,21 @@ export class PipelineRunDialog extends React.Component<Props> {
         blockOwnerDeletion: false,
       }
       graph.addOwnerReferences([ownerReferences]);
-      await tektonGraphStore.update(graph, { ...graph })
+      await tektonGraphStore.update(graph, { ...graph })*/
+
+      await pipelineRunApi.post({path:  this.pipeline.selfLink + "/run"},{
+        metadata: {
+          name: this.value.name,
+          namespace: this.value.namespace
+        } as IKubeObjectMetadata,
+        spec: {
+          resources: this.value.resources,
+          pipelineRef: this.value.pipelineRef,
+          serviceAccountName: this.value.serviceAccountName,
+          workspaces: this.value.workspces,
+          params: this.value.params,
+        },
+      })
 
       Notifications.ok(<>PipelineRun {this.value.name} Run Success</>);
       this.close();

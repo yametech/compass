@@ -1,11 +1,11 @@
-import { autobind } from "../../utils";
-import { KubeObject } from "../kube-object";
-import { KubeApi } from "../kube-api";
-import { PipelineSpec, Param } from "./tekton-pipeline.api";
-import { Params } from "./tekton-task.api";
-import { PersistentVolumeClaimVolumeSource } from "./persistent-volume-claims.api";
+import {advanceFormatDuration, autobind} from "../../utils";
+import {KubeObject} from "../kube-object";
+import {KubeApi} from "../kube-api";
+import {Param, PipelineSpec} from "./tekton-pipeline.api";
+import {Params} from "./tekton-task.api";
+import {PersistentVolumeClaimVolumeSource} from "./persistent-volume-claims.api";
 import moment from "moment";
-import { advanceFormatDuration } from "../../utils";
+import {apiTekton} from "../index";
 
 export interface PipelineRef {
   name: string;
@@ -219,4 +219,5 @@ export const pipelineRunApi = new KubeApi({
   apiBase: "/apis/tekton.dev/v1alpha1/pipelineruns",
   isNamespaced: true,
   objectConstructor: PipelineRun,
+  request: apiTekton,
 });
