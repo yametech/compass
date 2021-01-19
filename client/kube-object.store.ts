@@ -176,6 +176,9 @@ export abstract class KubeObjectStore<
       || item.kind === "TektonStore"
       || item.kind === "TektonWebHook"
       || item.kind === "TektonGraph"
+      || item.kind === "Service"
+      || item.kind === "Endpoint"
+      || item.kind === "Ingress"
     ) {
       const itemApi = apiManager.getApi(item.selfLink)
       await itemApi.delete({ name: item.getName(), namespace: item.getNs() })

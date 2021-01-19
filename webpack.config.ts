@@ -57,6 +57,11 @@ export default () => {
           secure: false,
           changeOrigin: true,
         },
+        '/service/': {
+          target: 'http://127.0.0.1:8080/',
+          secure: false,
+          changeOrigin: true,
+        },
         '/api-kube': {
           target: 'http://127.0.0.1:8080/',
           secure: false,  // 如果是https接口，需要配置这个参数
