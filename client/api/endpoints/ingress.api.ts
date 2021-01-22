@@ -1,7 +1,8 @@
-import { KubeObject } from "../kube-object";
-import { autobind } from "../../utils";
-import { IMetrics, metricsApi } from "./metrics.api";
-import { KubeApi } from "../kube-api";
+import {KubeObject} from "../kube-object";
+import {autobind} from "../../utils";
+import {IMetrics, metricsApi} from "./metrics.api";
+import {KubeApi} from "../kube-api";
+import {apiService} from "../index";
 
 export class IngressApi extends KubeApi<Ingress> {
   getMetrics(ingress: string, namespace: string): Promise<IIngressMetrics> {
@@ -116,4 +117,5 @@ export const ingressApi = new IngressApi({
   apiBase: "/apis/extensions/v1beta1/ingresses",
   isNamespaced: true,
   objectConstructor: Ingress,
+  request: apiService,
 });
