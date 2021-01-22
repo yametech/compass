@@ -102,6 +102,8 @@
     "lineProgressBackground": "#e8e8e8",
     "radioActiveBackground": "#f1f1f1",
     "menuActiveBackground": "#e8e8e8",
-    "bookBoxShadow": "#bebbbb"
+    "bookBoxShadow": "#bebbbb",
+    "bookChunkBackground": "#ffffff",
+    "bookChunkColor": "#555555"
   }
 }
