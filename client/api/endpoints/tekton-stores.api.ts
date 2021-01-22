@@ -1,6 +1,7 @@
-import { autobind } from "../../utils";
-import { KubeObject } from "../kube-object";
-import { KubeApi } from "../kube-api";
+import {autobind} from "../../utils";
+import {KubeObject} from "../kube-object";
+import {KubeApi} from "../kube-api";
+import {apiTekton} from "../index";
 
 export interface TektonStoreSpec {
   tektonResourceType: string;
@@ -50,4 +51,5 @@ export const tektonStoreApi = new KubeApi({
   apiBase: "/apis/fuxi.nip.io/v1/tektonstores",
   isNamespaced: true,
   objectConstructor: TektonStore,
+  request: apiTekton,
 });

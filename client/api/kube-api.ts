@@ -1,17 +1,12 @@
 // Base class for building all kubernetes apis
 
 import merge from "lodash/merge";
-import { stringify } from "querystring";
-import { IKubeObjectConstructor, KubeObject } from "./kube-object";
-import {
-  IKubeObjectRef,
-  KubeJsonApi,
-  KubeJsonApiData,
-  KubeJsonApiDataList,
-} from "./kube-json-api";
-import { apiKube } from "./index";
-import { kubeWatchApi } from "./kube-watch-api";
-import { apiManager } from "./api-manager";
+import {stringify} from "querystring";
+import {IKubeObjectConstructor, KubeObject} from "./kube-object";
+import {IKubeObjectRef, KubeJsonApi, KubeJsonApiData, KubeJsonApiDataList,} from "./kube-json-api";
+import {apiKube} from "./index";
+import {kubeWatchApi} from "./kube-watch-api";
+import {apiManager} from "./api-manager";
 
 const attachUri = "/attach/";
 
@@ -257,6 +252,19 @@ export class KubeApi<T extends KubeObject = any> {
   ): Promise<T> {
     const apiUrl = this.getUrl({ namespace, name });
     return this.request.put(apiUrl, { data }).then(this.parseResponse);
+  }
+
+  async post(
+      {path = ""} = {},
+      data?: Partial<T>
+  ): Promise<T> {
+    return this.request.post(path, data? { data: merge(
+          {
+            kind: this.kind,
+            apiVersion: this.apiVersionWithGroup,
+          },
+          data
+      ), } : null).then(this.parseResponse);
   }
 
   async updateAnnotation(

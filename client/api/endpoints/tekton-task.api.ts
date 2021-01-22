@@ -1,7 +1,8 @@
-import { autobind } from "../../utils";
-import { KubeObject } from "../kube-object";
-import { KubeApi } from "../kube-api";
-import { ParamSpec } from "./tekton-pipeline.api";
+import {autobind} from "../../utils";
+import {KubeObject} from "../kube-object";
+import {KubeApi} from "../kube-api";
+import {ParamSpec} from "./tekton-pipeline.api";
+import {apiTekton} from "../index";
 
 // ResourceDeclaration defines an input or output PipelineResource declared as a requirement
 // by another type such as a Task or Condition. The Name field will be used to refer to these
@@ -244,4 +245,5 @@ export const taskApi = new KubeApi({
   apiBase: "/apis/tekton.dev/v1alpha1/tasks",
   isNamespaced: true,
   objectConstructor: Task,
+  request: apiTekton,
 });

@@ -1,7 +1,7 @@
-import { JsonApi, JsonApiErrorParsed } from "./json-api";
-import { KubeJsonApi } from "./kube-json-api";
-import { Notifications } from "../components/notifications";
-import { clientVars } from "../../server/config";
+import {JsonApi, JsonApiErrorParsed} from "./json-api";
+import {KubeJsonApi} from "./kube-json-api";
+import {Notifications} from "../components/notifications";
+import {clientVars} from "../../server/config";
 import debounce from 'lodash/debounce';
 //-- JSON HTTP APIS
 
@@ -23,6 +23,16 @@ export const apiTenant = new KubeJsonApi({
 export const apiIstio = new KubeJsonApi({
     debug: !clientVars.IS_PRODUCTION,
     apiPrefix: clientVars.TENANT_PREFIX.ISTIO
+});
+
+export const apiTekton = new KubeJsonApi({
+    debug: !clientVars.IS_PRODUCTION,
+    apiPrefix: clientVars.API_PREFIX.TEKTON,
+});
+
+export const apiService = new KubeJsonApi({
+    debug: !clientVars.IS_PRODUCTION,
+    apiPrefix: clientVars.API_PREFIX.SERVICE
 });
 
 export const apiKube = new KubeJsonApi({
