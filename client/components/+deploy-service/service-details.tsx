@@ -139,6 +139,7 @@ export class DeployServiceDetails extends React.Component<Props> {
       <>
         <SubTitle title={<Trans>Service Type</Trans>}/>
         <Select
+          isClearable
           options={this.typeOptions}
           value={this.value.type}
           onChange={v => {
