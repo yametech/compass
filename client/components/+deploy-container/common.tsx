@@ -48,6 +48,7 @@ export interface LifeCycle {
 export interface VolumeMount {
   name: string;
   mountPath: string;
+  mountType: string;
 }
 
 export interface VolumeMounts {
@@ -139,6 +140,7 @@ export const lifeCycle: LifeCycle = {
 export const volumeMount: VolumeMount = {
   name: "",
   mountPath: "",
+  mountType: ""
 };
 
 export const volumeMounts: VolumeMounts = {

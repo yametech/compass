@@ -21,7 +21,8 @@
     margin-left: -59px;
     box-shadow: -2px -1px 3px $bookBoxShadow;
     .chunk {
-      background-color: #ffffff;
+      background-color: $bookChunkBackground;
+      color: $bookChunkColor;
       height: 34px;
       width: 34px;
       line-height: 34px;
