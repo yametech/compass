@@ -78,7 +78,7 @@ export class EnvironmentDetails extends React.Component<Props> {
 
   rConfigMaps(index: number) {
     return (
-      <>
+      <div>
         <SubTitle title={<Trans>Environment</Trans>}/>
         <Input
           required={true}
@@ -113,7 +113,7 @@ export class EnvironmentDetails extends React.Component<Props> {
           name={this.value[index].envConfig.configName}
           onChange={value => this.value[index].envConfig.configKey = value.value}
         />
-      </>
+      </div>
     )
   }
 
