@@ -63,7 +63,7 @@ export class DeployServiceDetails extends React.Component<Props> {
 
   rPorts(index: number) {
     return (
-      <>
+      <div key={`ports${index}`}>
         <br/>
         <Paper elevation={3} style={{padding: 25}}>
           <Grid container spacing={2} alignItems="center" direction="row">
@@ -129,7 +129,7 @@ export class DeployServiceDetails extends React.Component<Props> {
             </Grid>
           </Grid>
         </Paper>
-      </>
+      </div>
     )
   }
 
