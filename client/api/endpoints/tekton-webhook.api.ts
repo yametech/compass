@@ -2,6 +2,7 @@ import {autobind} from "../../utils";
 import {KubeObject} from "../kube-object";
 import {KubeApi} from "../kube-api";
 import {Params} from "../../components/+tekton-common";
+import {apiTekton} from "../index";
 
 export interface Job {
   branch: string;
@@ -32,4 +33,5 @@ export const tektonWebHookApi = new KubeApi({
   apiBase: "/apis/fuxi.nip.io/v1/tektonwebhooks",
   isNamespaced: true,
   objectConstructor: TektonWebHook,
+  request: apiTekton,
 });

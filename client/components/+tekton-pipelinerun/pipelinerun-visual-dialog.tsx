@@ -15,7 +15,7 @@ import { TaskRunLogsDialog } from "../+tekton-taskrun/task-run-logs-dialog";
 import { defaultInitData, defaultInitConfig } from "../+tekton-graph/common";
 import { taskName, NodeStatus } from "../+constant/tekton-constants";
 
-const wizardSpacing = parseInt(styles.wizardSpacing, 10) * 2;
+const wizardSpacing = parseInt(styles.wizardSpacing, 10) * 6;
 const wizardContentMaxHeight = parseInt(styles.wizardContentMaxHeight);
 const graphId = 'runContainer';
 
@@ -185,7 +185,7 @@ export class PipelineRunVisualDialog extends React.Component<Props> {
           }
         });
       }
-    }, 1000);
+    }, 500);
   }
 
   onOpen = async () => {

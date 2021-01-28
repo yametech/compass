@@ -40,7 +40,7 @@ export class PageFiltersSelect extends React.Component<Props> {
           return {
             type: FilterType.NAMESPACE,
             value: name,
-            icon: <Icon small material="layers"/>,
+            icon: <Icon small material="layers" className="primary" />,
             selected: selectedValues.includes(name),
           }
         })

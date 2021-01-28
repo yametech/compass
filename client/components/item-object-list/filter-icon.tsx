@@ -10,12 +10,12 @@ export function FilterIcon(props: Props) {
   const { type, ...iconProps } = props;
   switch (type) {
   case FilterType.NAMESPACE:
-    return <Icon small material="layers" {...iconProps}/>;
+    return <Icon small material="layers" className="primary" {...iconProps}/>;
 
   case FilterType.SEARCH:
-    return <Icon small material="search" {...iconProps}/>;
+    return <Icon small material="search" className="primary" {...iconProps}/>;
 
   default:
-    return <Icon small material="filter_list" {...iconProps}/>
+    return <Icon small material="filter_list" className="primary" {...iconProps}/>
   }
 }

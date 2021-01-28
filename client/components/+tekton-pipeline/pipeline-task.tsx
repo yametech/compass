@@ -79,7 +79,7 @@ export class PipelineTaskDetail extends React.Component<Props> {
 
   formatOptionLabel = (option: SelectOption) => {
     const {value, label} = option;
-    return (label || (<><Icon small material="layers"/> {value} </>));
+    return (label || (<><Icon small material="layers" className="primary" /> {value} </>));
   };
 
   render() {

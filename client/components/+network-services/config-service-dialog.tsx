@@ -1,19 +1,19 @@
 import "./config-service-dialog.scss";
 
 import React from "react";
-import {observer} from "mobx-react";
-import {observable} from "mobx";
-import {Dialog, DialogProps} from "../dialog";
-import {Trans} from "@lingui/macro";
-import {Wizard, WizardStep} from "../wizard";
-import {Service} from "../../api/endpoints";
-import {createMuiTheme, Paper} from "@material-ui/core";
-import {SubTitle} from "../layout/sub-title";
-import {Select} from "../select";
-import {Input} from "../input";
-import {serviceStore} from "./services.store";
-import {Notifications} from "../notifications";
-import {ThemeProvider} from "@material-ui/core/styles";
+import { observer } from "mobx-react";
+import { observable } from "mobx";
+import { Dialog, DialogProps } from "../dialog";
+import { Trans } from "@lingui/macro";
+import { Wizard, WizardStep } from "../wizard";
+import { Service } from "../../api/endpoints";
+import { createMuiTheme, Paper } from "@material-ui/core";
+import { SubTitle } from "../layout/sub-title";
+import { Select } from "../select";
+import { Input } from "../input";
+import { Notifications } from "../notifications";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { apiManager } from "../../../client/api/api-manager";
 
 interface ServicePort {
   name?: string;
@@ -84,7 +84,10 @@ export class ConfigServiceDialog extends React.Component<Props> {
   update = async () => {
     try {
       this.service.spec.ports = this.ports;
-      await serviceStore.update(this.service, {...this.service}).then((data) => {
+      await apiManager.getApi(this.service.selfLink).update(
+        { name: this.service.getName(), namespace: this.service.getNs() },
+        { data: this.service }
+      ).then((data) => {
         Notifications.ok(
           <>Service: {this.service.getName()} update succeeded</>
         );
@@ -98,9 +101,9 @@ export class ConfigServiceDialog extends React.Component<Props> {
   rPorts(index: number) {
     return (
       <>
-        <Paper elevation={3} style={{padding: 25}}>
-          <SubTitle title={"Name - "} children={this.ports[index].name}/>
-          <SubTitle title={<Trans>Protocol</Trans>}/>
+        <Paper elevation={3} style={{ padding: 25 }}>
+          <SubTitle title={"Name - "} children={this.ports[index].name} />
+          <SubTitle title={<Trans>Protocol</Trans>} />
           <Select
             options={this.protocolOptions}
             value={this.ports[index].protocol}
@@ -108,7 +111,7 @@ export class ConfigServiceDialog extends React.Component<Props> {
               this.ports[index].protocol = value.value;
             }}
           />
-          <SubTitle title={<Trans>Port</Trans>}/>
+          <SubTitle title={<Trans>Port</Trans>} />
           <Input
             required={true}
             title={"Port"}
@@ -116,7 +119,7 @@ export class ConfigServiceDialog extends React.Component<Props> {
             value={this.ports[index].port.toString()}
             onChange={value => this.ports[index].port = Number(value)}
           />
-          <SubTitle title={<Trans>TargetPort</Trans>}/>
+          <SubTitle title={<Trans>TargetPort</Trans>} />
           <Input
             required={true}
             title={"TargetPort"}
@@ -125,13 +128,13 @@ export class ConfigServiceDialog extends React.Component<Props> {
             onChange={value => this.ports[index].targetPort = Number(value)}
           />
         </Paper>
-        <br/>
+        <br />
       </>
     )
   }
 
   render() {
-    const {...dialogProps} = this.props;
+    const { ...dialogProps } = this.props;
     const header = <h5><Trans>Config Service</Trans></h5>;
     return (
       <ThemeProvider theme={theme}>

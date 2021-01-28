@@ -1,37 +1,33 @@
 import "./pipelinerun.scss";
 
-import React, { Fragment } from "react";
-import { observer } from "mobx-react";
-import { RouteComponentProps } from "react-router";
-import { Trans } from "@lingui/macro";
-import { PipelineRun, pipelineRunApi } from "../../api/endpoints";
-import { pipelineRunStore } from "./pipelinerun.store";
-import { pipelineStore } from "../+tekton-pipeline/pipeline.store";
-import { KubeObjectMenu, KubeObjectMenuProps } from "../kube-object";
-import { KubeObjectListLayout } from "../kube-object";
-import { apiManager } from "../../api/api-manager";
-import { observable } from "mobx";
-import { taskRunStore } from "../+tekton-taskrun";
-import { TooltipContent } from "../tooltip";
-import { StatusBrick } from "../status-brick";
-import { cssNames, stopPropagation } from "../../utils";
-import { MenuItem } from "../menu";
-import { Icon } from "../icon";
-import { Notifications } from "../notifications";
-import { PipelineRunIcon } from "./pipeline-run-icon";
-import { podsStore } from "../+workloads-pods/pods.store";
+import React, {Fragment} from "react";
+import {observer} from "mobx-react";
+import {RouteComponentProps} from "react-router";
+import {Trans} from "@lingui/macro";
+import {advanceSecondsToHms, PipelineRun, pipelineRunApi} from "../../api/endpoints";
+import {pipelineRunStore} from "./pipelinerun.store";
+import {pipelineStore} from "../+tekton-pipeline/pipeline.store";
+import {KubeObjectListLayout, KubeObjectMenu, KubeObjectMenuProps} from "../kube-object";
+import {ApiManager, apiManager} from "../../api/api-manager";
+import {observable} from "mobx";
+import {taskRunStore} from "../+tekton-taskrun";
+import {TooltipContent} from "../tooltip";
+import {StatusBrick} from "../status-brick";
+import {cssNames, stopPropagation} from "../../utils";
+import {MenuItem} from "../menu";
+import {Icon} from "../icon";
+import {Notifications} from "../notifications";
+import {PipelineRunIcon} from "./pipeline-run-icon";
+import {podsStore} from "../+workloads-pods/pods.store";
 import Tooltip from "@material-ui/core/Tooltip";
-import { PipelineRunVisualDialog } from "./pipelinerun-visual-dialog";
-import { tektonGraphStore } from "../+tekton-graph/tekton-graph.store";
-import { KubeEventIcon } from "../+events/kube-event-icon";
-import { eventStore } from "../+events/event.store";
-import { TaskRunLogsDialog } from "../+tekton-taskrun/task-run-logs-dialog";
-import { IKubeObjectMetadata } from "../../api/kube-object";
-import { advanceSecondsToHms } from "../../api/endpoints";
-import { configStore } from "../../config.store";
-import { Link } from "react-router-dom";
-import { PipelineStatus } from "../+constant/tekton-constants";
-import { runGraphAnnotationKey } from '../+constant/tekton-constants'
+import {PipelineRunVisualDialog} from "./pipelinerun-visual-dialog";
+import {tektonGraphStore} from "../+tekton-graph/tekton-graph.store";
+import {KubeEventIcon} from "../+events/kube-event-icon";
+import {eventStore} from "../+events/event.store";
+import {TaskRunLogsDialog} from "../+tekton-taskrun/task-run-logs-dialog";
+import {configStore} from "../../config.store";
+import {PipelineStatus, runGraphAnnotationKey} from "../+constant/tekton-constants";
+import {IKubeObjectMetadata} from "../../api/kube-object";
 
 enum sortBy {
   name = "name",
@@ -308,7 +304,7 @@ export function PipelineRunMenu(props: KubeObjectMenuProps<PipelineRun>) {
         onClick={async () => {
           const pipelineRun = object;
           try {
-            // will delete pipelineRun
+           /* // will delete pipelineRun
             const annotations = pipelineRun.metadata.annotations;
             const pipelineRunGraphName = annotations
               ? annotations[runGraphAnnotationKey]
@@ -355,7 +351,14 @@ export function PipelineRunMenu(props: KubeObjectMenuProps<PipelineRun>) {
 
             Notifications.ok(
               <>PipelineRun: {pipelineRun.getName()} rerun succeeded</>
+            );*/
+
+            await pipelineRunApi.post({path:  pipelineRun.selfLink + "/rerun"})
+
+            Notifications.ok(
+                <>PipelineRun: {pipelineRun.getName()} rerun succeeded</>
             );
+
           } catch (err) {
             Notifications.error(err);
           }

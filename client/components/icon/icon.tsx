@@ -24,6 +24,7 @@ export interface IconProps extends React.HTMLAttributes<any>, TooltipDecoratorPr
   sticker?: boolean;
   disabled?: boolean;
   ripple?: 'default' | 'inherit' | 'primary' | 'secondary';
+  rippleStyle?: Object;
 }
 
 @withTooltip
@@ -64,20 +65,22 @@ export class Icon extends React.PureComponent<IconProps> {
 
   render() {
     const { isInteractive } = this;
-    const StyledIconButton = withStyles({
-      root: {
-        padding: '0 !important',
-      }
-    })(IconButton);
     const {
       // skip passing props to icon's html element
       className, href, link, material, svg, size, small, big,
-      disabled, sticker, active, focusable, children, ripple,
+      disabled, sticker, active, focusable, children, ripple, rippleStyle,
       interactive: _interactive,
       onClick: _onClick,
       onKeyDown: _onKeyDown,
       ...elemProps
     } = this.props;
+
+    const StyledIconButton = withStyles({
+      root: {
+        padding: '0 !important',
+        ...rippleStyle
+      }
+    })(IconButton);
 
     let iconContent: ReactNode;
     const iconProps: Partial<IconProps> = {

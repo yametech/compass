@@ -81,6 +81,7 @@ export class Namespace2Layernet extends React.Component<Props> {
                         <div className="node">
                             <SubTitle title={<Trans>Add NetAttack</Trans>} />
                             <NetworkAttachmentDefinitionSelect
+                                isClearable
                                 value={this.networkAttachment}
                                 placeholder={_i18n._(t`NetworkAttachment`)}
                                 themeName="light"

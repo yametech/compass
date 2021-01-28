@@ -1,6 +1,7 @@
-import { autobind } from "../../utils";
-import { KubeObject } from "../kube-object";
-import { KubeApi } from "../kube-api";
+import {autobind} from "../../utils";
+import {KubeObject} from "../kube-object";
+import {KubeApi} from "../kube-api";
+import {apiService} from "../index";
 
 export interface IServicePort {
   name?: string;
@@ -97,4 +98,5 @@ export const serviceApi = new KubeApi({
   apiBase: "/api/v1/services",
   isNamespaced: true,
   objectConstructor: Service,
+  request: apiService,
 });
