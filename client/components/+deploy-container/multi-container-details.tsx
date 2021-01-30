@@ -73,7 +73,7 @@ export class MultiContainerDetails extends React.Component<Props> {
 
   rContainerDetails(index: number) {
     return (
-      <Collapse panelName={<Trans>Container</Trans>} extraExpand={this.genExtra(index)}>
+      <Collapse key={`cDetails${index}`} panelName={<Trans>Container</Trans>} extraExpand={this.genExtra(index)}>
         <ContainerDetails
           args={true} base={true} commands={true} environment={true}
           liveProbe={true} lifeCycle={true} volumeMounts={true} readyProbe={true}

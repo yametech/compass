@@ -35,11 +35,11 @@ interface Props extends RouteComponentProps<IDeployWorkloadsParams> {
 export function deployNameRender(deploy: Deploy) {
   const name = deploy.getName();
   return (
-    <Link onClick={(event) => { stopPropagation(event); ConfigDeployDialog.open(deploy) }} to={null}>
+    <a onClick={(event) => { stopPropagation(event); ConfigDeployDialog.open(deploy) }}>
       <Tooltip title={name} placement="top-start">
         <span>{name}</span>
       </Tooltip>
-    </Link>
+    </a>
   );
 }
 

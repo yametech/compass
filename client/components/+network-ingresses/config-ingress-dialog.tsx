@@ -50,7 +50,6 @@ export class ConfigIngressDialog extends React.Component<Props> {
   close = async () => {
     ConfigIngressDialog.close();
     await this.reset();
-
   }
 
   get ingress() {
@@ -99,8 +98,9 @@ export class ConfigIngressDialog extends React.Component<Props> {
     this.annotationArr.map(item => {
       annotations[item.name] = item.type;
     })
+    this.ingress.spec = data.spec;
     this.ingress.metadata.annotations = annotations;
-    
+
     apiManager.getApi(this.ingress.selfLink).update(
       { name: this.ingress.getName(), namespace: this.ingress.getNs() },
       { data: this.ingress }
