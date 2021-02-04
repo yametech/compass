@@ -74,6 +74,7 @@ export class Sidebar extends React.Component<Props> {
     const { toggle, isPinned, className } = this.props;
     const userConfig = store.get('u_config')
     const isClusterAdmin = userConfig ? userConfig.isClusterAdmin : false
+    const isTenantOwner = userConfig ? userConfig.isTenantOwner : false
     const query = namespaceStore.getContextParams();
     return (
       <SidebarContext.Provider value={{ pinned: isPinned }}>
@@ -178,7 +179,7 @@ export class Sidebar extends React.Component<Props> {
               text={<Trans>OVN Config</Trans>}
             />
             <SidebarNavItem
-              isHidden={!isClusterAdmin}
+              isHidden={!isClusterAdmin && !isTenantOwner}
               id="tenant"
               url={tenantURL({ query })}
               routePath={tenantRoute.path}

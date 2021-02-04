@@ -5,11 +5,10 @@ import {t} from "@lingui/macro";
 import {Select, SelectOption, SelectProps} from "../select";
 import {cssNames, noop} from "../../utils";
 import {Icon} from "../icon";
-import {tenantDepartmentStore} from "./department.store";
+import {tenantStore} from "./tenant.store";
 import {_i18n} from "../../i18n";
 
 interface Props extends SelectProps {
-  tenantId?: string,
   showIcons?: boolean;
   showClusterOption?: boolean; // show cluster option on the top (default: false)
   clusterOptionLabel?: React.ReactNode; // label for cluster option (default: "Cluster")
@@ -17,41 +16,30 @@ interface Props extends SelectProps {
 }
 
 const defaultProps: Partial<Props> = {
-  tenantId: "",
   showIcons: true,
   showClusterOption: false,
   get clusterOptionLabel() {
-    return _i18n._(t`Department`);
+    return _i18n._(t`BaseTenant`);
   },
 };
 
 @observer
-export class BaseDepartmentSelect extends React.Component<Props> {
+export class BaseTenantSelect extends React.Component<Props> {
   static defaultProps = defaultProps as object;
   private unsubscribe = noop;
 
   async componentDidMount() {
-    if (!tenantDepartmentStore.isLoaded) await tenantDepartmentStore.loadAll();
-    this.unsubscribe = tenantDepartmentStore.subscribe();
+    if (!tenantStore.isLoaded) await tenantStore.loadAll();
+    this.unsubscribe = tenantStore.subscribe();
   }
 
   componentWillUnmount() {
     this.unsubscribe();
   }
 
-  // @computed get tenantId(): string{
-  //   this.options.
-  // }
-
   @computed get options(): SelectOption[] {
-    const {customizeOptions, showClusterOption, clusterOptionLabel, tenantId} = this.props;
-    let options: SelectOption[] = tenantDepartmentStore.items.filter(item=>{
-      console.log("departmentSelect: tenant_id="+tenantId)
-      if (tenantId === "" || item.spec.tenant_id === tenantId) {
-        return true
-      }
-      return false
-    }).map(item => ({value: item.getName()}));
+    const {customizeOptions, showClusterOption, clusterOptionLabel} = this.props;
+    let options: SelectOption[] = tenantStore.items.map(item => ({value: item.getName()}));
     options = customizeOptions ? customizeOptions(options) : options;
     if (showClusterOption) {
       options.unshift({value: null, label: clusterOptionLabel});
@@ -74,8 +62,8 @@ export class BaseDepartmentSelect extends React.Component<Props> {
     const {className, showIcons, showClusterOption, clusterOptionLabel, customizeOptions, ...selectProps} = this.props;
     return (
       <Select
-        className={cssNames("BaseDepartmentSelect", className)}
-        menuClass="BaseDepartmentSelect"
+        className={cssNames("BaseTenantSelect", className)}
+        menuClass="BaseTenantSelect"
         formatOptionLabel={this.formatOptionLabel}
         options={this.options}
         {...selectProps}

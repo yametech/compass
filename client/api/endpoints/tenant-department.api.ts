@@ -13,8 +13,10 @@ export interface Stack {
 }
 
 export interface TenantDepartmentSpec {
-  namespace: Namespace[];
-  defaultNamespace: string;
+  tenant_id: string
+  owner?: string
+  namespaces: Namespace[];
+  // defaultNamespace: string;
   gits?: Stack[];
   registers?: Stack[];
 }
@@ -28,7 +30,7 @@ export class TenantDepartment extends KubeObject {
 
 export const tenantDepartmentApi = new KubeApi({
   kind: TenantDepartment.kind,
-  apiBase: "/apis/fuxi.nip.io/v1/basedepartments",
+  apiBase: "/apis/yamecloud.io/v1/basedepartments",
   isNamespaced: true,
   objectConstructor: TenantDepartment,
   request: apiTenant
