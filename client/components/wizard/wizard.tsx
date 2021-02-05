@@ -7,6 +7,7 @@ import { Stepper } from "../stepper";
 import { SubTitle } from "../layout/sub-title";
 import { Spinner } from "../spinner";
 import {Icon} from "../icon";
+import Draggable, { DraggableData } from 'react-draggable';
 
 interface WizardCommonProps<D = any> {
   data?: Partial<D>;
@@ -26,11 +27,31 @@ export interface WizardProps extends WizardCommonProps {
 
 interface State {
   step?: number;
+  disabled?: boolean;
+  bounds?: Object;
 }
 
 export class Wizard extends React.Component<WizardProps, State> {
   public state: State = {
-    step: this.getValidStep(this.props.step)
+    step: this.getValidStep(this.props.step),
+    disabled: true,
+    bounds: { left: 0, top: 0, bottom: 0, right: 0 }
+  };
+
+  private draggleRef = React.createRef();
+
+  onStart = (uiData: DraggableData) => {
+    const { clientWidth, clientHeight } = window?.document?.documentElement;
+    const target = this.draggleRef?.current as Element;
+    const targetRect = target.getBoundingClientRect();
+    this.setState({
+      bounds: {
+        left: -targetRect?.left + uiData?.x,
+        right: clientWidth - (targetRect?.right - uiData?.x),
+        top: -targetRect?.top + uiData?.y,
+        bottom: clientHeight - (targetRect?.bottom - uiData?.y),
+      },
+    });
   };
 
   get steps() {
@@ -81,25 +102,47 @@ export class Wizard extends React.Component<WizardProps, State> {
 
   render() {
     const { className, title, header, hideSteps } = this.props;
+    const { disabled, bounds } = this.state;
     const steps = this.steps.map(stepElem => ({ title: stepElem.props.title }))
     const step = React.cloneElement(this.steps[this.step - 1]);
     return (
-      <div className={cssNames("Wizard", className)}>
-        <div className="header">
-          {header}
-          {title ? <SubTitle title={title}/> : null}
-          {!hideSteps && steps.length > 1 ? <Stepper steps={steps} step={this.step}/> : null}
-          <Icon
-            small
-            className="remove-icon"
-            material="clear"
-            onClick={(event) => {
-              this.props.done()
+      <Draggable
+        disabled={disabled}
+        bounds={bounds}
+        onStart={(event, uiData) => this.onStart(uiData)}
+      >
+        <div ref={this.draggleRef as any} className={cssNames("Wizard", className)}>
+          <div
+            onMouseOver={() => {
+              if (disabled) {
+                this.setState({
+                  disabled: false
+                });
+              }
             }}
-          />
+            onMouseOut={() => {
+              this.setState({
+                disabled: true
+              });
+            }}
+          >
+            <div className="header">
+              {header}
+              {title ? <SubTitle title={title}/> : null}
+              {!hideSteps && steps.length > 1 ? <Stepper steps={steps} step={this.step}/> : null}
+              <Icon
+                small
+                className="remove-icon"
+                material="clear"
+                onClick={(event) => {
+                  this.props.done()
+                }}
+              />
+            </div>
+          </div>
+          {step}
         </div>
-        {step}
-      </div>
+      </Draggable>
     );
   }
 }
