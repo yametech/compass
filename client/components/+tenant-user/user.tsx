@@ -60,12 +60,14 @@ export class TenantUsers extends React.Component<Props> {
           renderHeaderTitle={<Trans>Users</Trans>}
           renderTableHeader={[
             {title: <Trans>Name</Trans>, className: "name", sortBy: sortBy.name},
+            {title: <Trans>TenantName</Trans>, className: "tenant"},
             {title: <Trans>Department</Trans>, className: "department"},
             {title: <Trans>Namespace</Trans>, className: "namespace", sortBy: sortBy.namespace},
             {title: <Trans>Age</Trans>, className: "age", sortBy: sortBy.age},
           ]}
           renderTableContents={(user: TenantUser) => [
             this.renderUserName(user),
+            user.spec.tenant_id,
             user.spec.department_id,
             user.getNs(),
             user.getAge(),

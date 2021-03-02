@@ -1,7 +1,7 @@
 import React from "react";
 import {computed} from "mobx";
 import {observer} from "mobx-react";
-import {t, Trans} from "@lingui/macro";
+import {t} from "@lingui/macro";
 import {Select, SelectOption, SelectProps} from "../select";
 import {cssNames, noop} from "../../utils";
 import {Icon} from "../icon";
@@ -9,6 +9,7 @@ import {tenantRoleStore} from "./role.store";
 import {_i18n} from "../../i18n";
 
 interface Props extends SelectProps {
+  department_id?: string
   showIcons?: boolean;
   showClusterOption?: boolean; // show cluster option on the top (default: false)
   clusterOptionLabel?: React.ReactNode; // label for cluster option (default: "Cluster")
@@ -16,6 +17,7 @@ interface Props extends SelectProps {
 }
 
 const defaultProps: Partial<Props> = {
+  departmentId: "",
   showIcons: true,
   showClusterOption: false,
   get clusterOptionLabel() {
@@ -38,8 +40,13 @@ export class BaseRoleSelect extends React.Component<Props> {
   }
 
   @computed get options(): SelectOption[] {
-    const {customizeOptions, showClusterOption, clusterOptionLabel} = this.props;
-    let options: SelectOption[] = tenantRoleStore.items.map(item => ({value: item.getName()}));
+    const {customizeOptions, showClusterOption, clusterOptionLabel,departmentId} = this.props;
+    let options: SelectOption[] = tenantRoleStore.items.filter(item=>{
+      if (departmentId === "" || item.spec.department_id === departmentId){
+        return true
+      }
+      return false
+    }).map(item => ({value: item.getName()}));
     options = customizeOptions ? customizeOptions(options) : options;
     if (showClusterOption) {
       options.unshift({value: null, label: clusterOptionLabel});

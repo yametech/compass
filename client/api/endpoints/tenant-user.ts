@@ -9,17 +9,19 @@ export class TenantUser extends KubeObject {
 
     spec: {
         name: string,
-        department_id: string,
-        display: string,
-        email: string,
+        tenant_id: string
+        department_id?: string,
+        display?: string,
+        email?: string,
         password: string
         roles?: string[]
+        is_tenant_owner?: boolean
     }
 }
 
 export const tenantUserApi = new KubeApi({
     kind: TenantUser.kind,
-    apiBase: "/apis/fuxi.nip.io/v1/baseusers",
+    apiBase: "/apis/yamecloud.io/v1/baseusers",
     isNamespaced: true,
     objectConstructor: TenantUser,
     request: apiTenant
