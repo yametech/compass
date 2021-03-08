@@ -1,0 +1,16 @@
+.ConfigUserDialog {
+  .Wizard {
+    width: 40vw;
+    height: 70vh;
+  }
+
+  .WizardStep {
+    .step-content {
+      padding: var(--wizard-spacing);
+    }
+
+    code {
+      max-height: 100vh;
+    }
+  }
+}

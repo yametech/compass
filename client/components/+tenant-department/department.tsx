@@ -59,11 +59,15 @@ export class TenantDepartments extends React.Component<Props> {
           renderHeaderTitle={<Trans>Departments</Trans>}
           renderTableHeader={[
             {title: <Trans>Name</Trans>, className: "name", sortBy: sortBy.name},
+            {title: <Trans>TenantName</Trans>, className: "tenantName"},
+            {title: <Trans>Owner</Trans>, className: "owner"},
             {title: <Trans>Namespace</Trans>, className: "namespace", sortBy: sortBy.namespace},
             {title: <Trans>Age</Trans>, className: "age", sortBy: sortBy.age},
           ]}
           renderTableContents={(department: TenantDepartment) => [
             this.renderDepartmentName(department),
+            department.spec.tenant_id,
+            department.spec.owner,
             department.getNs(),
             department.getAge(),
           ]}

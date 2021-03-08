@@ -1,19 +1,23 @@
 import "./namespace-select.scss"
 
 import React from "react";
-import { computed } from "mobx";
-import { observer } from "mobx-react";
-import { t, Trans } from "@lingui/macro";
-import { Select, SelectOption, SelectProps } from "../select";
-import { cssNames, noop } from "../../utils";
-import { Icon } from "../icon";
-import { namespaceStore } from "./namespace.store";
-import { _i18n } from "../../i18n";
-import { FilterIcon } from "../item-object-list/filter-icon";
-import { FilterType } from "../item-object-list/page-filters.store";
-import { themeStore } from "../../theme.store";
+import {computed} from "mobx";
+import {observer} from "mobx-react";
+import {t, Trans} from "@lingui/macro";
+import {Select, SelectOption, SelectProps} from "../select";
+import {cssNames, noop} from "../../utils";
+import {Icon} from "../icon";
+import {namespaceStore} from "./namespace.store";
+import {_i18n} from "../../i18n";
+import {FilterIcon} from "../item-object-list/filter-icon";
+import {FilterType} from "../item-object-list/page-filters.store";
+import {themeStore} from "../../theme.store";
+import {tenantDepartmentStore} from "../+tenant-department/department.store";
+import {tenantStore} from "../+tenant-tenant";
 
 interface Props extends SelectProps {
+  tenantId?: string;
+  departmentId?: string;
   showIcons?: boolean;
   showClusterOption?: boolean; // show cluster option on the top (default: false)
   clusterOptionLabel?: React.ReactNode; // label for cluster option (default: "Cluster")
@@ -22,6 +26,8 @@ interface Props extends SelectProps {
 }
 
 const defaultProps: Partial<Props> = {
+  tenantId: "",
+  departmentId: "",
   required: false,
   showIcons: true,
   showClusterOption: false,
@@ -45,8 +51,20 @@ export class NamespaceSelect extends React.Component<Props> {
   }
 
   @computed get options(): SelectOption[] {
-    const { customizeOptions, showClusterOption, clusterOptionLabel } = this.props;
+    const { customizeOptions, showClusterOption, clusterOptionLabel, tenantId, departmentId } = this.props;
     let options: SelectOption[] = namespaceStore.items.map(ns => ({ value: ns.getName() }));
+    if (departmentId != ""){
+      let department = tenantDepartmentStore.getByName(departmentId);
+      if (department != undefined){
+        options = department.spec.namespaces.map(ns => ({ value: ns }))
+      }
+    }else if (tenantId != ""){
+      let tenant = tenantStore.getByName(tenantId);
+      if (tenant != undefined){
+        options = tenant.spec.namespaces.map(ns => ({ value: ns }))
+      }
+    }
+
     options = customizeOptions ? customizeOptions(options) : options;
     if (showClusterOption) {
       options.unshift({ value: null, label: clusterOptionLabel });

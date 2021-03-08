@@ -3,8 +3,8 @@ import "./add-role-dialog.scss"
 import React from "react";
 import {observer} from "mobx-react";
 import {Dialog, DialogProps} from "../dialog";
-import {observable} from "mobx";
-import {TenantRole} from "../../api/endpoints";
+import {computed, observable} from "mobx";
+import {TenantRole, tenantRoleApi} from "../../api/endpoints";
 import {Wizard, WizardStep} from "../wizard";
 import {t, Trans} from "@lingui/macro";
 import {SubTitle} from "../layout/sub-title";
@@ -12,7 +12,10 @@ import {Input} from "../input";
 import {_i18n} from "../../i18n";
 import {systemName} from "../input/input.validators";
 import {Notifications} from "../notifications";
-import {tenantRoleStore} from "./role.store";
+import {BaseTenantSelect} from "../+tenant-tenant/tenant-select";
+import {BaseDepartmentSelect} from "../+tenant-department/department-select";
+import {NamespaceSelect} from "../+namespaces/namespace-select";
+import {SelectOption} from "../select";
 
 interface Props extends Partial<DialogProps> {
 }
@@ -31,8 +34,17 @@ export class AddRoleDialog extends React.Component<Props> {
   }
 
   @observable name = "";
+  @observable tenant_id = "";
+  @observable department_id = "";
+  @observable namespaces = observable.array<string>([], {deep: false});
   @observable namespace = "kube-system";
   @observable comment = "";
+
+  @computed get selectedNamespaces() {
+    return [
+      ...this.namespaces,
+    ]
+  }
 
   close = () => {
     AddRoleDialog.close();
@@ -40,19 +52,27 @@ export class AddRoleDialog extends React.Component<Props> {
 
   reset = () => {
     this.name = "";
+    this.tenant_id = "";
+    this.department_id = "";
     this.comment = "";
+    this.namespaces.replace([]);
   }
 
   createRole = async () => {
-    const {name, namespace, comment} = this;
+    const {name, namespace, tenant_id, department_id, comment} = this;
     const role: Partial<TenantRole> = {
       spec: {
-        value: 0,
+        tenant_id: tenant_id,
+        department_id: department_id,
+        namespaces: this.selectedNamespaces,
         comment: comment,
       }
     }
     try {
-      const newRole = await tenantRoleStore.create({namespace, name}, role);
+      let labelMap = new Map<string, string>()
+          .set("tenant.yamecloud.io", tenant_id)
+          .set("department.yamecloud.io",department_id);
+      const newRole = await tenantRoleApi.create({namespace, name, labels: labelMap}, role);
       // showDetails(newRole.selfLink);
       this.reset();
       Notifications.ok(
@@ -66,8 +86,9 @@ export class AddRoleDialog extends React.Component<Props> {
 
   render() {
     const {...dialogProps} = this.props;
-    const {name, comment} = this;
+    const {name, tenant_id, department_id, comment} = this;
     const header = <h5><Trans>Create Role</Trans></h5>;
+    const unwrapNamespaces = (options: SelectOption[]) => options.map(option => option.value);
     return (
       <Dialog
         {...dialogProps}
@@ -86,6 +107,43 @@ export class AddRoleDialog extends React.Component<Props> {
                 value={name} onChange={v => this.name = v}
               />
             </div>
+
+            <div className="baseTenant">
+              <SubTitle title={<Trans>BaseTenant</Trans>}/>
+              <BaseTenantSelect
+                  placeholder={_i18n._(t`BaseTenant`)}
+                  themeName="light"
+                  className="box grow"
+                  value={tenant_id} onChange={({value}) => this.tenant_id = value}
+              />
+            </div>
+            <div className="tenant-department">
+              <SubTitle title={<Trans>Tenant Department</Trans>}/>
+              <BaseDepartmentSelect
+                  placeholder={_i18n._(t`Tenant Department`)}
+                  themeName="light"
+                  className="box grow"
+                  tenantId={this.tenant_id}
+                  value={department_id} onChange={({value}) => this.department_id = value}
+              />
+            </div>
+            <div className="namespaces">
+              <SubTitle title={<Trans>Namespace</Trans>} />
+              <NamespaceSelect
+                  isMulti
+                  value={this.namespaces}
+                  placeholder={_i18n._(t`Namespace`)}
+                  themeName="light"
+                  className="box grow"
+                  tenantId={this.tenant_id}
+                  departmentId={this.department_id}
+                  onChange={(opts: SelectOption[]) => {
+                    if (!opts) opts = [];
+                    this.namespaces.replace(unwrapNamespaces(opts));
+                  }}
+              />
+            </div>
+
             <div className="comment">
               <SubTitle title={<Trans>Comment</Trans>}/>
               <Input
