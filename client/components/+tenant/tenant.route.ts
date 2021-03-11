@@ -8,6 +8,10 @@ export const tenantRoute: RouteProps = {
     }
 }
 
+export const tenantTenantRoute: RouteProps = {
+    path: "/tenant-tenant"
+}
+
 export const tenantDepartmentRoute: RouteProps = {
     path: "/tenant-department"
 }
@@ -26,6 +30,9 @@ export const tenantUserRoute: RouteProps = {
 
 
 // Route params
+export interface ITenantTenantParams {
+}
+
 export interface ITenantDepartmentParams {
 }
 
@@ -40,7 +47,8 @@ export interface ITenantUserParams {
 
 
 // URL-builders
-export const tenantURL = (params?: IURLParams) => tenantDepartmentURL(params);
+export const tenantURL = (params?: IURLParams) => tenantTenantURL(params);
+export const tenantTenantURL = buildURL<ITenantTenantParams>(tenantTenantRoute.path)
 export const tenantDepartmentURL = buildURL<ITenantDepartmentParams>(tenantDepartmentRoute.path)
 export const tenantPermissionURL = buildURL<ITenantPermissionParams>(tenantPermissionRoute.path)
 export const tenantRoleURL = buildURL<ITenantRoleParams>(tenantRoleRoute.path)

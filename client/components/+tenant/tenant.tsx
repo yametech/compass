@@ -10,10 +10,16 @@ import {TenantRoles} from '../+tenant-role';
 import {TenantUsers} from "../+tenant-user";
 import {namespaceStore} from "../+namespaces/namespace.store";
 import {
-    tenantDepartmentRoute, tenantDepartmentURL,
-    tenantRoleRoute, tenantRoleURL,
-    tenantUserRoute, tenantUserURL
+    tenantDepartmentRoute,
+    tenantDepartmentURL,
+    tenantRoleRoute,
+    tenantRoleURL,
+    tenantTenantRoute,
+    tenantTenantURL,
+    tenantUserRoute,
+    tenantUserURL
 } from './tenant.route'
+import {Tenants} from "../+tenant-tenant";
 
 interface Props extends RouteComponentProps {
 }
@@ -24,6 +30,12 @@ export class Tenant extends React.Component<Props> {
     static get tabRoutes(): TabRoute[] {
         const query = namespaceStore.getContextParams();
         return [
+            {
+                title: <Trans>BaseTenant</Trans>,
+                component: Tenants,
+                url: tenantTenantURL({query}),
+                path: tenantTenantRoute.path
+            },
             {
                 title: <Trans>Department</Trans>,
                 component: TenantDepartments,

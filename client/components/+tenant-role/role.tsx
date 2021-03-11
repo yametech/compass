@@ -10,6 +10,7 @@ import {tenantRoleStore} from "./role.store"
 
 import {AddRoleDialog} from "./add-role-dialog";
 import {ConfigRoleDialog} from "./config-role-dialog";
+import {GrantRoleDialog} from "./grant-role-dialog";
 import {MenuItem} from "../menu";
 import {Icon} from "../icon";
 import {_i18n} from "../../i18n";
@@ -78,6 +79,7 @@ export class TenantRoles extends React.Component<Props> {
         />
         <AddRoleDialog/>
         <ConfigRoleDialog/>
+        <GrantRoleDialog/>
       </>
     );
   }
@@ -92,6 +94,10 @@ export function RoleMenu(props: KubeObjectMenuProps<TenantRole>) {
       <MenuItem onClick={() => ConfigRoleDialog.open(object)}>
         <Icon material="toc" title={_i18n._(t`Config`)} interactive={toolbar}/>
         <span className="config"><Trans>Config</Trans></span>
+      </MenuItem>
+      <MenuItem onClick={() => GrantRoleDialog.open(object)}>
+        <Icon material="sync_alt" title={_i18n._(t`Grant`)} interactive={toolbar}/>
+        <span className="sync_alt"><Trans>Grant</Trans></span>
       </MenuItem>
     </KubeObjectMenu>
   )

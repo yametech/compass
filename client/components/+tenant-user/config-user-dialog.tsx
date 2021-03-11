@@ -27,8 +27,10 @@ export class ConfigUserDialog extends React.Component<Props> {
   @observable namespace = "kube-system";
   @observable display = "";
   @observable email = "";
+  @observable tenant_id = "";
   @observable department_id = "";
   @observable password = "";
+  @observable is_tenant_owner = false;
   @observable roles = observable.array<string>([], {deep: false});
 
   static open(user: TenantUser) {
@@ -57,34 +59,41 @@ export class ConfigUserDialog extends React.Component<Props> {
   onOpen = () => {
     this.name = this.user.getName();
     this.department_id = this.user.spec.department_id;
+    this.tenant_id = this.user.spec.tenant_id;
     this.display = this.user.spec.display;
     this.email = this.user.spec.email;
     this.password = this.user.spec.password;
     this.roles.replace(this.user.spec.roles)
+    this.is_tenant_owner = this.user.spec.is_tenant_owner
   }
 
   reset = () => {
     this.name = "";
     this.email = "";
     this.display = "";
+    this.tenant_id = "";
     this.department_id = "";
+    this.is_tenant_owner = false
     this.roles.replace([]);
   }
 
   updateUser = async () => {
-    const {name, namespace, password, department_id, display, email} = this;
+    const {name, namespace, password, tenant_id, department_id, display, email, is_tenant_owner} = this;
     const user: Partial<TenantUser> = {
       spec: {
         name: name,
         display: display,
         email: email,
         password: password,
+        tenant_id: tenant_id,
         department_id: department_id,
         roles: this.selectedRoles,
+        is_tenant_owner: is_tenant_owner
       }
     }
+    this.user.spec = user.spec
     try {
-      const newUser = await tenantUserApi.create({namespace, name}, user);
+      await tenantUserApi.update({namespace, name}, this.user);
       // showDetails(newUser.selfLink);
       this.reset();
       Notifications.ok(
@@ -98,7 +107,7 @@ export class ConfigUserDialog extends React.Component<Props> {
 
   render() {
     const {...dialogProps} = this.props;
-    const {display, password, email, department_id} = this;
+    const {name, display, password, email, tenant_id, department_id} = this;
     const unwrapRoles = (options: SelectOption[]) => options.map(option => option.value);
     const header = <h5><Trans>Update User</Trans></h5>;
     return (
@@ -111,12 +120,22 @@ export class ConfigUserDialog extends React.Component<Props> {
       >
         <Wizard header={header} done={this.close}>
           <WizardStep contentClass="flow column" nextLabel={<Trans>Apply</Trans>} next={this.updateUser}>
+            <div className="tenant">
+              <SubTitle title={<Trans>BaseTenant</Trans>}/>
+              <Input
+                  required={true}
+                  disabled={true}
+                  title={"BaseTenant"}
+                  value={tenant_id}
+              />
+            </div>
             <div className="tenant-department">
               <SubTitle title={<Trans>Tenant Department</Trans>}/>
               <BaseDepartmentSelect
                 placeholder={_i18n._(t`Tenant Department`)}
                 themeName="light"
                 className="box grow"
+                tenantId={this.tenant_id}
                 value={department_id} onChange={({value}) => this.department_id = value}
               />
             </div>
@@ -128,10 +147,20 @@ export class ConfigUserDialog extends React.Component<Props> {
                 placeholder={_i18n._(t`Tenant Roles`)}
                 themeName="light"
                 className="box grow"
+                departmentId={this.department_id}
                 onChange={(opts: SelectOption[]) => {
                   if (!opts) opts = [];
                   this.roles.replace(unwrapRoles(opts));
                 }}
+              />
+            </div>
+            <div className="user-name">
+              <SubTitle title={<Trans>User name</Trans>}/>
+              <Input
+                  required={true}
+                  disabled={true}
+                  placeholder={_i18n._(t`Name`)}
+                  value={name}
               />
             </div>
             <div className="display">

@@ -1,0 +1,16 @@
+.GrantRoleDialog {
+  .Wizard {
+    width: 700px;
+    height: 60vh;
+  }
+
+  .WizardStep {
+    .step-content {
+      padding: var(--wizard-spacing);
+    }
+
+    code {
+      max-height: 100vh;
+    }
+  }
+}

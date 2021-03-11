@@ -173,6 +173,7 @@ export abstract class KubeObjectStore<
   async remove(item: T) {
     if (item.selfLink.startsWith("/apis/networking.istio.io/v1beta1")
       || item.selfLink.startsWith("/apis/tekton.dev/v1alpha1")
+      || item.selfLink.startsWith("/apis/yamecloud.io/v1")
       || item.kind === "TektonStore"
       || item.kind === "TektonWebHook"
       || item.kind === "TektonGraph"

@@ -15,6 +15,7 @@ import {Notifications} from "../notifications";
 import {BaseDepartmentSelect} from "../+tenant-department/department-select";
 import {BaseRoleSelect} from "../+tenant-role/role-select";
 import {SelectOption} from "../select";
+import {BaseTenantSelect} from "../+tenant-tenant/tenant-select";
 
 interface Props extends Partial<DialogProps> {
 }
@@ -27,6 +28,7 @@ export class AddUserDialog extends React.Component<Props> {
   @observable namespace = "kube-system";
   @observable display = "";
   @observable email = "";
+  @observable tenant_id = "";
   @observable department_id = "";
   @observable password = "";
   @observable roles = observable.array<string>([], {deep: false});
@@ -47,6 +49,7 @@ export class AddUserDialog extends React.Component<Props> {
     this.name = "";
     this.email = "";
     this.display = "";
+    this.tenant_id = "";
     this.department_id = "";
     this.password = "";
     this.roles.replace([]);
@@ -59,19 +62,21 @@ export class AddUserDialog extends React.Component<Props> {
   }
 
   createUser = async () => {
-    const {name, namespace, password, department_id, display, email} = this;
+    const {name, namespace, password, tenant_id, department_id, display, email} = this;
     const user: Partial<TenantUser> = {
       spec: {
         name: name,
         display: display,
         email: email,
         password: password,
+        tenant_id: tenant_id,
         department_id: department_id,
         roles: this.selectedRoles,
+        is_tenant_owner: false
       }
     }
     try {
-      const newUser = await tenantUserApi.create({namespace, name}, user);
+      const newUser = await tenantUserApi.create({namespace, name, labels: new Map<string, string>().set("tenant.yamecloud.io", tenant_id)}, user);
       // showDetails(newUser.selfLink);
       this.reset();
       Notifications.ok(
@@ -97,12 +102,25 @@ export class AddUserDialog extends React.Component<Props> {
       >
         <Wizard header={header} done={this.close}>
           <WizardStep contentClass="flow column" nextLabel={<Trans>Create</Trans>} next={this.createUser}>
+            <div className="baseTenant">
+              <SubTitle title={<Trans>BaseTenant</Trans>}/>
+              <BaseTenantSelect
+                  placeholder={_i18n._(t`BaseTenant`)}
+                  themeName="light"
+                  className="box grow"
+                  value={this.tenant_id} onChange={({value}) => {
+                    this.tenant_id = value
+                    this.department_id = ""
+              }}
+              />
+            </div>
             <div className="tenant-department">
               <SubTitle title={<Trans>Tenant Department</Trans>}/>
               <BaseDepartmentSelect
                 placeholder={_i18n._(t`Tenant Department`)}
                 themeName="light"
                 className="box grow"
+                tenantId={this.tenant_id}
                 value={this.department_id} onChange={({value}) => this.department_id = value}
               />
             </div>
@@ -114,6 +132,7 @@ export class AddUserDialog extends React.Component<Props> {
                 placeholder={_i18n._(t`Tenant Roles`)}
                 themeName="light"
                 className="box grow"
+                departmentId={this.department_id}
                 onChange={(opts: SelectOption[]) => {
                   if (!opts) opts = [];
                   this.roles.replace(unwrapRoles(opts));

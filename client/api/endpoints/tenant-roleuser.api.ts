@@ -10,7 +10,7 @@ export class TenantRoleUser extends KubeObject {
 
 export const tenantRoleUserApi = new KubeApi({
     kind: TenantRoleUser.kind,
-    apiBase: "/apis/fuxi.nip.io/v1/baseroleusers",
+    apiBase: "/apis/yamecloud.io/v1/baseroleusers",
     isNamespaced: true,
     objectConstructor: TenantRoleUser,
     request: apiTenant
