@@ -1,6 +1,7 @@
 import "./overview.scss"
 
 import React from "react";
+import store from "store";
 import { observable, when } from "mobx";
 import { observer } from "mobx-react";
 import { OverviewStatuses } from "./overview-statuses";
@@ -27,21 +28,21 @@ interface Props extends RouteComponentProps<IWorkloadsOverviewRouteParams> {
 export class WorkloadsOverview extends React.Component<Props> {
   @observable isReady = false;
   @observable isUnmounting = false;
+  @observable isClusterAdmin = false;
 
   async componentDidMount() {
-    const stores = [
+    const userConifg = store.get('u_config');
+    this.isClusterAdmin = userConifg ? userConifg.isClusterAdmin : false;
+    let stores: any[] = [
       podsStore,
-      deploymentStore,
-      daemonSetStore,
-      statefulSetStore,
       replicaSetStore,
-      jobStore,
-      cronJobStore,
       eventStore,
       enhanceStatefulSetStore,
       stoneStore,
-      waterStore,
     ];
+    if (this.isClusterAdmin) {
+      stores = stores.concat([deploymentStore, daemonSetStore, statefulSetStore, jobStore, cronJobStore, waterStore]);
+    }
     this.isReady = stores.every(store => store.isLoaded);
     if (!this.isReady) {
       await Promise.all(stores.map(store => store.loadAll()));
@@ -62,7 +63,7 @@ export class WorkloadsOverview extends React.Component<Props> {
     }
     return (
       <>
-        <OverviewStatuses />
+        <OverviewStatuses isClusterAdmin={this.isClusterAdmin} />
         <Events
           compact
           hideFilters

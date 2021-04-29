@@ -8,7 +8,7 @@
 
   width: var(--wizard-width);
   color: $dialogTextColor;
-  height: 90vh;
+  max-height: 90vh;
   width: 50vw;
 
   &.small {
@@ -23,7 +23,7 @@
     max-height: var(--wizard-content-max-height);
   }
 
-  > .header {
+  .header {
     position: relative;
     text-align: center;
     color: white;
@@ -31,6 +31,7 @@
     padding: var(--wizard-spacing);
     background: #2d98ed;
     padding: 10px 24px;
+    cursor: move;
     b {
       font-weight: $font-weight-normal;
     }

@@ -36,6 +36,7 @@
     "mobx-observable-history": "^1.0.3",
     "morgan": "^1.9.1",
     "react-beautiful-dnd": "^13.0.0",
+    "react-draggable": "^4.4.3",
     "react-treeview": "^0.4.7",
     "sockjs-client": "^1.5.0",
     "store": "^2.0.12",
