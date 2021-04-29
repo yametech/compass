@@ -1,7 +1,6 @@
 import "./overview-statuses.scss"
 
 import React from "react";
-import store from "store";
 import { observer } from "mobx-react";
 import { Trans } from "@lingui/macro";
 import { OverviewWorkloadStatus } from "./overview-workload-status";
@@ -9,11 +8,12 @@ import { cronJobsURL, daemonSetsURL, deploymentsURL, jobsURL, podsURL, statefulS
 import { PageFiltersList } from "../item-object-list/page-filters-list";
 import { NamespaceSelectFilter } from "../+namespaces/namespace-select";
 
+interface Props {
+  isClusterAdmin: boolean
+}
 @observer
-export class OverviewStatuses extends React.Component {
+export class OverviewStatuses extends React.Component<Props> {
   render() {
-    const userConifg = store.get('u_config');
-    const isClusterAdmin = userConifg ? userConifg.isClusterAdmin : false;
     return (
       <div className="OverviewStatuses">
         <div className="header flex gaps align-center">
@@ -31,7 +31,7 @@ export class OverviewStatuses extends React.Component {
           <div className="workload">
             <OverviewWorkloadStatus type="StatefulSets*" url={enhanceStatefulSetsURL()} />
           </div>
-          {isClusterAdmin ?
+          {this.props.isClusterAdmin ?
             <>
               <div className="workload">
                 <OverviewWorkloadStatus type="waters" url={watersURL()} />
