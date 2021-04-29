@@ -8,7 +8,7 @@
 
   width: var(--wizard-width);
   color: $dialogTextColor;
-  height: 90vh;
+  max-height: 90vh;
   width: 50vw;
 
   &.small {
