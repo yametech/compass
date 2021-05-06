@@ -1,5 +1,5 @@
-import React, {forwardRef, useEffect, useImperativeHandle} from 'react';
-import {createStyles, makeStyles, Theme} from '@material-ui/core/styles';
+import React, { forwardRef, useEffect, useImperativeHandle } from 'react';
+import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import Paper from '@material-ui/core/Paper';
@@ -10,14 +10,14 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 
 import './grant-role-dialog.scss';
-import {observer} from "mobx-react";
-import {Dialog, DialogProps} from "../dialog";
-import {observable} from "mobx";
-import {TenantRole, tenantRoleApi} from "../../api/endpoints";
-import {Wizard, WizardStep} from "../wizard";
-import {Trans} from "@lingui/macro";
-import {Notifications} from "../notifications";
-import {apiPermission} from "../../api";
+import { observer } from "mobx-react";
+import { Dialog, DialogProps } from "../dialog";
+import { observable } from "mobx";
+import { TenantRole, tenantRoleApi } from "../../api/endpoints";
+import { Wizard, WizardStep } from "../wizard";
+import { Trans } from "@lingui/macro";
+import { Notifications } from "../notifications";
+import { apiPermission } from "../../api";
 
 
 const useStyles = makeStyles((theme: Theme) =>
@@ -66,7 +66,7 @@ interface resTree {
 }
 
 interface Iprops {
-  checkedMap: Object, 
+  checkedMap: Object,
   resTree: resTree
 }
 
@@ -84,11 +84,13 @@ export const TransferList = forwardRef((props: Iprops, ref: any) => {
   }
 
   let resTree = props.resTree;
-  
+
   if (props.resTree) {
     resTree.id = resTree.name;
     loopNode(resTree.children, resTree.id);
     allTree = resTree;
+  } else {
+    return null;
   }
 
   const classes = useStyles();
@@ -110,7 +112,7 @@ export const TransferList = forwardRef((props: Iprops, ref: any) => {
 
     const matchNode = (map: object) => {
       let transNode: string[] = []
-      for(let [k, v] of Object.entries(map)){
+      for (let [k, v] of Object.entries(map)) {
         transNode = transNode.concat(v.map((item: string) => `${k}/${item}`))
       }
       return all.filter(item => {
@@ -118,7 +120,7 @@ export const TransferList = forwardRef((props: Iprops, ref: any) => {
           let one = item.split('/')
           let one2 = ''
           if (one.length > 2) {
-            one2 = `${one[one.length -2]}/${one[one.length -1]}`
+            one2 = `${one[one.length - 2]}/${one[one.length - 1]}`
           }
           return item.indexOf(n) !== -1 && n === one2
         })
@@ -142,7 +144,7 @@ export const TransferList = forwardRef((props: Iprops, ref: any) => {
   const loopParentNode = (nodes: string[]) => {
     return nodes.reduce((pre, next) => {
       let NODE = next.split('/').reduce((p, n) => {
-        p.push(`${p.length > 0 ? `${p[p.length -1]}/` : '' }${n}`);
+        p.push(`${p.length > 0 ? `${p[p.length - 1]}/` : ''}${n}`);
         return p
       }, [])
       return Array.from(new Set(pre.concat(NODE)));
@@ -163,7 +165,7 @@ export const TransferList = forwardRef((props: Iprops, ref: any) => {
   const totalNode = (a: string[]) => {
     return Array.from(new Set(loopParentNode(a).concat(loopChildNode(a))));
   }
-  
+
   const handleCheckedRight = () => { // 向右移动
     let moveNode = totalNode(leftSelected);
     setRight(right.concat(moveNode));
@@ -207,7 +209,7 @@ export const TransferList = forwardRef((props: Iprops, ref: any) => {
   })
 
   const renderTree = (nodes: RenderTree, type: string) => { // 渲染树节点
-    const ARR =  type === 'left' ? left : right;
+    const ARR = type === 'left' ? left : right;
     const notLeaf = ARR.filter(item => item.startsWith(nodes.id) && !!nodes.children)
     if (notLeaf.length === 1) {
       return null
@@ -330,17 +332,17 @@ export class GrantRoleDialog extends React.Component<Props> {
   }
 
   onOpen = () => {
-    if (this.tenantRole.spec.privilege != undefined){
+    if (this.tenantRole.spec.privilege != undefined) {
       this.checkedMap = this.tenantRole.spec.privilege
     }
     this.name = this.tenantRole.getName();
-    apiPermission.get("/permission_tree").then((data: resTree) =>{
+    apiPermission.get("/permission_tree").then((data: resTree) => {
       this.permissionTree = data
-    } )
+    })
   }
 
   updateRole = async () => {
-    const {name, namespace} = this;
+    const { name, namespace } = this;
     const role: Partial<TenantRole> = {
       spec: {
         tenant_id: this.tenantRole.spec.tenant_id,
@@ -352,7 +354,7 @@ export class GrantRoleDialog extends React.Component<Props> {
     }
     this.tenantRole.spec = role.spec
     try {
-      const newRole = await tenantRoleApi.update({namespace, name}, this.tenantRole);
+      const newRole = await tenantRoleApi.update({ namespace, name }, this.tenantRole);
       this.reset();
       Notifications.ok(
         <>Role {name} grant succeeded</>
@@ -364,8 +366,8 @@ export class GrantRoleDialog extends React.Component<Props> {
   }
 
   render() {
-    const {...dialogProps} = this.props;
-    
+    const { ...dialogProps } = this.props;
+
     const header = <h5><Trans>Grant Role</Trans></h5>;
     return (
       <Dialog
