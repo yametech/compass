@@ -1,3 +1,3 @@
 default:
-	docker build -t yametech/compass:v0.1.3 -f Dockerfile .
-	docker push yametech/compass:v0.1.3
+	docker build -t yametech/compass:0.2.0 -f Dockerfile .
+	docker push yametech/compass:0.2.0
