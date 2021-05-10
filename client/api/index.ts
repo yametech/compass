@@ -10,6 +10,11 @@ export const apiBase = new JsonApi({
     apiPrefix: clientVars.API_PREFIX.BASE,
 });
 
+export const apiConfig = new JsonApi({
+    debug: !clientVars.IS_PRODUCTION,
+    apiPrefix: clientVars.API_PREFIX.CONFIG,
+});
+
 export const apiPermission = new JsonApi({
     debug: !clientVars.IS_PRODUCTION,
     apiPrefix: clientVars.API_PREFIX.TENANT,

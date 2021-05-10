@@ -61,7 +61,7 @@ export class TerminalApi extends WebSocketApi {
         Data: "export COLUMNS=1000000000 && export TERM=xterm" + "\r",
       };
       this.sendCommand(dataObj);
-    }, 5000);
+    }, 1000);
   }
 
   async getUrl() {

@@ -1,8 +1,8 @@
 // App configuration api
-import { apiBase } from "../index";
+import { apiConfig } from "../index";
 import { IConfig } from "../../../server/common/config";
 export const configApi = {
   getConfig() {
-    return apiBase.get<IConfig>("/config")
+    return apiConfig.get<IConfig>("/config")
   },
 };
