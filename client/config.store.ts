@@ -25,7 +25,7 @@ export class ConfigStore {
   @observable isLoaded = false;
 
   constructor() {
-    this.updater.start();
+    // this.updater.start();
   }
 
   load() {
