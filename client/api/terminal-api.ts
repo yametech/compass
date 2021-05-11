@@ -56,27 +56,27 @@ export class TerminalApi extends WebSocketApi {
       flushOnOpen: false,
       pingIntervalSeconds: 30,
     });
-    setTimeout(() => {
-      const dataObj = {
-        Data: "export COLUMNS=1000000000 && export TERM=xterm" + "\r",
-      };
-      this.sendCommand(dataObj);
-    }, 5000);
+    // setTimeout(() => {
+    //   const dataObj = {
+    //     Data: "export COLUMNS=1000000000 && export TERM=xterm" + "\r",
+    //   };
+    //   this.sendCommand(dataObj);
+    // }, 5000);
   }
 
   async getUrl() {
     const { hostname, protocol } = location;
     const wss = `http${protocol === "https:" ? "s" : ""}://`;
     console.log(
-      `${wss}${hostname}${configStore.serverPort}/workload/shell/pod`
+      `${wss}${hostname}${configStore.serverPort}/terminal/shell/pod`
     );
-    return `${wss}${hostname}${configStore.serverPort}/workload/shell/pod`;
+    return `${wss}${hostname}${configStore.serverPort}/terminal/shell/pod`;
   }
 
   async connect() {
     const apiUrl = await this.getUrl();
     const { colorTheme } = this.options;
-    this.emitStatus("Connecting terminal.....", {
+    this.emitStatus("\r\n Connecting terminal.....", {
       color:
         colorTheme == "light" ? TerminalColor.GRAY : TerminalColor.LIGHT_GRAY,
     });

@@ -1,19 +1,19 @@
-import {action, observable, reaction} from "mobx";
-import {autobind} from "./utils";
-import {KubeObject} from "./api/kube-object";
-import {IKubeWatchEvent, kubeWatchApi} from "./api/kube-watch-api";
-import {ItemStore} from "./item.store";
-import {configStore} from "./config.store";
-import {apiManager} from "./api/api-manager";
-import {IKubeApiQueryParams, KubeApi} from "./api/kube-api";
-import {KubeJsonApiData} from "./api/kube-json-api";
+import { action, observable, reaction } from "mobx";
+import { autobind } from "./utils";
+import { KubeObject } from "./api/kube-object";
+import { IKubeWatchEvent, kubeWatchApi } from "./api/kube-watch-api";
+import { ItemStore } from "./item.store";
+import { configStore } from "./config.store";
+import { apiManager } from "./api/api-manager";
+import { IKubeApiQueryParams, KubeApi } from "./api/kube-api";
+import { KubeJsonApiData } from "./api/kube-json-api";
 import store from "store";
-import {Notifications} from "./components/notifications";
+import { Notifications } from "./components/notifications";
 
 @autobind()
 export abstract class KubeObjectStore<
   T extends KubeObject = any
-> extends ItemStore<T> {
+  > extends ItemStore<T> {
   abstract api: KubeApi<T>;
   public limit: number;
 
@@ -178,24 +178,30 @@ export abstract class KubeObjectStore<
       || item.kind === "TektonWebHook"
       || item.kind === "TektonGraph"
       || item.kind === "Service"
-      || item.kind === "Endpoint"
+      || item.kind === "Endpoints"
       || item.kind === "Ingress"
     ) {
       const itemApi = apiManager.getApi(item.selfLink)
       await itemApi.delete({ name: item.getName(), namespace: item.getNs() })
-          .then((res) => {
-             Notifications.ok(item.kind + " " + item.getName() +" delete succeeded")
-          }).catch((err)=>{
-            console.error(err)
-            Notifications.error(item.kind + " " + item.getName() +" delete failed")
-          })
-          .finally(() => { });
+        .then((res) => {
+          Notifications.ok(item.kind + " " + item.getName() + " delete succeeded")
+          this.items.remove(item)
+          this.selectedItemsIds.delete(item.getId());
+        }).catch((err) => {
+          Notifications.error(item.kind + " " + item.getName() + " delete failed" + " because " + err)
+        });
       return
     }
 
-    await item.delete();
-    this.items.remove(item);
-    this.selectedItemsIds.delete(item.getId());
+    item.delete()
+      .then((res) => {
+        Notifications.ok(item.kind + " " + item.getName() + " delete succeeded")
+        this.items.remove(item);
+        this.selectedItemsIds.delete(item.getId());
+      })
+      .catch((err) => {
+        Notifications.error(item.kind + " " + item.getName() + " delete failed" + " because " + err)
+      });
   }
 
   async removeSelectedItems() {

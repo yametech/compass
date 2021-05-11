@@ -53,40 +53,40 @@ export class JsonApi<D = JsonApiData, P extends JsonApiParams = JsonApiParams> {
   get<T = D>(path: string, params?: P, reqInit: RequestInit = {}) {
     const userConfig = store.get('u_config')
     const token = userConfig.token
-    if(!token) return
-    let reqConfig = { ...reqInit, method: "get", headers:{Authorization:token}}
+    if (!token) return
+    let reqConfig = { ...reqInit, method: "get", headers: { Authorization: token } }
     return this.request<T>(path, params, { ...reqConfig });
   }
 
   post<T = D>(path: string, params?: P, reqInit: RequestInit = {}) {
     const userConfig = store.get('u_config')
     const token = userConfig.token
-    if(!token) return
-    let reqConfig = {...reqInit,method: "post",headers:{Authorization:token}}
-    return this.request<T>(path, params, {...reqConfig  });
+    if (!token) return
+    let reqConfig = { ...reqInit, method: "post", headers: { Authorization: token } }
+    return this.request<T>(path, params, { ...reqConfig });
   }
 
   put<T = D>(path: string, params?: P, reqInit: RequestInit = {}) {
     const userConfig = store.get('u_config')
     const token = userConfig.token
-    if(!token) return
-    let reqConfig = {...reqInit,method: "put",headers:{Authorization:token}}
+    if (!token) return
+    let reqConfig = { ...reqInit, method: "put", headers: { Authorization: token } }
     return this.request<T>(path, params, { ...reqConfig });
   }
 
   patch<T = D>(path: string, params?: P, reqInit: RequestInit = {}) {
     const userConfig = store.get('u_config')
     const token = userConfig.token
-    if(!token) return
-    let reqConfig = {...reqInit,method: "patch",headers:{Authorization:token}}
+    if (!token) return
+    let reqConfig = { ...reqInit, method: "patch", headers: { Authorization: token } }
     return this.request<T>(path, params, { ...reqConfig });
   }
 
   del<T = D>(path: string, params?: P, reqInit: RequestInit = {}) {
     const userConfig = store.get('u_config')
     const token = userConfig.token
-    if(!token) return
-    let reqConfig = {...reqInit,method: "delete",headers:{Authorization:token}}
+    if (!token) return
+    let reqConfig = { ...reqInit, method: "delete", headers: { Authorization: token } }
     return this.request<T>(path, params, { ...reqConfig });
   }
 

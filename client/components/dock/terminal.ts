@@ -136,6 +136,7 @@ export class Terminal {
   }
 
   onApiData = (data: string) => {
+    this.fitLazy();
     this.xterm.write(typeof data === 'string' ? data : new Uint8Array(data));
   }
 
