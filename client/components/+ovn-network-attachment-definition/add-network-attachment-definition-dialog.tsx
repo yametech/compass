@@ -1,25 +1,25 @@
 import "./add-network-attachment-definition-dialog.scss";
 
 import React from "react";
-import {Dialog, DialogProps} from "../dialog";
-import {Wizard, WizardStep} from "../wizard";
-import {observable} from "mobx";
-import {observer} from "mobx-react";
-import {Notifications} from "../notifications";
+import { Dialog, DialogProps } from "../dialog";
+import { Wizard, WizardStep } from "../wizard";
+import { observable } from "mobx";
+import { observer } from "mobx-react";
+import { Notifications } from "../notifications";
 import {
   networkAttachmentDefinitionApi,
   NetworkAttachmentDefinitionConfig,
   networkAttachmentDefinitionConfig,
 } from "../../api/endpoints";
-import {IPInput} from "../ip";
-import {SubTitle} from "../layout/sub-title";
-import {Input} from "../input";
-import {Icon} from "../icon";
-import {stopPropagation} from "../../utils";
-import {createMuiTheme, Grid, Paper} from "@material-ui/core";
-import {ThemeProvider} from "@material-ui/core/styles";
-import {Select} from "../select";
-import {NamespaceSelect} from "../+namespaces/namespace-select";
+import { IPInput } from "../ip";
+import { SubTitle } from "../layout/sub-title";
+import { Input } from "../input";
+import { Icon } from "../icon";
+import { stopPropagation } from "../../utils";
+import { createMuiTheme, Grid, Paper } from "@material-ui/core";
+import { ThemeProvider } from "@material-ui/core/styles";
+import { Select } from "../select";
+import { NamespaceSelect } from "../+namespaces/namespace-select";
 import Switch from '@material-ui/core/Switch';
 
 const theme = createMuiTheme({
@@ -47,7 +47,7 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
   @observable name: string = "";
   @observable namespace: string = "";
   @observable config: NetworkAttachmentDefinitionConfig = networkAttachmentDefinitionConfig;
-  @observable routes: { [key: string]: string }[] = [{"dst": "0.0.0.0/0"}];
+  @observable routes: { [key: string]: string }[] = [{ "dst": "0.0.0.0/0" }];
 
   static open() {
     AddNetworkAttachmentDefinitionDialog.isOpen = true;
@@ -70,7 +70,7 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
   addNetworkAttachmentDefinition = async () => {
     try {
       this.config.name = this.name;
-      await networkAttachmentDefinitionApi.create({name: this.name, namespace: this.namespace}, {
+      await networkAttachmentDefinitionApi.create({ name: this.name, namespace: this.namespace }, {
         spec: {
           config: JSON.stringify(this.config)
         }
@@ -90,7 +90,7 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
       mode: "bridge",
       ipam: {
         type: 'host-local',
-        routes: [{"dst": "0.0.0.0/0"}]
+        routes: [{ "dst": "0.0.0.0/0" }]
       }
     });
   }
@@ -123,22 +123,22 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
   rAddRoutes(pluginIndex: number, index: number) {
     return (
       <>
-        <br/>
+        <br />
         <Grid container alignItems="center" direction="row">
           <Grid item xs={11} zeroMinWidth>
-            <SubTitle title={`destination`}/>
+            <SubTitle title={`destination`} />
             <IPInput
               isIPv4CIDR={true}
               value={this.config.plugins[pluginIndex]?.addroutes[index]?.dst}
               onChange={(value: string) => {
                 this.config.plugins[pluginIndex].addroutes[index].dst = value
-              }}/>
-            <SubTitle title={`gateway`}/>
+              }} />
+            <SubTitle title={`gateway`} />
             <IPInput
               value={this.config.plugins[pluginIndex]?.addroutes[index]?.gw}
               onChange={(value: string) => {
                 this.config.plugins[pluginIndex].addroutes[index].gw = value
-              }}/>
+              }} />
           </Grid>
           <Grid item xs zeroMinWidth>
             <Icon
@@ -161,16 +161,16 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
   rDelRoutes(pluginIndex: number, index: number) {
     return (
       <>
-        <br/>
+        <br />
         <Grid container alignItems="center" direction="row">
           <Grid item xs={11} zeroMinWidth>
-            <SubTitle title={`destination`}/>
+            <SubTitle title={`destination`} />
             <IPInput
               isIPv4CIDR={true}
               value={this.config.plugins[pluginIndex]?.delroutes[index]?.dst}
               onChange={(value: string) => {
                 this.config.plugins[pluginIndex].delroutes[index].dst = value
-              }}/>
+              }} />
           </Grid>
           <Grid item xs zeroMinWidth>
             <Icon
@@ -192,10 +192,10 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
 
   rPlugin(index: number) {
     return (
-      <Paper elevation={3} style={{padding: 25}}>
+      <Paper elevation={3} style={{ padding: 25 }}>
         <Grid container spacing={5} alignItems="center" direction="row">
           <Grid item xs={11} zeroMinWidth>
-            <SubTitle title={`type`}/>
+            <SubTitle title={`type`} />
             <Select
               value={this.config.plugins[index]?.type}
               options={['macvlan', 'route-override']}
@@ -203,7 +203,7 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
                 (value) => {
                   this.config.plugins[index].type = value.value;
                   if (this.config.plugins[index].type == 'macvlan') {
-                    this.config.plugins[index].ipam = {type: 'host-local', routes: [{"dst": "0.0.0.0/0"}]};
+                    this.config.plugins[index].ipam = { type: 'host-local', routes: [{ "dst": "0.0.0.0/0" }] };
                     this.config.plugins[index].master = "";
                     this.config.plugins[index].mode = "bridge";
 
@@ -225,40 +225,40 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
             {
               this.config.plugins[index]?.type == 'macvlan' ?
                 <>
-                  <SubTitle title={`master`}/>
+                  <SubTitle title={`master`} />
                   <Input
                     required
                     value={this.config.plugins[index]?.master}
                     onChange={(value) => this.config.plugins[index].master = value}
                   />
-                  <SubTitle title={`mode :`} children={'bridge'}/>
-                  <SubTitle title={`IPAM type`}/>
+                  <SubTitle title={`mode :`} children={'bridge'} />
+                  <SubTitle title={`IPAM type`} />
                   <Select
                     value={this.config.plugins[index]?.ipam.type}
-                    options={['host-local']}
+                    options={['host-local', 'global-ipam']}
                     onChange={
                       (value) => this.config.plugins[index].ipam.type = value.value
                     }
                   />
-                  <SubTitle title={`IPAM RangeStart`}/>
+                  <SubTitle title={`IPAM RangeStart`} />
                   <IPInput
                     value={this.config.plugins[index]?.ipam.rangeStart}
                     onChange={(value: string) => {
                       this.config.plugins[index].ipam.rangeStart = value
-                    }}/>
-                  <SubTitle title={`IPAM RangeEnd`}/>
+                    }} />
+                  <SubTitle title={`IPAM RangeEnd`} />
                   <IPInput
                     value={this.config.plugins[index]?.ipam.rangeEnd}
                     onChange={(value: string) => {
                       this.config.plugins[index].ipam.rangeEnd = value
-                    }}/>
-                  <SubTitle title={`IPAM SubNet`}/>
+                    }} />
+                  <SubTitle title={`IPAM SubNet`} />
                   <IPInput
                     value={this.config.plugins[index]?.ipam.subnet}
                     isIPv4CIDR
                     onChange={(value: string) => {
                       this.config.plugins[index].ipam.subnet = value
-                    }}/>
+                    }} />
                 </> : null
             }
             {
@@ -271,9 +271,9 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
                         this.config.plugins[index].flushroutes = event.target.checked
                       }
                       name="flushroutes"
-                      inputProps={{'aria-label': 'primary checkbox'}}
+                      inputProps={{ 'aria-label': 'primary checkbox' }}
                     />
-                  }/>
+                  } />
                   <SubTitle
                     title={
                       <>
@@ -282,7 +282,7 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
                         <Icon material={"add_circle"} className={"add_circle"} onClick={event => {
                           this.addRoutes(index);
                           stopPropagation(event);
-                        }} small/>
+                        }} small />
                       </>
                     }>
                   </SubTitle>
@@ -297,7 +297,7 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
                         <Icon material={"add_circle"} className={"add_circle"} onClick={event => {
                           this.addDelRoutes(index);
                           stopPropagation(event);
-                        }} small/>
+                        }} small />
                       </>
                     }>
                   </SubTitle>
@@ -326,23 +326,23 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
   }
 
   render() {
-    const {...dialogProps} = this.props;
+    const { ...dialogProps } = this.props;
     const header = <h5>Create NetworkAttachmentDefinition</h5>;
     return (
       <ThemeProvider theme={theme}>
         <Dialog {...dialogProps} className="AddNetworkAttachmentDefinitionDialog"
-                isOpen={AddNetworkAttachmentDefinitionDialog.isOpen} close={this.close}>
+          isOpen={AddNetworkAttachmentDefinitionDialog.isOpen} close={this.close}>
           <Wizard header={header} done={this.close}>
             <WizardStep contentClass="flex gaps column"
-                        nextLabel={`Create NetworkAttachmentDefinition`} next={this.addNetworkAttachmentDefinition}>
-              <SubTitle title={`name`}/>
+              nextLabel={`Create NetworkAttachmentDefinition`} next={this.addNetworkAttachmentDefinition}>
+              <SubTitle title={`name`} />
               <Input
                 required
                 value={this.name}
                 onChange={(value) => this.name = value}
               />
-              <SubTitle title={`namespace`}/>
-              <NamespaceSelect required value={this.namespace} onChange={value => this.namespace = value.value}/>
+              <SubTitle title={`namespace`} />
+              <NamespaceSelect required value={this.namespace} onChange={value => this.namespace = value.value} />
               <SubTitle
                 title={
                   <>
@@ -351,7 +351,7 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
                     <Icon material={"add_circle"} className={"add_circle"} onClick={event => {
                       this.add();
                       stopPropagation(event);
-                    }} small/>
+                    }} small />
                   </>
                 }>
               </SubTitle>
