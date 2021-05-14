@@ -253,6 +253,33 @@ export class ConfigNetworkAttachmentDefinitionDialog extends React.Component<Pro
                     onChange={(value: string) => {
                       this.config.plugins[index].ipam.subnet = value
                     }} />
+
+                  {
+                    this.config.plugins[index].ipam.type == 'global-ipam' ?
+                      <>
+                        <SubTitle title={`EtcdURL`} />
+                        <Input
+                          required
+                          value={this.config.plugins[index]?.ipam.etcdConfig.etcdURL}
+                          onChange={(value) => this.config.plugins[index].ipam.etcdConfig.etcdURL = value}
+                        />
+                        <SubTitle title={`etcdCertFile`} />
+                        <Input
+                          value={this.config.plugins[index]?.ipam.etcdConfig.etcdCertFile}
+                          onChange={(value) => this.config.plugins[index].ipam.etcdConfig.etcdCertFile = value}
+                        />
+                        <SubTitle title={`etcdKeyFile`} />
+                        <Input
+                          value={this.config.plugins[index]?.ipam.etcdConfig.etcdKeyFile}
+                          onChange={(value) => this.config.plugins[index].ipam.etcdConfig.etcdKeyFile = value}
+                        />
+                        <SubTitle title={`etcdTrustedCAFileFile`} />
+                        <Input
+                          value={this.config.plugins[index]?.ipam.etcdConfig.etcdTrustedCAFileFile}
+                          onChange={(value) => this.config.plugins[index].ipam.etcdConfig.etcdTrustedCAFileFile = value}
+                        />
+                      </> : null
+                  }
                 </> : null
             }
             {
