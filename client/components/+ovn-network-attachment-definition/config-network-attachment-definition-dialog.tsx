@@ -1,25 +1,25 @@
 import "./config-network-attachment-definition-dialog.scss";
 
 import React from "react";
-import {Dialog, DialogProps} from "../dialog";
-import {Wizard, WizardStep} from "../wizard";
-import {observable} from "mobx";
-import {observer} from "mobx-react";
-import {Notifications} from "../notifications";
+import { Dialog, DialogProps } from "../dialog";
+import { Wizard, WizardStep } from "../wizard";
+import { observable } from "mobx";
+import { observer } from "mobx-react";
+import { Notifications } from "../notifications";
 import {
   NetworkAttachmentDefinitionConfig,
   networkAttachmentDefinitionConfig,
   NetworkAttachmentDefinition,
 } from "../../api/endpoints";
-import {IPInput} from "../ip";
-import {SubTitle} from "../layout/sub-title";
-import {Select} from "../select";
-import {Input} from "../input";
-import {networkAttachmentDefinitionStore} from "./network-attachment-definition.store";
-import {createMuiTheme, Grid, Paper} from "@material-ui/core";
-import {Icon} from "../icon";
-import {stopPropagation} from "../../utils";
-import {ThemeProvider} from "@material-ui/core/styles";
+import { IPInput } from "../ip";
+import { SubTitle } from "../layout/sub-title";
+import { Select } from "../select";
+import { Input } from "../input";
+import { networkAttachmentDefinitionStore } from "./network-attachment-definition.store";
+import { createMuiTheme, Grid, Paper } from "@material-ui/core";
+import { Icon } from "../icon";
+import { stopPropagation } from "../../utils";
+import { ThemeProvider } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 
 const theme = createMuiTheme({
@@ -86,7 +86,7 @@ export class ConfigNetworkAttachmentDefinitionDialog extends React.Component<Pro
       mode: "bridge",
       ipam: {
         type: 'host-local',
-        routes: [{"dst": "0.0.0.0/0"}]
+        routes: [{ "dst": "0.0.0.0/0" }]
       }
     });
   }
@@ -119,22 +119,22 @@ export class ConfigNetworkAttachmentDefinitionDialog extends React.Component<Pro
   rAddRoutes(pluginIndex: number, index: number) {
     return (
       <>
-        <br/>
+        <br />
         <Grid container alignItems="center" direction="row">
           <Grid item xs={11} zeroMinWidth>
-            <SubTitle title={`destination`}/>
+            <SubTitle title={`destination`} />
             <IPInput
               isIPv4CIDR={true}
               value={this.config.plugins[pluginIndex]?.addroutes[index]?.dst}
               onChange={(value: string) => {
                 this.config.plugins[pluginIndex].addroutes[index].dst = value
-              }}/>
-            <SubTitle title={`gateway`}/>
+              }} />
+            <SubTitle title={`gateway`} />
             <IPInput
               value={this.config.plugins[pluginIndex]?.addroutes[index]?.gw}
               onChange={(value: string) => {
                 this.config.plugins[pluginIndex].addroutes[index].gw = value
-              }}/>
+              }} />
           </Grid>
           <Grid item xs zeroMinWidth>
             <Icon
@@ -156,16 +156,16 @@ export class ConfigNetworkAttachmentDefinitionDialog extends React.Component<Pro
   rDelRoutes(pluginIndex: number, index: number) {
     return (
       <>
-        <br/>
+        <br />
         <Grid container alignItems="center" direction="row">
           <Grid item xs={11} zeroMinWidth>
-            <SubTitle title={`destination`}/>
+            <SubTitle title={`destination`} />
             <IPInput
               isIPv4CIDR={true}
               value={this.config.plugins[pluginIndex]?.delroutes[index]?.dst}
               onChange={(value: string) => {
                 this.config.plugins[pluginIndex].delroutes[index].dst = value
-              }}/>
+              }} />
           </Grid>
           <Grid item xs zeroMinWidth>
             <Icon
@@ -186,10 +186,10 @@ export class ConfigNetworkAttachmentDefinitionDialog extends React.Component<Pro
 
   rPlugin(index: number) {
     return (
-      <Paper elevation={3} style={{padding: 25}}>
+      <Paper elevation={3} style={{ padding: 25 }}>
         <Grid container spacing={5} alignItems="center" direction="row">
           <Grid item xs={11} zeroMinWidth>
-            <SubTitle title={`type`}/>
+            <SubTitle title={`type`} />
             <Select
               value={this.config.plugins[index]?.type}
               options={['macvlan', 'route-override']}
@@ -197,7 +197,7 @@ export class ConfigNetworkAttachmentDefinitionDialog extends React.Component<Pro
                 (value) => {
                   this.config.plugins[index].type = value.value;
                   if (this.config.plugins[index].type == 'macvlan') {
-                    this.config.plugins[index].ipam = {type: 'host-local', routes: [{"dst": "0.0.0.0/0"}]};
+                    this.config.plugins[index].ipam = { type: 'host-local', routes: [{ "dst": "0.0.0.0/0" }] };
                     this.config.plugins[index].master = "";
                     this.config.plugins[index].mode = "bridge";
 
@@ -219,40 +219,40 @@ export class ConfigNetworkAttachmentDefinitionDialog extends React.Component<Pro
             {
               this.config.plugins[index]?.type == 'macvlan' ?
                 <>
-                  <SubTitle title={`master`}/>
+                  <SubTitle title={`master`} />
                   <Input
                     required
                     value={this.config.plugins[index]?.master}
                     onChange={(value) => this.config.plugins[index].master = value}
                   />
-                  <SubTitle title={`mode :`} children={'bridge'}/>
-                  <SubTitle title={`IPAM type`}/>
+                  <SubTitle title={`mode :`} children={'bridge'} />
+                  <SubTitle title={`IPAM type`} />
                   <Select
                     value={this.config.plugins[index]?.ipam.type}
-                    options={['host-local']}
+                    options={['host-local', 'global-ipam']}
                     onChange={
                       (value) => this.config.plugins[index].ipam.type = value.value
                     }
                   />
-                  <SubTitle title={`IPAM RangeStart`}/>
+                  <SubTitle title={`IPAM RangeStart`} />
                   <IPInput
                     value={this.config.plugins[index]?.ipam.rangeStart}
                     onChange={(value: string) => {
                       this.config.plugins[index].ipam.rangeStart = value
-                    }}/>
-                  <SubTitle title={`IPAM RangeEnd`}/>
+                    }} />
+                  <SubTitle title={`IPAM RangeEnd`} />
                   <IPInput
                     value={this.config.plugins[index]?.ipam.rangeEnd}
                     onChange={(value: string) => {
                       this.config.plugins[index].ipam.rangeEnd = value
-                    }}/>
-                  <SubTitle title={`IPAM SubNet`}/>
+                    }} />
+                  <SubTitle title={`IPAM SubNet`} />
                   <IPInput
                     value={this.config.plugins[index]?.ipam.subnet}
                     isIPv4CIDR
                     onChange={(value: string) => {
                       this.config.plugins[index].ipam.subnet = value
-                    }}/>
+                    }} />
                 </> : null
             }
             {
@@ -265,9 +265,9 @@ export class ConfigNetworkAttachmentDefinitionDialog extends React.Component<Pro
                         this.config.plugins[index].flushroutes = event.target.checked
                       }
                       name="flushroutes"
-                      inputProps={{'aria-label': 'primary checkbox'}}
+                      inputProps={{ 'aria-label': 'primary checkbox' }}
                     />
-                  }/>
+                  } />
                   <SubTitle
                     title={
                       <>
@@ -276,7 +276,7 @@ export class ConfigNetworkAttachmentDefinitionDialog extends React.Component<Pro
                         <Icon material={"edit"} className={"editIcon"} onClick={event => {
                           this.addRoutes(index);
                           stopPropagation(event);
-                        }} small/>
+                        }} small />
                       </>
                     }>
                   </SubTitle>
@@ -291,7 +291,7 @@ export class ConfigNetworkAttachmentDefinitionDialog extends React.Component<Pro
                         <Icon material={"edit"} className={"editIcon"} onClick={event => {
                           this.addDelRoutes(index);
                           stopPropagation(event);
-                        }} small/>
+                        }} small />
                       </>
                     }>
                   </SubTitle>
@@ -335,21 +335,21 @@ export class ConfigNetworkAttachmentDefinitionDialog extends React.Component<Pro
   }
 
   render() {
-    const {...dialogProps} = this.props;
+    const { ...dialogProps } = this.props;
     const header = <h5>Config NetworkAttachmentDefinition</h5>;
 
     return (
       <ThemeProvider theme={theme}>
         <Dialog {...dialogProps}
-                className="ConfigNetworkAttachmentDefinitionDialog"
-                isOpen={ConfigNetworkAttachmentDefinitionDialog.isOpen}
-                close={this.close}
-                onOpen={this.onOpen}>
+          className="ConfigNetworkAttachmentDefinitionDialog"
+          isOpen={ConfigNetworkAttachmentDefinitionDialog.isOpen}
+          close={this.close}
+          onOpen={this.onOpen}>
           <Wizard header={header} done={this.close}>
             <WizardStep contentClass="flex gaps column"
-                        nextLabel={`Config NetworkAttachmentDefinition`} next={this.configNetworkAttachmentDefinition}>
-              <SubTitle title={`name :`} children={this.name}/>
-              <SubTitle title={`namespace :`} children={this.namespace}/>
+              nextLabel={`Config NetworkAttachmentDefinition`} next={this.configNetworkAttachmentDefinition}>
+              <SubTitle title={`name :`} children={this.name} />
+              <SubTitle title={`namespace :`} children={this.namespace} />
               <SubTitle
                 title={
                   <>
@@ -358,7 +358,7 @@ export class ConfigNetworkAttachmentDefinitionDialog extends React.Component<Pro
                     <Icon material={"edit"} className={"editIcon"} onClick={event => {
                       this.add();
                       stopPropagation(event);
-                    }} small/>
+                    }} small />
                   </>
                 }>
               </SubTitle>
