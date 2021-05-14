@@ -1,6 +1,6 @@
-import {autobind} from "../../utils";
-import {KubeObject} from "../kube-object";
-import {KubeApi} from "../kube-api";
+import { autobind } from "../../utils";
+import { KubeObject } from "../kube-object";
+import { KubeApi } from "../kube-api";
 
 export interface IPAM {
   type?: string,
@@ -10,7 +10,15 @@ export interface IPAM {
   rangeEnd?: string,
   routes?: {
     dst?: string
-  }[]
+  }[],
+  etcdConfig?: EtcdConfig,
+}
+
+export interface EtcdConfig {
+  etcdURL?: string,
+  etcdCertFile?: string,
+  etcdKeyFile?: string,
+  etcdTrustedCAFileFile?: string,
 }
 
 export interface Delroute {
@@ -26,7 +34,7 @@ export interface Plugin {
   type?: string,
   master?: string,
   mode?: string,
-  ipam?:  IPAM,
+  ipam?: IPAM,
   flushroutes?: boolean,
   delroutes?: Delroute[],
   addroutes?: Addroute[]

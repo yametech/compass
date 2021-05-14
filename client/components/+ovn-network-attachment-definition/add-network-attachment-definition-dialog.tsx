@@ -90,7 +90,8 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
       mode: "bridge",
       ipam: {
         type: 'host-local',
-        routes: [{ "dst": "0.0.0.0/0" }]
+        routes: [{ "dst": "0.0.0.0/0" }],
+        etcdConfig: { etcdURL: "" },
       }
     });
   }
@@ -246,12 +247,14 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
                     onChange={(value: string) => {
                       this.config.plugins[index].ipam.rangeStart = value
                     }} />
+
                   <SubTitle title={`IPAM RangeEnd`} />
                   <IPInput
                     value={this.config.plugins[index]?.ipam.rangeEnd}
                     onChange={(value: string) => {
                       this.config.plugins[index].ipam.rangeEnd = value
                     }} />
+
                   <SubTitle title={`IPAM SubNet`} />
                   <IPInput
                     value={this.config.plugins[index]?.ipam.subnet}
@@ -259,6 +262,35 @@ export class AddNetworkAttachmentDefinitionDialog extends React.Component<Props>
                     onChange={(value: string) => {
                       this.config.plugins[index].ipam.subnet = value
                     }} />
+
+                  {
+                    this.config.plugins[index].ipam.type == 'global-ipam' ?
+                      <>
+                        <SubTitle title={`EtcdURL`} />
+                        <Input
+                          required
+                          value={this.config.plugins[index]?.ipam.etcdConfig.etcdURL}
+                          onChange={(value) => this.config.plugins[index].ipam.etcdConfig.etcdURL = value}
+                        />
+                        <SubTitle title={`etcdCertFile`} />
+                        <Input
+                          value={this.config.plugins[index]?.ipam.etcdConfig.etcdCertFile}
+                          onChange={(value) => this.config.plugins[index].ipam.etcdConfig.etcdCertFile = value}
+                        />
+                        <SubTitle title={`etcdKeyFile`} />
+                        <Input
+                          value={this.config.plugins[index]?.ipam.etcdConfig.etcdKeyFile}
+                          onChange={(value) => this.config.plugins[index].ipam.etcdConfig.etcdKeyFile = value}
+                        />
+                        <SubTitle title={`etcdTrustedCAFileFile`} />
+                        <Input
+                          value={this.config.plugins[index]?.ipam.etcdConfig.etcdTrustedCAFileFile}
+                          onChange={(value) => this.config.plugins[index].ipam.etcdConfig.etcdTrustedCAFileFile = value}
+                        />
+                      </> : null
+                  }
+
+
                 </> : null
             }
             {
