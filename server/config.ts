@@ -14,6 +14,7 @@ export const config = {
 
   API_PREFIX: {
     BASE: '/api', // local express.js server api
+    WATCHER: '/watcher', // watcher api
     TENANT: '/base',  // tenant api
     TEKTON: '/tekton', // tekton
     WORKLOAD: '/workload', // tekton

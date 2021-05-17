@@ -46,6 +46,14 @@ export default () => {
           changeOrigin: true,
           // pathRewrite: { '^/base': '' }
         },
+        '/watcher': {
+          target: 'http://127.0.0.1:8080',
+          ws: true,
+          secure: false,
+          changeOrigin: true,
+          logLevel: 'debug',
+          // pathRewrite: { '^/base': '' }
+        },
         '/config': {
           target: 'http://127.0.0.1:8080',
           secure: false,
