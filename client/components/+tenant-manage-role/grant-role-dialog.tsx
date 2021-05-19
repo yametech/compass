@@ -305,7 +305,7 @@ export class GrantRoleDialog extends React.Component<Props> {
   @observable static isOpen = false;
   @observable static data: TenantRole = null;
   @observable name = "";
-  @observable namespace = "kube-system";
+  @observable namespace = "";
   @observable transferRef = React.createRef();
   @observable permissionTree: resTree;
   @observable checkedMap = {};

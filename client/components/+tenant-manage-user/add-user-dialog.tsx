@@ -12,10 +12,10 @@ import {Input} from "../input";
 import {_i18n} from "../../i18n";
 import {systemName} from "../input/input.validators";
 import {Notifications} from "../notifications";
-import {BaseDepartmentSelect} from "../+tenant-department/department-select";
-import {BaseRoleSelect} from "../+tenant-role/role-select";
+import {BaseDepartmentSelect} from "../+tenant-manage-department/department-select";
+import {BaseRoleSelect} from "../+tenant-manage-role/role-select";
 import {SelectOption} from "../select";
-import {BaseTenantSelect} from "../+tenant-tenant/tenant-select";
+import {BaseTenantSelect} from "../+tenant-manage-tenant/tenant-select";
 
 interface Props extends Partial<DialogProps> {
 }
@@ -25,7 +25,7 @@ export class AddUserDialog extends React.Component<Props> {
 
   @observable static isOpen = false;
   @observable name = "";
-  @observable namespace = "kube-system";
+  @observable namespace = "";
   @observable display = "";
   @observable email = "";
   @observable tenant_id = "";

@@ -100,7 +100,8 @@ export class KubeObjectDetails extends React.Component {
         kind == "TektonWebHook" ||
         kind == "IP" ||
         kind == "Subnet" ||
-        kind == "NetworkAttachmentDefinition"
+        kind == "NetworkAttachmentDefinition" ||
+        kind == "BaseTenant"
       ) {
         isCrdInstanceLocal = false;
       }

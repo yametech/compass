@@ -24,7 +24,7 @@ export class ConfigTenantDialog extends React.Component<Props> {
   @observable static data: Tenant = null;
   @observable name = "";
   @observable owner = "";
-  @observable namespace = "kube-system";
+  @observable namespace = "";
   @observable namespaces = observable.array<string>([], {deep: false});
 
   @computed get selectedNamespaces() {

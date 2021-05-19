@@ -5,9 +5,9 @@ import {Redirect, Route, Switch} from "react-router";
 import {RouteComponentProps} from "react-router-dom";
 import {Trans} from "@lingui/macro";
 import {MainLayout, TabRoute} from "../layout/main-layout";
-import {TenantDepartments} from '../+tenant-department';
-import {TenantRoles} from '../+tenant-role';
-import {TenantUsers} from "../+tenant-user";
+import {TenantDepartments} from '../+tenant-manage-department';
+import {TenantRoles} from '../+tenant-manage-role';
+import {TenantUsers} from "../+tenant-manage-user";
 import {namespaceStore} from "../+namespaces/namespace.store";
 import {
     tenantDepartmentRoute,
@@ -19,7 +19,7 @@ import {
     tenantUserRoute,
     tenantUserURL
 } from './tenant.route'
-import {Tenants} from "../+tenant-tenant";
+import {Tenants} from "../+tenant-manage-tenant";
 
 interface Props extends RouteComponentProps {
 }
@@ -31,7 +31,7 @@ export class Tenant extends React.Component<Props> {
         const query = namespaceStore.getContextParams();
         return [
             {
-                title: <Trans>BaseTenant</Trans>,
+                title: <Trans>Tenant</Trans>,
                 component: Tenants,
                 url: tenantTenantURL({query}),
                 path: tenantTenantRoute.path

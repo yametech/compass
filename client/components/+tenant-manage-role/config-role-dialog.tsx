@@ -11,7 +11,7 @@ import {SubTitle} from "../layout/sub-title";
 import {_i18n} from "../../i18n";
 import {Notifications} from "../notifications";
 import {Input} from "../input";
-import {BaseDepartmentSelect} from "../+tenant-department/department-select";
+import {BaseDepartmentSelect} from "../+tenant-manage-department/department-select";
 import {NamespaceSelect} from "../+namespaces/namespace-select";
 import {SelectOption} from "../select";
 
@@ -26,7 +26,7 @@ export class ConfigRoleDialog extends React.Component<Props> {
   @observable tenant_id = "";
   @observable department_id = "";
   @observable name = "";
-  @observable namespace = "kube-system";
+  @observable namespace = "";
   @observable comment = "";
   @observable namespaces = observable.array<string>([], {deep: false});
 

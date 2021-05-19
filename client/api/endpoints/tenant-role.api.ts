@@ -25,7 +25,7 @@ export class TenantRole extends KubeObject {
 export const tenantRoleApi = new KubeApi({
     kind: TenantRole.kind,
     apiBase: "/apis/yamecloud.io/v1/baseroles",
-    isNamespaced: true,
+    isNamespaced: false,
     objectConstructor: TenantRole,
     request: apiTenant
 });

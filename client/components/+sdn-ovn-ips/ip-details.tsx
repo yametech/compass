@@ -1,10 +1,8 @@
 import React from "react";
-import { disposeOnUnmount, observer } from "mobx-react";
-import { reaction } from "mobx";
+import { observer } from "mobx-react";
 import { KubeObjectDetailsProps } from "../kube-object";
 import { apiManager } from "../../api/api-manager";
 import { IP, ipApi } from "../../api/endpoints/ip.api";
-import { ipStore } from "./ip.store";
 import { DrawerItem } from "../drawer/drawer-item";
 import { Trans } from "@lingui/macro";
 import { KubeEventDetails } from "../+events/kube-event-details";
@@ -15,14 +13,6 @@ interface Props extends KubeObjectDetailsProps<IP> {
 
 @observer
 export class IPDetails extends React.Component<Props> {
-    @disposeOnUnmount
-    clean = reaction(() => this.props.object, () => {
-        ipStore.reset();
-    });
-
-    componentWillUnmount() {
-        ipStore.reset();
-    }
 
     render() {
 

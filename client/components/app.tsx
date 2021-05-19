@@ -17,7 +17,7 @@ import { clusterRoute, clusterURL } from "./+cluster";
 import { KubeConfigDialog } from "./kubeconfig-dialog";
 import { Nodes, nodesRoute } from "./+nodes";
 import { Workloads, workloadsRoute, workloadsURL } from "./+workloads";
-import { Tenant, tenantRoute } from "./+tenant";
+import { Tenant, tenantRoute } from "./+tenant-manage";
 import { Namespaces, namespacesRoute } from "./+namespaces";
 import { Network, networkRoute } from "./+network";
 import { Storage, storageRoute } from "./+storage";

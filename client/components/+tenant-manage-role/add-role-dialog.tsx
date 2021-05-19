@@ -12,8 +12,8 @@ import {Input} from "../input";
 import {_i18n} from "../../i18n";
 import {systemName} from "../input/input.validators";
 import {Notifications} from "../notifications";
-import {BaseTenantSelect} from "../+tenant-tenant/tenant-select";
-import {BaseDepartmentSelect} from "../+tenant-department/department-select";
+import {BaseTenantSelect} from "../+tenant-manage-tenant/tenant-select";
+import {BaseDepartmentSelect} from "../+tenant-manage-department/department-select";
 import {NamespaceSelect} from "../+namespaces/namespace-select";
 import {SelectOption} from "../select";
 
@@ -37,7 +37,7 @@ export class AddRoleDialog extends React.Component<Props> {
   @observable tenant_id = "";
   @observable department_id = "";
   @observable namespaces = observable.array<string>([], {deep: false});
-  @observable namespace = "kube-system";
+  @observable namespace = "";
   @observable comment = "";
 
   @computed get selectedNamespaces() {

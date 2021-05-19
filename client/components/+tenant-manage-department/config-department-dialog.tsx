@@ -14,7 +14,7 @@ import {NamespaceSelect} from "../+namespaces/namespace-select";
 import {SelectOption} from "../select";
 import {StackDetails} from "./stack-details";
 import {Input} from "../input";
-import {BaseUserSelect} from "../+tenant-user/user-select";
+import {BaseUserSelect} from "../+tenant-manage-user/user-select";
 
 interface Props extends Partial<DialogProps> {
 }

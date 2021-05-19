@@ -11,8 +11,8 @@ import {SubTitle} from "../layout/sub-title";
 import {Input} from "../input";
 import {_i18n} from "../../i18n";
 import {Notifications} from "../notifications";
-import {BaseDepartmentSelect} from "../+tenant-department/department-select";
-import {BaseRoleSelect} from "../+tenant-role/role-select";
+import {BaseDepartmentSelect} from "../+tenant-manage-department/department-select";
+import {BaseRoleSelect} from "../+tenant-manage-role/role-select";
 import {SelectOption} from "../select";
 
 interface Props extends Partial<DialogProps> {
@@ -24,7 +24,7 @@ export class ConfigUserDialog extends React.Component<Props> {
   @observable static isOpen = false;
   @observable static data: TenantUser = null;
   @observable name = "";
-  @observable namespace = "kube-system";
+  @observable namespace = "";
   @observable display = "";
   @observable email = "";
   @observable tenant_id = "";

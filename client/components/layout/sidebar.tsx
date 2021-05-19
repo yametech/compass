@@ -19,7 +19,7 @@ import { Istio, istioRoute, istioGatewayURL } from "../+istio";
 import { ovnURL, ovnRoute, SDN } from "../+sdn";
 import { Config, configRoute, configURL } from "../+config";
 import { eventRoute, eventsURL } from "../+events";
-import { tenantRoute, tenantURL, Tenant } from "../+tenant";
+import { tenantRoute, tenantURL, Tenant } from "../+tenant-manage";
 import { Apps, appsRoute, appsURL } from "../+apps";
 import { namespaceStore } from "../+namespaces/namespace.store";
 import { TabRoute } from "./main-layout";
@@ -177,7 +177,7 @@ export class Sidebar extends React.Component<Props> {
               url={tenantURL({ query })}
               routePath={tenantRoute.path}
               subMenus={Tenant.tabRoutes}
-              text={<Trans>Tenant</Trans>}
+              text={<Trans>Tenant Manage</Trans>}
               icon={<Icon material="people" />}
             />
             <SidebarNavItem

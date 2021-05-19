@@ -1,9 +1,7 @@
 import React from "react";
-import { disposeOnUnmount, observer } from "mobx-react";
-import { reaction } from "mobx";
+import { observer } from "mobx-react";
 import { KubeObjectDetailsProps } from "../kube-object";
 import { apiManager } from "../../api/api-manager";
-import { subNetStore } from "./subnet.store";
 import { DrawerItem } from "../drawer/drawer-item";
 import { Trans } from "@lingui/macro";
 import { KubeEventDetails } from "../+events/kube-event-details";
@@ -15,14 +13,6 @@ interface Props extends KubeObjectDetailsProps<SubNet> {
 
 @observer
 export class SubNetDetails extends React.Component<Props> {
-    @disposeOnUnmount
-    clean = reaction(() => this.props.object, () => {
-        subNetStore.reset();
-    });
-
-    componentWillUnmount() {
-        subNetStore.reset();
-    }
 
     render() {
 

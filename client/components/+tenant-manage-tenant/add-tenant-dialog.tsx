@@ -15,7 +15,7 @@ import {SelectOption} from "../select";
 import {Tenant, tenantApi} from "../../api/endpoints/tenant-tenant";
 import {TenantUser, tenantUserApi} from "../../api/endpoints";
 import {tenantStore} from "./tenant.store";
-import {tenantUserStore} from "../+tenant-user";
+import {tenantUserStore} from "../+tenant-manage-user";
 import {NamespaceSelect} from "../+namespaces/namespace-select";
 
 interface Props extends Partial<DialogProps> {
@@ -29,7 +29,7 @@ export class AddTenantDialog extends React.Component<Props> {
   @observable owner = "";
   @observable username = "";
   @observable password = "";
-  @observable namespace = "kube-system";
+  @observable namespace = "";
   @observable namespaces = observable.array<string>([], {deep: false});
 
   @computed get selectedNamespaces() {

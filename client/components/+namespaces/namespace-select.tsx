@@ -12,8 +12,8 @@ import {_i18n} from "../../i18n";
 import {FilterIcon} from "../item-object-list/filter-icon";
 import {FilterType} from "../item-object-list/page-filters.store";
 import {themeStore} from "../../theme.store";
-import {tenantDepartmentStore} from "../+tenant-department/department.store";
-import {tenantStore} from "../+tenant-tenant";
+import {tenantDepartmentStore} from "../+tenant-manage-department/department.store";
+import {tenantStore} from "../+tenant-manage-tenant";
 
 interface Props extends SelectProps {
   tenantId?: string;

@@ -1,19 +1,19 @@
 import * as React from "react";
-import {observer} from "mobx-react";
-import {RouteComponentProps} from "react-router";
-import {t, Trans} from "@lingui/macro";
-import {KubeObjectMenu, KubeObjectMenuProps} from "../kube-object";
-import {KubeObjectListLayout} from "../kube-object";
-import {tenantUserStore} from "./user.store";
-import {TenantUser, tenantUserApi} from "../../api/endpoints";
-import {apiManager} from "../../api/api-manager";
-import {AddUserDialog} from "./add-user-dialog";
-import {ConfigUserDialog} from "./config-user-dialog";
-import {MenuItem} from "../menu";
-import {Icon} from "../icon";
-import {_i18n} from "../../i18n";
-import {Link} from "react-router-dom";
-import {stopPropagation} from "../../utils";
+import { observer } from "mobx-react";
+import { RouteComponentProps } from "react-router";
+import { t, Trans } from "@lingui/macro";
+import { KubeObjectMenu, KubeObjectMenuProps } from "../kube-object";
+import { KubeObjectListLayout } from "../kube-object";
+import { tenantUserStore } from "./user.store";
+import { TenantUser, tenantUserApi } from "../../api/endpoints";
+import { apiManager } from "../../api/api-manager";
+import { AddUserDialog } from "./add-user-dialog";
+import { ConfigUserDialog } from "./config-user-dialog";
+import { MenuItem } from "../menu";
+import { Icon } from "../icon";
+import { _i18n } from "../../i18n";
+import { Link } from "react-router-dom";
+import { stopPropagation } from "../../utils";
 import Tooltip from "@material-ui/core/Tooltip";
 
 enum sortBy {
@@ -47,8 +47,7 @@ export class TenantUsers extends React.Component<Props> {
     return (
       <>
         <KubeObjectListLayout
-          onDetails={() => {
-          }}
+          // onDetails={() => {}}
           className="Users" store={tenantUserStore}
           sortingCallbacks={{
             [sortBy.name]: (item: TenantUser) => item.getName(),
@@ -59,11 +58,11 @@ export class TenantUsers extends React.Component<Props> {
           ]}
           renderHeaderTitle={<Trans>Users</Trans>}
           renderTableHeader={[
-            {title: <Trans>Name</Trans>, className: "name", sortBy: sortBy.name},
-            {title: <Trans>TenantName</Trans>, className: "tenant"},
-            {title: <Trans>Department</Trans>, className: "department"},
-            {title: <Trans>Namespace</Trans>, className: "namespace", sortBy: sortBy.namespace},
-            {title: <Trans>Age</Trans>, className: "age", sortBy: sortBy.age},
+            { title: <Trans>Name</Trans>, className: "name", sortBy: sortBy.name },
+            { title: <Trans>TenantName</Trans>, className: "tenant" },
+            { title: <Trans>Department</Trans>, className: "department" },
+            { title: <Trans>Namespace</Trans>, className: "namespace", sortBy: sortBy.namespace },
+            { title: <Trans>Age</Trans>, className: "age", sortBy: sortBy.age },
           ]}
           renderTableContents={(user: TenantUser) => [
             this.renderUserName(user),
@@ -73,15 +72,15 @@ export class TenantUsers extends React.Component<Props> {
             user.getAge(),
           ]}
           renderItemMenu={(item: TenantUser) => {
-            return <TenantUserMenu object={item}/>
+            return <TenantUserMenu object={item} />
           }}
           addRemoveButtons={{
             onAdd: () => AddUserDialog.open(),
             addTooltip: <Trans>Create new User</Trans>
           }}
         />
-        <AddUserDialog/>
-        <ConfigUserDialog/>
+        <AddUserDialog />
+        <ConfigUserDialog />
       </>
     );
   }
@@ -89,12 +88,12 @@ export class TenantUsers extends React.Component<Props> {
 
 export function TenantUserMenu(props: KubeObjectMenuProps<TenantUser>) {
 
-  const {object, toolbar} = props;
+  const { object, toolbar } = props;
 
   return (
     <KubeObjectMenu {...props}>
       <MenuItem onClick={() => ConfigUserDialog.open(object)}>
-        <Icon material="toc" title={_i18n._(t`Config`)} interactive={toolbar}/>
+        <Icon material="toc" title={_i18n._(t`Config`)} interactive={toolbar} />
         <span className="config"><Trans>Config</Trans></span>
       </MenuItem>
     </KubeObjectMenu>
