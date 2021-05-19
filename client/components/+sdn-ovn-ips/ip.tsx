@@ -1,13 +1,13 @@
 import * as React from "react";
-import {observer} from "mobx-react";
-import {RouteComponentProps} from "react-router";
-import {t, Trans} from "@lingui/macro";
-import {KubeObjectMenu, KubeObjectMenuProps} from "../kube-object";
-import {KubeObjectListLayout} from "../kube-object";
-import {IIPRouteParams} from "./ip.route";
-import {ipStore} from "./ip.store";
-import {apiManager} from "../../api/api-manager";
-import {IP, ipApi} from "../../api/endpoints/ip.api";
+import { observer } from "mobx-react";
+import { RouteComponentProps } from "react-router";
+import { t, Trans } from "@lingui/macro";
+import { KubeObjectMenu, KubeObjectMenuProps } from "../kube-object";
+import { KubeObjectListLayout } from "../kube-object";
+import { IIPRouteParams } from "./ip.route";
+import { ipStore } from "./ip.store";
+import { apiManager } from "../../api/api-manager";
+import { IP, ipApi } from "../../api/endpoints/ip.api";
 
 enum sortBy {
     name = "name",
@@ -25,8 +25,6 @@ export class IPs extends React.Component<Props> {
         return (
             <>
                 <KubeObjectListLayout
-                    onDetails={() => {
-                    }}
                     className="IP" store={ipStore}
                     sortingCallbacks={{
                         [sortBy.name]: (item: IP) => item.getName(),
@@ -37,11 +35,11 @@ export class IPs extends React.Component<Props> {
                     ]}
                     renderHeaderTitle={<Trans>IP</Trans>}
                     renderTableHeader={[
-                        {title: <Trans>Name</Trans>, className: "name", sortBy: sortBy.name},
-                        {title: <Trans>Namespace</Trans>, className: "namespace"},
-                        {title: <Trans>IP Address</Trans>, className: "ipAddress"},
-                        {title: <Trans>Mac Address</Trans>, className: "macAddress"},
-                        {title: <Trans>Age</Trans>, className: "age", sortBy: sortBy.age},
+                        { title: <Trans>Name</Trans>, className: "name", sortBy: sortBy.name },
+                        { title: <Trans>Namespace</Trans>, className: "namespace" },
+                        { title: <Trans>IP Address</Trans>, className: "ipAddress" },
+                        { title: <Trans>Mac Address</Trans>, className: "macAddress" },
+                        { title: <Trans>Age</Trans>, className: "age", sortBy: sortBy.age },
                     ]}
                     renderTableContents={(field: IP) => [
                         field.getName(),
@@ -51,7 +49,7 @@ export class IPs extends React.Component<Props> {
                         field.getAge(),
                     ]}
                     renderItemMenu={(item: IP) => {
-                        return <IPMenu object={item}/>
+                        return <IPMenu object={item} />
                     }}
                 />
             </>
@@ -60,9 +58,8 @@ export class IPs extends React.Component<Props> {
 }
 
 export function IPMenu(props: KubeObjectMenuProps<IP>) {
-
     return (
-       <KubeObjectMenu {...props} />
+        <KubeObjectMenu {...props} />
     )
 }
 

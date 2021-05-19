@@ -1,10 +1,10 @@
 import { RouteProps } from "react-router";
 import { buildURL } from "../../navigation";
-import { Ovn } from './ovn'
+import { SDN } from './sdn'
 
 export const ovnRoute: RouteProps = {
   get path() {
-    return Ovn.tabRoutes.map(({ path }) => path).flat()
+    return SDN.tabRoutes.map(({ path }) => path).flat()
   }
 }
 

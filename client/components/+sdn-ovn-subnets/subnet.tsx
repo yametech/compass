@@ -12,7 +12,7 @@ import { ISubNetRouteParams } from "./subnet.route";
 import { AddSubNetDialog } from "./add-subnet-dialog";
 import { Icon } from "../icon";
 import { ConfigSubNetDialog } from "./config-subnet-dialog";
-import { _i18n } from "../../../client/i18n";
+import { _i18n } from "../../i18n";
 import { Link } from "react-router-dom";
 import { stopPropagation } from "../../utils";
 import Tooltip from "@material-ui/core/Tooltip";
@@ -45,8 +45,7 @@ export class SubNets extends React.Component<Props> {
     return (
       <>
         <KubeObjectListLayout
-          onDetails={() => {
-          }}
+          // onDetails={() => {}}
           className="SubNet" store={subNetStore}
           sortingCallbacks={{
             [sortBy.name]: (item: SubNet) => item.getName(),

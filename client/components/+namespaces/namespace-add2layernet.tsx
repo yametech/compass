@@ -8,7 +8,7 @@ import { SubTitle } from "../layout/sub-title";
 import { _i18n } from "../../i18n";
 import { Notifications } from "../notifications";
 import { Namespace } from "../../api/endpoints"
-import { NetworkAttachmentDefinitionSelect } from "../+ovn-network-attachment-definition/network-attachment-definition-select";
+import { NetworkAttachmentDefinitionSelect } from "../+sdn-multus-network-attachment-definition/network-attachment-definition-select";
 import { apiBase } from "../../../client/api";
 
 interface Props extends Partial<DialogProps> {

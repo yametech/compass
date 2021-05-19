@@ -1,6 +1,6 @@
-import {autobind} from "../../utils";
-import {KubeObjectStore} from "../../kube-object.store";
-import {apiManager} from "../../api/api-manager";
+import { autobind } from "../../utils";
+import { KubeObjectStore } from "../../kube-object.store";
+import { apiManager } from "../../api/api-manager";
 import {
   NetworkAttachmentDefinition,
   networkAttachmentDefinitionApi

@@ -1,6 +1,7 @@
 import { autobind } from "../../utils";
 import { KubeObject } from "../kube-object";
 import { KubeApi } from "../kube-api";
+import { apiSDN } from "../index";
 
 export interface IPAM {
   type?: string,
@@ -64,6 +65,10 @@ export class NetworkAttachmentDefinition extends KubeObject {
     config: string
   }
 
+  setConfig(n: NetworkAttachmentDefinitionConfig) {
+    this.spec.config = JSON.stringify(n)
+  }
+
   getConfig(): NetworkAttachmentDefinitionConfig {
     try {
       return JSON.parse(this.spec.config)
@@ -76,6 +81,7 @@ export class NetworkAttachmentDefinition extends KubeObject {
 export const networkAttachmentDefinitionApi = new KubeApi({
   kind: NetworkAttachmentDefinition.kind,
   apiBase: "/apis/k8s.cni.cncf.io/v1/network-attachment-definitions",
-  isNamespaced: false,
+  isNamespaced: true,
   objectConstructor: NetworkAttachmentDefinition,
+  request: apiSDN,
 });

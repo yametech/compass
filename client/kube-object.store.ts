@@ -171,37 +171,37 @@ export abstract class KubeObjectStore<
   }
 
   async remove(item: T) {
-    if (item.selfLink.startsWith("/apis/networking.istio.io/v1beta1")
-      || item.selfLink.startsWith("/apis/tekton.dev/v1alpha1")
-      || item.selfLink.startsWith("/apis/yamecloud.io/v1")
-      || item.kind === "TektonStore"
-      || item.kind === "TektonWebHook"
-      || item.kind === "TektonGraph"
-      || item.kind === "Service"
-      || item.kind === "Endpoints"
-      || item.kind === "Ingress"
-    ) {
-      const itemApi = apiManager.getApi(item.selfLink)
-      await itemApi.delete({ name: item.getName(), namespace: item.getNs() })
-        .then((res) => {
-          Notifications.ok(item.kind + " " + item.getName() + " delete succeeded")
-          this.items.remove(item)
-          this.selectedItemsIds.delete(item.getId());
-        }).catch((err) => {
-          Notifications.error(item.kind + " " + item.getName() + " delete failed" + " because " + err)
-        });
-      return
-    }
-
-    item.delete()
+    // if (item.selfLink.startsWith("/apis/networking.istio.io/v1beta1")
+    //   || item.selfLink.startsWith("/apis/tekton.dev/v1alpha1")
+    //   || item.selfLink.startsWith("/apis")
+    //   || item.kind === "TektonStore"
+    //   || item.kind === "TektonWebHook"
+    //   || item.kind === "TektonGraph"
+    //   || item.kind === "Service"
+    //   || item.kind === "Endpoints"
+    //   || item.kind === "Ingress"
+    // ) {
+    const itemApi = apiManager.getApi(item.selfLink)
+    await itemApi.delete({ name: item.getName(), namespace: item.getNs() })
       .then((res) => {
         Notifications.ok(item.kind + " " + item.getName() + " delete succeeded")
-        this.items.remove(item);
+        this.items.remove(item)
         this.selectedItemsIds.delete(item.getId());
-      })
-      .catch((err) => {
+      }).catch((err) => {
         Notifications.error(item.kind + " " + item.getName() + " delete failed" + " because " + err)
       });
+    // return
+    // }
+
+    // item.delete()
+    //   .then((res) => {
+    //     Notifications.ok(item.kind + " " + item.getName() + " delete succeeded")
+    //     this.items.remove(item);
+    //     this.selectedItemsIds.delete(item.getId());
+    //   })
+    //   .catch((err) => {
+    //     Notifications.error(item.kind + " " + item.getName() + " delete failed" + " because " + err)
+    //   });
   }
 
   async removeSelectedItems() {

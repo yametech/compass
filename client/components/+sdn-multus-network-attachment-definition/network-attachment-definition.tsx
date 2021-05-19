@@ -31,7 +31,6 @@ export class NetworkAttachmentDefinitions extends React.Component<Props> {
     return (
       <>
         <KubeObjectListLayout
-          onDetails={() => {}}
           className="NetworkAttachmentDefinition"
           store={networkAttachmentDefinitionStore}
           sortingCallbacks={{

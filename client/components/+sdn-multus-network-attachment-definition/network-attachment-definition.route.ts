@@ -2,7 +2,7 @@ import {RouteProps} from "react-router";
 import {buildURL} from "../../navigation";
 
 export const networkAttachmentDefinitionRoute: RouteProps = {
-  path: "/network-attachment-definition"
+  path: "/networkattachmentdefinition"
 }
 
 export interface INetworkAttachmentDefinitionRouteParams {

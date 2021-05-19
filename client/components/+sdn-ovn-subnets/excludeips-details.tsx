@@ -1,14 +1,14 @@
-import {ActionMeta} from "react-select/src/types";
-import {observer} from "mobx-react";
+import { ActionMeta } from "react-select/src/types";
+import { observer } from "mobx-react";
 import React from "react";
-import {SubTitle} from "../layout/sub-title";
-import {Icon} from "../icon";
-import {_i18n} from "../../i18n";
-import {t, Trans} from "@lingui/macro";
-import {Input} from "../input";
-import {computed, observable} from "mobx";
-import {Grid} from "@material-ui/core";
-import {stopPropagation} from "../../utils";
+import { SubTitle } from "../layout/sub-title";
+import { Icon } from "../icon";
+import { _i18n } from "../../i18n";
+import { t, Trans } from "@lingui/macro";
+import { Input } from "../input";
+import { computed, observable } from "mobx";
+import { Grid } from "@material-ui/core";
+import { stopPropagation } from "../../utils";
 
 interface Props<T = any> extends Partial<Props> {
   value?: T;

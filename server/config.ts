@@ -22,6 +22,7 @@ export const config = {
     ISTIO: '/servicemesh', // istio
     SERVICE: '/service', // service
     TERMINAL: '/api-kube', // terminal api
+    SDN: "/sdn", // network plugin api
     CONFIG: '',
     KUBE_BASE: '/api-kube', // kubernetes cluster api
     KUBE_USERS: '/api-users', // users & groups api

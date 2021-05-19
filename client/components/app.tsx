@@ -27,7 +27,7 @@ import { Events } from "./+events";
 import { Login } from "./+login";
 import { Tekton, tektonRoute } from "./+tekton";
 import { Istio, istioRoute } from "./+istio"
-import { Ovn, ovnRoute } from "./+ovn";
+import { SDN, ovnRoute } from "./+sdn";
 import { eventRoute } from "./+events";
 import { ErrorBoundary } from "./error-boundary";
 import { Apps, appsRoute } from "./+apps";
@@ -78,7 +78,7 @@ class App extends React.Component {
                 <Route component={Events} {...eventRoute} />
                 <Route component={Tekton} {...tektonRoute} />
                 <Route component={Istio} {...istioRoute} />
-                <Route component={Ovn} {...ovnRoute} />
+                <Route component={SDN} {...ovnRoute} />
                 <Route component={CustomResources} {...crdRoute} />
                 <Route component={UserManagement} {...usersManagementRoute} />
                 <Route component={Apps} {...appsRoute} />

@@ -21,6 +21,7 @@ import { Icon } from "../icon";
 import { stopPropagation } from "../../utils";
 import { ThemeProvider } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
+import { apiManager } from "../../../client/api/api-manager";
 
 const theme = createMuiTheme({
   overrides: {
@@ -346,19 +347,19 @@ export class ConfigNetworkAttachmentDefinitionDialog extends React.Component<Pro
   }
 
   configNetworkAttachmentDefinition = async () => {
-    try {
-      await networkAttachmentDefinitionStore.update(this.object, {
-        spec: {
-          config: JSON.stringify(this.config)
-        }
+    this.object.setConfig(this.config)
+    await apiManager.getApi(this.object.metadata?.selfLink).update(
+      { name: this.object.getName(), namespace: this.object.getNs() }, this.object).
+      then(() => {
+        Notifications.ok(
+          <>NetworkAttachmentDefinition {name} save succeeded</>
+        );
+      }).catch((err) => {
+        Notifications.error(err);
+      }).finally(() => {
+        this.close();
       })
-      Notifications.ok(
-        <>NetworkAttachmentDefinition {name} save succeeded</>
-      );
-      this.close();
-    } catch (err) {
-      Notifications.error(err);
-    }
+
   }
 
   render() {
