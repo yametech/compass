@@ -2,6 +2,7 @@ import { KubeObject } from "../kube-object";
 import { KubeJsonApiData } from "../kube-json-api";
 import { autobind } from "../../utils";
 import { KubeApi } from "../kube-api";
+import { apiBase, apiWorkloads, apiTekton } from "..";
 
 export enum SecretType {
   Opaque = "Opaque",
@@ -35,6 +36,10 @@ export class Secret extends KubeObject {
     this.data = this.data || {};
   }
 
+  setData(data: { [prop: string]: string; token?: string; }) {
+    this.data = data;
+  }
+
   getKeys(): string[] {
     return Object.keys(this.data);
   }
@@ -53,12 +58,14 @@ export const secretsApi = new KubeApi({
   apiBase: "/api/v1/secrets",
   isNamespaced: true,
   objectConstructor: Secret,
+  request: apiWorkloads,
 });
 
 
-export const opsSecretsApi = new KubeApi({
+export const tektonConfigApi = new KubeApi({
   kind: Secret.kind,
-  apiBase: "/api/v1/ops-secrets",
+  apiBase: "/api/v1/tektonconfig",
   isNamespaced: true,
   objectConstructor: Secret,
+  request: apiTekton,
 });

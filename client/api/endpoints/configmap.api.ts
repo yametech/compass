@@ -2,6 +2,7 @@ import { KubeObject } from "../kube-object";
 import { KubeJsonApiData } from "../kube-json-api";
 import { autobind } from "../../utils";
 import { KubeApi } from "../kube-api";
+import { apiWorkloads } from "..";
 
 @autobind()
 export class ConfigMap extends KubeObject {
@@ -26,4 +27,5 @@ export const configMapApi = new KubeApi({
   apiBase: "/api/v1/configmaps",
   isNamespaced: true,
   objectConstructor: ConfigMap,
+  request: apiWorkloads,
 });

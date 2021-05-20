@@ -9,7 +9,7 @@ import { Dialog, DialogProps } from "../dialog";
 import { Wizard, WizardStep } from "../wizard";
 import { Input } from "../input";
 import { isUrl, systemName } from "../input/input.validators";
-import { Secret, SecretType } from "../../api/endpoints";
+import { Secret, SecretType, tektonConfigApi, secretsApi } from "../../api/endpoints";
 import { SubTitle } from "../layout/sub-title";
 import { NamespaceSelect } from "../+namespaces/namespace-select";
 import { Select, SelectOption } from "../select";
@@ -22,7 +22,7 @@ import upperFirst from "lodash/upperFirst";
 import { Checkbox } from "../checkbox";
 import { configStore } from "../../config.store";
 import { namespaceStore } from "../+namespaces/namespace.store";
-import { opsSecretsStore, secretsStore } from "./secrets.store";
+import { apiManager } from "../../../client/api/api-manager";
 
 interface Props extends Partial<DialogProps> {
   className: string
@@ -106,7 +106,7 @@ export class ConfigSecretDialog extends React.Component<Props> {
   }
 
   get types() {
-    if (this.isOpsSecret) {
+    if (this.isTektonConfig) {
       return Object.keys(this.opsSecretTemplate) as SecretType[];
     }
     return Object.keys(this.secretTemplate) as SecretType[];
@@ -117,13 +117,13 @@ export class ConfigSecretDialog extends React.Component<Props> {
   @observable namespace = "default";
   @observable type = SecretType.Opaque;
   @observable userNotVisible = false;
-  @observable isOpsSecret = false;
+  @observable isTektonConfig = false;
 
   reset = () => {
     this.secret = null;
     this.name = "";
     this.namespace = "default";
-    this.isOpsSecret = false;
+    this.isTektonConfig = false;
   }
 
   close = () => {
@@ -135,8 +135,8 @@ export class ConfigSecretDialog extends React.Component<Props> {
     this.name = ConfigSecretDialog.secret.getName();
     this.namespace = ConfigSecretDialog.secret.getNs();
 
-    if (this.props.className == "OpsSecrets") {
-      this.isOpsSecret = true;
+    if (this.props.className == "TektonConfig") {
+      this.isTektonConfig = true;
       this.secret = this.opsSecretTemplate;
       this.type = ConfigSecretDialog.secret.type;
 
@@ -211,7 +211,6 @@ export class ConfigSecretDialog extends React.Component<Props> {
     }
 
     ConfigSecretDialog.secret.getLabels().map(item => {
-      console.log(item)
       const splitR = item.split("=", 2)
       let setSuccess: boolean = false;
       this.secret[this.type].labels.map(item => {
@@ -220,12 +219,13 @@ export class ConfigSecretDialog extends React.Component<Props> {
           setSuccess = true;
         }
       })
-      if (!setSuccess) {
 
+      if (!setSuccess) {
         this.secret[this.type].labels.push(
           { key: splitR[0], value: splitR[1], required: true }
         )
       }
+
     })
   }
 
@@ -256,20 +256,13 @@ export class ConfigSecretDialog extends React.Component<Props> {
     const { className } = this.props;
     const { data = [], labels = [], annotations = [] } = this.secret[type];
 
-    const secret: Partial<Secret> = {
-      type: type,
-      data: this.getDataFromFields(data, val => val ? base64.encode(val) : ""),
-      metadata: {
-        name: name,
-        namespace: namespace,
-        annotations: this.getDataFromFields(annotations),
-        labels: this.getDataFromFields(labels),
-      } as IKubeObjectMetadata
-    }
+    ConfigSecretDialog.secret.metadata.annotations = this.getDataFromFields(annotations);
+    ConfigSecretDialog.secret.metadata.labels = this.getDataFromFields(labels);
+    ConfigSecretDialog.secret.setData(this.getDataFromFields(data, val => val ? base64.encode(val) : ""));
 
     try {
-      const api = className == "OpsSecrets" ? opsSecretsStore : secretsStore;
-      await api.update(ConfigSecretDialog.secret, { ...secret });
+      const api = className == "TektonConfig" ? tektonConfigApi : secretsApi;
+      await api.update({ name: name, namespace: namespace }, { ...ConfigSecretDialog.secret });
       Notifications.ok(
         <div>Secret {name} save succeeded</div>
       );
@@ -437,7 +430,7 @@ export class ConfigSecretDialog extends React.Component<Props> {
         <Wizard header={header} done={this.close}>
           <WizardStep contentClass="flow column" nextLabel={<Trans>Update</Trans>} next={this.updateSecret}>
             {
-              !this.isOpsSecret ?
+              !this.isTektonConfig ?
                 <div className="secret-userNotVisible">
                   {isClusterAdmin && className == "OpsSecrets" ?
                     <div>
@@ -465,12 +458,13 @@ export class ConfigSecretDialog extends React.Component<Props> {
               <div className="secret-namespace">
                 <SubTitle title={<Trans>Namespace</Trans>} />
                 <NamespaceSelect
-                  isDisabled={this.isOpsSecret}
+                  isDisabled={this.isTektonConfig}
                   themeName="light"
                   value={namespace}
                   onChange={({ value }) => this.namespace = value}
                 />
               </div>
+
               <div className="secret-type">
                 <SubTitle title={<Trans>Secret type</Trans>} />
                 <Select
@@ -479,12 +473,15 @@ export class ConfigSecretDialog extends React.Component<Props> {
                   value={type} onChange={({ value }: SelectOption) => this.type = value}
                 />
               </div>
+
             </div>
             {this.renderFields("annotations")}
             {this.renderFields("labels")}
-            {!this.isOpsSecret ?
+
+            {!this.isTektonConfig ?
               this.type == SecretType.DockerConfigJson ? this.renderDockerConfigFields() : this.renderFields("data") : null}
-            {this.isOpsSecret ? this.renderData("data") : null}
+            {this.isTektonConfig ? this.renderData("data") : null}
+
           </WizardStep>
         </Wizard>
       </Dialog>

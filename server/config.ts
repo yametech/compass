@@ -17,11 +17,12 @@ export const config = {
     WATCHER: '/watcher', // watcher api
     TENANT: '/base',  // tenant api
     TEKTON: '/tekton', // tekton
-    WORKLOAD: '/workload', // tekton
+    WORKLOAD: '/workload', // workload
+    WORKLOADS: '/workloads',// 0.2.0 workload api server
     CLUSTER: '/cluster',
     ISTIO: '/servicemesh', // istio
     SERVICE: '/service', // service
-    TERMINAL: '/api-kube', // terminal api
+    TERMINAL: '/terminal', // terminal api
     SDN: "/sdn", // network plugin api
     CONFIG: '',
     KUBE_BASE: '/api-kube', // kubernetes cluster api

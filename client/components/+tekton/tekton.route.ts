@@ -33,7 +33,7 @@ export const taskRunRoute: RouteProps = {
 };
 
 export const opsSecretRoute: RouteProps = {
-  path: "/ops-secret",
+  path: "/tekton-config",
 };
 
 export const tektonStoreRoute: RouteProps = {

@@ -38,7 +38,9 @@ export class ConfigMapDetails extends React.Component<Props> {
     const { object: configMap } = this.props;
     try {
       this.isSaving = true;
-      await configMapsStore.update(configMap, { ...configMap, data: this.data.toJSON() });
+      await apiManager.getApi(configMap.selfLink).update(
+        { name: configMap.getName(), namespace: configMap.getNs() },
+        { ...configMap, data: this.data.toJSON() });
       Notifications.ok(
         <p>
           <Trans>ConfigMap <b>{configMap.getName()}</b> successfully updated.</Trans>
@@ -55,11 +57,11 @@ export class ConfigMapDetails extends React.Component<Props> {
     const data = Object.entries(this.data.toJSON());
     return (
       <div className="ConfigMapDetails">
-        <KubeObjectMeta object={configMap}/>
+        <KubeObjectMeta object={configMap} />
         {
           data.length > 0 && (
             <>
-              <DrawerTitle title={<Trans>Data</Trans>}/>
+              <DrawerTitle title={<Trans>Data</Trans>} />
               {
                 data.map(([name, value]) => {
                   return (
@@ -88,7 +90,7 @@ export class ConfigMapDetails extends React.Component<Props> {
           )
         }
 
-        <KubeEventDetails object={configMap}/>
+        <KubeEventDetails object={configMap} />
       </div>
     );
   }

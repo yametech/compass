@@ -9,7 +9,7 @@ import { Dialog, DialogProps } from "../dialog";
 import { Wizard, WizardStep } from "../wizard";
 import { Input } from "../input";
 import { isUrl, systemName } from "../input/input.validators";
-import { Secret, secretsApi, SecretType, opsSecretsApi } from "../../api/endpoints";
+import { Secret, secretsApi, SecretType, tektonConfigApi } from "../../api/endpoints";
 import { SubTitle } from "../layout/sub-title";
 import { NamespaceSelect } from "../+namespaces/namespace-select";
 import { Select, SelectOption } from "../select";
@@ -119,19 +119,20 @@ export class AddSecretDialog extends React.Component<Props> {
 
   close = () => {
     AddSecretDialog.close();
+    this.reset();
   }
 
   onOpen = async () => {
 
     const { className } = this.props;
 
-    if (this.props.className == "OpsSecrets") {
+    if (this.props.className == "TektonConfig") {
       this.isOpsSecret = true;
       this.type = SecretType.BasicAuth;
       this.secret = this.opsSecretTemplate;
 
       let ns = configStore.getDefaultNamespace();
-      if (className == "OpsSecrets") {
+      if (className == "TektonConfig") {
         ns = configStore.getOpsNamespace();
       }
 
@@ -170,7 +171,7 @@ export class AddSecretDialog extends React.Component<Props> {
     const { data = [], annotations = [] } = this.secret[type];
 
     let labels = this.userNotVisible ? new Map<string, string>().set("hide", "1") : new Map<string, string>()
-    if (className == "OpsSecrets") {
+    if (className == "TektonConfig") {
       labels.set("tekton", "1")
     }
 
@@ -186,7 +187,7 @@ export class AddSecretDialog extends React.Component<Props> {
     }
 
     try {
-      const api = className == "OpsSecrets" ? opsSecretsApi : secretsApi;
+      const api = className == "TektonConfig" ? tektonConfigApi : secretsApi;
       await api.create({ namespace, name }, secret);
 
       Notifications.ok(<>Secret {name} save succeeded</>);
@@ -379,8 +380,8 @@ export class AddSecretDialog extends React.Component<Props> {
               <div className="secret-namespace">
                 <SubTitle title={<Trans>Namespace</Trans>} />
                 <NamespaceSelect
-                  isDisabled={this.isOpsSecret}
                   required={true}
+                  isDisabled={this.isOpsSecret}
                   themeName="light"
                   value={namespace}
                   onChange={({ value }) => this.namespace = value}
@@ -389,6 +390,7 @@ export class AddSecretDialog extends React.Component<Props> {
               <div className="secret-type">
                 <SubTitle title={<Trans>Secret type</Trans>} />
                 <Select
+                  required={true}
                   themeName="light"
                   options={this.types}
                   value={type} onChange={({ value }: SelectOption) => this.type = value}

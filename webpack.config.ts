@@ -40,21 +40,13 @@ export default () => {
       overlay: true,
       publicPath: '',
       proxy: {
-        '/base': {
+        '/base/': {
           target: 'http://127.0.0.1:8080',
           secure: false,
           changeOrigin: true,
           // pathRewrite: { '^/base': '' }
         },
-        '/watcher': {
-          target: 'http://127.0.0.1:8080',
-          ws: true,
-          secure: false,
-          changeOrigin: true,
-          logLevel: 'debug',
-          // pathRewrite: { '^/base': '' }
-        },
-        '/sdn': {
+        '/watcher/': {
           target: 'http://127.0.0.1:8080',
           ws: true,
           secure: false,
@@ -62,31 +54,60 @@ export default () => {
           logLevel: 'debug',
           // pathRewrite: { '^/base': '' }
         },
-        '/config': {
+        '/sdn/': {
+          target: 'http://127.0.0.1:8080',
+          ws: true,
+          secure: false,
+          changeOrigin: true,
+          logLevel: 'debug',
+          // pathRewrite: { '^/base': '' }
+        },
+
+        '/workloads/': {
+          target: 'http://127.0.0.1:8080',
+          ws: true,
+          secure: false,
+          changeOrigin: true,
+          logLevel: 'debug',
+          // pathRewrite: { '^/base': '' }
+        },
+
+        '/workloadplus/': {
+          target: 'http://127.0.0.1:8080',
+          ws: true,
+          secure: false,
+          changeOrigin: true,
+          logLevel: 'debug',
+          // pathRewrite: { '^/base': '' }
+        },
+
+        '/config/': {
           target: 'http://127.0.0.1:8080',
           secure: false,
           changeOrigin: true,
           // pathRewrite: { '^/base': '' }
         },
-        '/terminal': {
+
+        '/terminal/': {
           target: 'http://127.0.0.1:8080',
           secure: false,
           changeOrigin: true,
         },
 
-        '/api-kube/attach': {
+        '/api-kube/attach/': {
           target: 'http://127.0.0.1:8080',
           secure: false,
           changeOrigin: true,
           pathRewrite: { '^/api-kube': '/terminal' }
         },
 
-        '/servicemesh': {
+        '/servicemesh/': {
           target: 'http://127.0.0.1:8080',
           secure: false,
           changeOrigin: true,
           // pathRewrite: { '^/base': '' }
         },
+
         '/tekton/': {
           target: 'http://127.0.0.1:8080',
           secure: false,
@@ -97,30 +118,25 @@ export default () => {
           secure: false,
           changeOrigin: true,
         },
-        '/api-kube': {
+
+        '/api-kube/': {
           target: 'http://127.0.0.1:8080',
           secure: false,  // 如果是https接口，需要配置这个参数
           changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
           pathRewrite: { '^/api-kube': '/workload' },
         },
-        '/api-resource': {
+
+        '/api-resource/': {
           target: 'http://127.0.0.1:8080',
           secure: false,  // 如果是https接口，需要配置这个参数
           changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
           pathRewrite: { '^/api-resource': '/workload' }
         },
 
-        '/user-login': {
+        '/user-login/': {
           target: 'http://127.0.0.1:8080',
           secure: false,  // 如果是https接口，需要配置这个参数
           changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
-        },
-
-        '/api/config': {
-          target: 'http://127.0.0.1:8080',
-          secure: false,  // 如果是https接口，需要配置这个参数
-          changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
-          pathRewrite: { '^/api/config': '/workload/config' }
         },
 
         '/api': {

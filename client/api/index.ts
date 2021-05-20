@@ -20,6 +20,11 @@ export const apiPermission = new JsonApi({
     apiPrefix: clientVars.API_PREFIX.TENANT,
 })
 
+export const apiTerminal = new KubeJsonApi({
+    debug: !clientVars.IS_PRODUCTION,
+    apiPrefix: clientVars.TENANT_PREFIX.TERMINAL
+});
+
 export const apiTenant = new KubeJsonApi({
     debug: !clientVars.IS_PRODUCTION,
     apiPrefix: clientVars.TENANT_PREFIX.TENANT
@@ -28,6 +33,11 @@ export const apiTenant = new KubeJsonApi({
 export const apiIstio = new KubeJsonApi({
     debug: !clientVars.IS_PRODUCTION,
     apiPrefix: clientVars.TENANT_PREFIX.ISTIO
+});
+
+export const apiWorkloads = new KubeJsonApi({
+    debug: !clientVars.IS_PRODUCTION,
+    apiPrefix: clientVars.API_PREFIX.WORKLOADS,
 });
 
 export const apiTekton = new KubeJsonApi({

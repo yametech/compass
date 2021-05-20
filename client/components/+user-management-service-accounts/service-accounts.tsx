@@ -14,7 +14,7 @@ import { IServiceAccountsRouteParams } from "../+user-management";
 import { serviceAccountsStore } from "./service-accounts.store";
 import { CreateServiceAccountDialog } from "./create-service-account-dialog";
 import { apiManager } from "../../api/api-manager";
-import { secretsStore, opsSecretsStore } from "../+config-secrets/secrets.store";
+import { secretsStore, tektonConfigStore } from "../+config-secrets/secrets.store";
 
 enum sortBy {
   name = "name",
@@ -32,7 +32,7 @@ export class ServiceAccounts extends React.Component<Props> {
       <>
         <KubeObjectListLayout
           className="ServiceAccounts" store={serviceAccountsStore}
-          dependentStores={[opsSecretsStore, secretsStore]}
+          dependentStores={[tektonConfigStore, secretsStore]}
           sortingCallbacks={{
             [sortBy.name]: (account: ServiceAccount) => account.getName(),
             [sortBy.namespace]: (account: ServiceAccount) => account.getNs(),
