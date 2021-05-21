@@ -18,7 +18,6 @@ import { cronJobStore } from "../+workloads-cronjobs/cronjob.store";
 import { namespaceStore } from "../+namespaces/namespace.store";
 import { enhanceStatefulSetStore } from "../+workloads-enhancestatefulsets/enhancestatefulset.store"
 import { stoneStore } from "../+workloads-stones/stones.store"
-import { waterStore } from "../+workloads-waters/waters.store";
 import { Link } from "react-router-dom";
 
 interface Props {
@@ -76,7 +75,7 @@ export class OverviewWorkloadStatus extends React.Component<Props> {
       },
     }
     return (
-      <PieChart data={chartData} options={options}/>
+      <PieChart data={chartData} options={options} />
     )
   }
 
@@ -93,11 +92,11 @@ export class OverviewWorkloadStatus extends React.Component<Props> {
       cronJobs: cronJobStore,
       'StatefulSets*': enhanceStatefulSetStore,
       stones: stoneStore,
-      waters: waterStore,
     } as any;
+    
     const item = stringToStore[type].getAllByNs(contextNs);
     let status = stringToStore[type].getStatuses(item) as object;
-    
+
     return (
       <div className="OverviewWorkloadStatus">
         <div className="flex column align-center box grow">

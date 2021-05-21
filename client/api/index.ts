@@ -35,6 +35,12 @@ export const apiIstio = new KubeJsonApi({
     apiPrefix: clientVars.TENANT_PREFIX.ISTIO
 });
 
+export const apiWorkloadPlus = new KubeJsonApi({
+    debug: !clientVars.IS_PRODUCTION,
+    apiPrefix: clientVars.API_PREFIX.WORKLOADPLUS,
+});
+
+
 export const apiWorkloads = new KubeJsonApi({
     debug: !clientVars.IS_PRODUCTION,
     apiPrefix: clientVars.API_PREFIX.WORKLOADS,

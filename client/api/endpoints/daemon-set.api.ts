@@ -3,6 +3,7 @@ import { IPodContainer } from "./pods.api";
 import { IAffinity, WorkloadKubeObject } from "../workload-kube-object";
 import { autobind } from "../../utils";
 import { KubeApi } from "../kube-api";
+import { apiWorkloads } from "../index";
 
 @autobind()
 export class DaemonSet extends WorkloadKubeObject {
@@ -73,4 +74,5 @@ export const daemonSetApi = new KubeApi({
   apiBase: "/apis/apps/v1/daemonsets",
   isNamespaced: true,
   objectConstructor: DaemonSet,
+  request: apiWorkloads,
 });

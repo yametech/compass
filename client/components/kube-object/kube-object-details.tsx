@@ -82,7 +82,7 @@ export class KubeObjectDetails extends React.Component {
         kind == "StatefulSet" ||
         kind == "Stone" ||
         kind == "Injector" ||
-        kind == "Water" ||
+    
         kind == "Workloads" ||
         kind == "Field" ||
         kind == "Form" ||

@@ -1,13 +1,12 @@
-import {KubeObject} from "../kube-object";
-import {autobind} from "../../utils";
-import {IMetrics, metricsApi} from "./metrics.api";
-import {KubeApi} from "../kube-api";
-import {apiService} from "../index";
+import { KubeObject } from "../kube-object";
+import { autobind } from "../../utils";
+import { IMetrics, metricsApi } from "./metrics.api";
+import { KubeApi } from "../kube-api";
+import { apiService } from "../index";
 
 export class IngressApi extends KubeApi<Ingress> {
   getMetrics(ingress: string, namespace: string): Promise<IIngressMetrics> {
-    const bytesSent = (statuses: string) =>
-      `sum(rate(nginx_ingress_controller_bytes_sent_sum{ingress="${ingress}", status=~"${statuses}"}[1m])) by (ingress)`;
+    const bytesSent = (statuses: string) => `sum(rate(nginx_ingress_controller_bytes_sent_sum{ingress="${ingress}", status=~"${statuses}"}[1m])) by (ingress)`;
     const bytesSentSuccess = bytesSent("^2\\\\d*");  // Requests with status 2**
     const bytesSentFailure = bytesSent("^5\\\\d*");  // Requests with status 5**
     const requestDurationSeconds = `sum(rate(nginx_ingress_controller_request_duration_seconds_sum{ingress="${ingress}"}[1m])) by (ingress)`;
@@ -114,7 +113,7 @@ export class Ingress extends KubeObject {
 
 export const ingressApi = new IngressApi({
   kind: Ingress.kind,
-  apiBase: "/apis/extensions/v1beta1/ingresses",
+  apiBase: "/apis/networking.k8s.io/v1/ingresses",
   isNamespaced: true,
   objectConstructor: Ingress,
   request: apiService,

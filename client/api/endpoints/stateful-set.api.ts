@@ -3,6 +3,7 @@ import { IPodContainer } from "./pods.api";
 import { IAffinity, WorkloadKubeObject } from "../workload-kube-object";
 import { autobind } from "../../utils";
 import { KubeApi } from "../kube-api";
+import { apiWorkloads } from "../index";
 
 @autobind()
 export class StatefulSet extends WorkloadKubeObject {
@@ -81,4 +82,5 @@ export const statefulSetApi = new KubeApi({
   apiBase: "/apis/apps/v1/statefulsets",
   isNamespaced: true,
   objectConstructor: StatefulSet,
+  request: apiWorkloads,
 });

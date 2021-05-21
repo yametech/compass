@@ -1,6 +1,7 @@
 import { IAffinity, WorkloadKubeObject } from "../workload-kube-object";
 import { autobind } from "../../utils";
 import { KubeApi } from "../kube-api";
+import { apiWorkloads } from "../index";
 
 export class DeploymentApi extends KubeApi<Deployment> {
   protected getScaleApiUrl(params: { namespace: string; name: string }) {
@@ -168,4 +169,5 @@ export const deploymentApi = new DeploymentApi({
   apiBase: "/apis/apps/v1/deployments",
   isNamespaced: true,
   objectConstructor: Deployment,
+  request: apiWorkloads,
 });

@@ -3,6 +3,7 @@ import { IPodContainer } from "./pods.api";
 import { IAffinity, WorkloadKubeObject } from "../workload-kube-object";
 import { autobind } from "../../utils";
 import { KubeApi } from "../kube-api";
+import { apiWorkloadPlus } from "../index";
 
 @autobind()
 export class EnhanceStatefulSet extends WorkloadKubeObject {
@@ -104,4 +105,5 @@ export const enhanceStatefulSetApi = new KubeApi({
   apiBase: "/apis/nuwa.nip.io/v1/statefulsets",
   isNamespaced: true,
   objectConstructor: EnhanceStatefulSet,
+  request: apiWorkloadPlus,
 });

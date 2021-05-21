@@ -9,8 +9,6 @@ import { Trans } from "@lingui/macro";
 import { MainLayout, TabRoute } from "../layout/main-layout";
 import { WorkloadsOverview } from "../+workloads-overview/overview";
 import {
-  watersRoute,
-  watersURL,
   injectorURL,
   injectorsRoute,
   enhanceStatefulSetsURL,
@@ -46,7 +44,6 @@ import { Stones } from "../+workloads-stones";
 import { Deploys } from "../+workloads-deploy";
 import { StatefulSets } from "../+workloads-statefulsets";
 import { Injectors } from "../+workloads-injectors";
-import { Waters } from "../+workloads-waters"
 
 interface Props extends RouteComponentProps {
 }
@@ -92,12 +89,6 @@ export class Workloads extends React.Component<Props> {
 
     if (isClusterAdmin) {
       items.push(
-        {
-          title: <Trans>Waters</Trans>,
-          component: Waters,
-          url: watersURL({ query }),
-          path: watersRoute.path
-        },
         {
           title: <Trans>Injectors</Trans>,
           component: Injectors,

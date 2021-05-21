@@ -19,6 +19,7 @@ export const config = {
     TEKTON: '/tekton', // tekton
     WORKLOAD: '/workload', // workload
     WORKLOADS: '/workloads',// 0.2.0 workload api server
+    WORKLOADPLUS: '/workloadplus',// 0.2.0 workloadplus api server
     CLUSTER: '/cluster',
     ISTIO: '/servicemesh', // istio
     SERVICE: '/service', // service

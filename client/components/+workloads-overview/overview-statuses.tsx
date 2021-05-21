@@ -4,7 +4,7 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Trans } from "@lingui/macro";
 import { OverviewWorkloadStatus } from "./overview-workload-status";
-import { cronJobsURL, daemonSetsURL, deploymentsURL, jobsURL, podsURL, statefulSetsURL, enhanceStatefulSetsURL, stonesURL, watersURL } from "../+workloads";
+import { cronJobsURL, daemonSetsURL, deploymentsURL, jobsURL, podsURL, statefulSetsURL, enhanceStatefulSetsURL, stonesURL } from "../+workloads";
 import { PageFiltersList } from "../item-object-list/page-filters-list";
 import { NamespaceSelectFilter } from "../+namespaces/namespace-select";
 
@@ -33,9 +33,6 @@ export class OverviewStatuses extends React.Component<Props> {
           </div>
           {this.props.isClusterAdmin ?
             <>
-              <div className="workload">
-                <OverviewWorkloadStatus type="waters" url={watersURL()} />
-              </div>
               <div className="workload">
                 <OverviewWorkloadStatus type="deployments" url={deploymentsURL()} />
               </div>

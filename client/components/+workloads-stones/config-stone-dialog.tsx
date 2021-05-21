@@ -14,6 +14,7 @@ import { Select } from "../select";
 import { stoneStore } from "./stones.store";
 import { Input } from "../input";
 import { isNumber } from "../input/input.validators";
+import { apiManager } from "../../../client/api/api-manager";
 
 interface Props extends Partial<DialogProps> {
 }
@@ -50,18 +51,21 @@ export class ConfigStoneDialog extends React.Component<Props> {
   }
 
   updateStone = async () => {
-    try {
-      this.stone.spec.strategy = this.strategy;
-      this.stone.spec.coordinates = this.coordinates;
-      this.stone.spec.template.spec.containers = this.containers;
-      await stoneStore.update(this.stone, { ...this.stone })
+
+    this.stone.spec.strategy = this.strategy;
+    this.stone.spec.coordinates = this.coordinates;
+    this.stone.spec.template.spec.containers = this.containers;
+    await apiManager.getApi(this.stone.selfLink).update(
+      { name: this.stone.getName(), namespace: this.stone.getNs() }, { ...this.stone }
+    ).then(() => {
       Notifications.ok(
         <>Stone {this.stone.getName()} save succeeded</>
       );
+    }).catch((err) => {
+      Notifications.error(<>Stone {this.stone.getName()} save error: {err}</>);
+    }).finally(() => {
       this.close();
-    } catch (err) {
-      Notifications.error(err);
-    }
+    })
   }
 
   get options() {

@@ -4,6 +4,7 @@ import { IPodContainer } from "./pods.api";
 import { formatDuration } from "../../utils/formatDuration";
 import { autobind } from "../../utils";
 import { KubeApi } from "../kube-api";
+import { apiWorkloads } from "../index";
 
 @autobind()
 export class CronJob extends KubeObject {
@@ -85,4 +86,5 @@ export const cronJobApi = new KubeApi({
   apiBase: "/apis/batch/v1beta1/cronjobs",
   isNamespaced: true,
   objectConstructor: CronJob,
+  request: apiWorkloads,
 });

@@ -9,6 +9,7 @@ import { KubeObjectStore } from "../kube-object.store";
 import { KubeApi } from "./kube-api";
 import { configStore } from "../config.store";
 import { apiManager } from "./api-manager";
+import { KubeObject } from './kube-object';
 
 const obj = require('event-source-polyfill/src/eventsource.min.js');
 let EventSource = obj.EventSourcePolyfill
@@ -105,8 +106,8 @@ export class KubeWatchApi {
     let data = JSON.parse(evt.data);
     if ((data as IKubeWatchEvent).object) {
       this.onData.emit(data);
-    }
-    else {
+      // console.log("onMessage.emit: ->", evt.data);
+    } else {
       this.onRouteEvent(data);
     }
   }
@@ -120,6 +121,8 @@ export class KubeWatchApi {
         await api.refreshResourceVersion({ namespace });
         this.reconnect();
       }
+    } else if (type == "PING") {
+      console.log("onMessage: PING");
     }
   }
 
