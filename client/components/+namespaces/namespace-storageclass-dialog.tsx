@@ -7,13 +7,10 @@ import { Wizard, WizardStep } from "../wizard";
 import { t, Trans } from "@lingui/macro";
 import { SubTitle } from "../layout/sub-title";
 import { _i18n } from "../../i18n";
-import { NodeSelect } from "../+nodes"
-import { apiBase } from "../../api";
 import { Notifications } from "../notifications";
-import { Namespace, StorageClass } from "../../api/endpoints"
-import { SelectOption } from "../select/select";
-import { namespaceStore } from "./namespace.store";
+import { Namespace } from "../../api/endpoints"
 import { StorageClassSelect } from "../+storage-classes/storage-select";
+import { apiManager } from "../../../client/api/api-manager";
 
 interface Props extends Partial<DialogProps> {
 }
@@ -42,28 +39,25 @@ export class NamespaceStorageClasslimit extends React.Component<Props> {
     }
 
     onOpen = () => {
-        NamespaceStorageClasslimit.namespace.getAnnotations().map(annotation => {
-            const annotationKeyValue = annotation.split("=");
-            if (annotationKeyValue[0] == "fuxi.kubernetes.io/default_storage_limit") {
-                this.storageClasses = JSON.parse(annotationKeyValue[1])[0];
-            }
-        })
+        const storageClassesString = NamespaceStorageClasslimit.namespace.getAnnotation("fuxi.kubernetes.io/default_storage_limit");
+        this.storageClasses = JSON.parse(storageClassesString)[0];
     }
 
     updateAnnotate = async () => {
+        const ns = NamespaceStorageClasslimit.namespace;
         const data = {
-            namespace: NamespaceStorageClasslimit.namespace.getName(),
+            namespace: ns.getName(),
             storageClasses: new Array<string>()
         };
         data.storageClasses.push(this.storageClasses);
 
         try {
-            await apiBase.post("/namespaces/annotation/storageclass", { data }).
+            await apiManager.getApi(ns.selfLink).annotate({ name: ns.getName(), namespace: "", subresource: "storageclass" }, { data }).
                 then(() => {
                     this.close();
                 })
             Notifications.ok(
-              <> {NamespaceStorageClasslimit.namespace.getName()} annotation succeeded </>
+                <> {NamespaceStorageClasslimit.namespace.getName()} annotation succeeded </>
             );
         } catch (err) {
             Notifications.error(err);
@@ -95,10 +89,10 @@ export class NamespaceStorageClasslimit extends React.Component<Props> {
                                 themeName="light"
                                 className="box grow"
                                 onChange={value => this.storageClasses = value.value}
-                                // onChange={(opts: SelectOption[]) => {
-                                //     if (!opts) opts = [];
-                                //     this.storageClasses.replace(unwrapStorageClasses(opts));
-                                // }}
+                            // onChange={(opts: SelectOption[]) => {
+                            //     if (!opts) opts = [];
+                            //     this.storageClasses.replace(unwrapStorageClasses(opts));
+                            // }}
                             />
                         </div>
                     </WizardStep>

@@ -1,7 +1,7 @@
 // Metrics api
 
 import moment from "moment";
-import { apiBase } from "../index";
+import { apiWorkloads } from "../index";
 import { IMetricsQuery } from "../../../server/common/metrics";
 
 export interface IMetrics {
@@ -45,7 +45,7 @@ export const metricsApi = {
       end = now;
     }
 
-    return apiBase.post("/metrics", {
+    return apiWorkloads.post("/metrics", {
       data: query,
       query: {
         start, end, step,
@@ -95,8 +95,8 @@ export function getItemMetrics(metrics: { [key: string]: IMetrics }, itemName: s
 }
 
 export function getMetricLastPoints(metrics: { [key: string]: IMetrics }) {
-  const result: Partial<{[metric: string]: number}> = {};
-  if(!metrics){
+  const result: Partial<{ [metric: string]: number }> = {};
+  if (!metrics) {
     return result
   }
   Object.keys(metrics).forEach(metricName => {

@@ -7,9 +7,9 @@ import { t, Trans } from "@lingui/macro";
 import { SubTitle } from "../layout/sub-title";
 import { _i18n } from "../../i18n";
 import { Notifications } from "../notifications";
-import { Namespace } from "../../api/endpoints"
+import { Namespace, namespacesApi } from "../../api/endpoints"
 import { NetworkAttachmentDefinitionSelect } from "../+sdn-multus-network-attachment-definition/network-attachment-definition-select";
-import { apiBase } from "../../../client/api";
+import { apiManager } from "../../../client/api/api-manager";
 
 interface Props extends Partial<DialogProps> {
 }
@@ -47,15 +47,11 @@ export class Namespace2Layernet extends React.Component<Props> {
         };
 
         try {
-            // await apiManager.getApi(Namespace2Layernet.namespace.selfLink).
-            //     updateAnnotation({ name: Namespace2Layernet.namespace.getName() }, { data })
-
-            await apiBase.post("/namespaces/annotation/networkattachment", { data });
-
+            const ns = Namespace2Layernet.namespace;
+            await apiManager.getApi(ns.selfLink).annotate({ name: ns.getName(), namespace: "", subresource: "networkattachment" }, { data });
             Notifications.ok(
-                <> {Namespace2Layernet.namespace.getName()} annotation NetworkAttachmentDefinition succeeded </>
+                <> namespace {Namespace2Layernet.namespace.getName()} annotation networkAttachmentDefinition succeeded </>
             );
-
         } catch (err) {
             Notifications.error(err);
         } finally {
@@ -65,7 +61,7 @@ export class Namespace2Layernet extends React.Component<Props> {
 
     render() {
         const { ...dialogProps } = this.props;
-        const header = <h5><Trans>Add NetworkAttachmentDefinition</Trans></h5>;
+        const header = <h5><Trans>NetworkAttachmentDefinition</Trans></h5>;
 
         return (
             <Dialog
@@ -79,7 +75,7 @@ export class Namespace2Layernet extends React.Component<Props> {
                     <WizardStep contentClass="flow column" nextLabel={<Trans>Annotate</Trans>}
                         next={this.updateAnnotate}>
                         <div className="node">
-                            <SubTitle title={<Trans>Add NetAttack</Trans>} />
+                            <SubTitle title={<Trans>Chioce NetworkAttachment</Trans>} />
                             <NetworkAttachmentDefinitionSelect
                                 isClearable
                                 value={this.networkAttachment}

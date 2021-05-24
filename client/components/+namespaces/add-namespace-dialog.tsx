@@ -8,7 +8,7 @@ import { _i18n } from "../../i18n";
 import { Dialog, DialogProps } from "../dialog";
 import { Wizard, WizardStep } from "../wizard";
 import { namespaceStore } from "./namespace.store";
-import { Namespace } from "../../api/endpoints";
+import { Namespace, namespacesApi } from "../../api/endpoints";
 import { Input } from "../input";
 import { systemName } from "../input/input.validators";
 import { Notifications } from "../notifications";
@@ -37,17 +37,14 @@ export class AddNamespaceDialog extends React.Component<Props> {
 
   addNamespace = async () => {
     const { namespace } = this;
-    const { onSuccess, onError } = this.props;
-    try {
-      await namespaceStore.create({ name: namespace }).then(onSuccess);
-      Notifications.ok(
-        <>Namespace {namespace} save succeeded</>
-      );
-      this.close();
-    } catch (err) {
-      Notifications.error(err);
-      onError && onError(err);
-    }
+    await namespacesApi.create({ name: namespace, namespace: "" }).
+      then((v) => {
+        Notifications.ok(<>Namespace {namespace} save succeeded</>);
+      }).catch((err) => {
+        Notifications.error(err);
+      }).finally(() => {
+        this.close();
+      })
   }
 
   render() {
