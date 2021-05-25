@@ -3,6 +3,7 @@ import {autobind} from "../../utils";
 import {IMetrics, metricsApi} from "./metrics.api";
 import {Pod} from "./pods.api";
 import {KubeApi} from "../kube-api";
+import { apiWorkloads } from "../index";
 
 export class PersistentVolumeClaimsApi extends KubeApi<PersistentVolumeClaim> {
   getMetrics(pvcName: string, namespace: string): Promise<IPvcMetrics> {
@@ -96,4 +97,5 @@ export const pvcApi = new PersistentVolumeClaimsApi({
   apiBase: "/api/v1/persistentvolumeclaims",
   isNamespaced: true,
   objectConstructor: PersistentVolumeClaim,
+  request:apiWorkloads,
 });

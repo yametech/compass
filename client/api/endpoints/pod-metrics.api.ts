@@ -1,5 +1,6 @@
 import { KubeObject } from "../kube-object";
 import { KubeApi } from "../kube-api";
+import { apiWorkloads } from "../index";
 
 export class PodMetrics extends KubeObject {
   timestamp: string
@@ -18,4 +19,5 @@ export const podMetricsApi = new KubeApi({
   apiBase: "/apis/metrics.k8s.io/v1beta1/pods",
   isNamespaced: true,
   objectConstructor: PodMetrics,
+  request: apiWorkloads,
 });

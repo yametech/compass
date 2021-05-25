@@ -2,6 +2,7 @@ import { KubeObject } from "../kube-object";
 import { unitsToBytes } from "../../utils/convertMemory";
 import { autobind } from "../../utils";
 import { KubeApi } from "../kube-api";
+import { apiWorkloads } from "../index";
 
 @autobind()
 export class PersistentVolume extends KubeObject {
@@ -68,4 +69,5 @@ export const persistentVolumeApi = new KubeApi({
   apiBase: "/api/v1/persistentvolumes",
   isNamespaced: false,
   objectConstructor: PersistentVolume,
+  request:apiWorkloads,
 });

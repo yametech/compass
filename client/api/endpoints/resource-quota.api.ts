@@ -1,6 +1,7 @@
 import { KubeObject } from "../kube-object";
 import { KubeApi } from "../kube-api";
 import { KubeJsonApiData } from "../kube-json-api";
+import { apiWorkloads } from "../index";
 
 export interface IResourceQuotaValues {
   [quota: string]: string;
@@ -65,4 +66,5 @@ export const resourceQuotaApi = new KubeApi({
   apiBase: "/api/v1/resourcequotas",
   isNamespaced: true,
   objectConstructor: ResourceQuota,
+  request: apiWorkloads,
 });
