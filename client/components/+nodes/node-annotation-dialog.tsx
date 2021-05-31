@@ -93,7 +93,7 @@ export class NodeAnnotationDialog extends React.Component<Props> {
   }
 
   render() {
-    const header = <h5><Trans>Node Annotation</Trans></h5>;
+    const header = <h5><Trans>Node GEO Annotation</Trans></h5>;
     return (
       <Dialog
         isOpen={NodeAnnotationDialog.isOpen}

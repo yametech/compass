@@ -2,21 +2,17 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Dialog, DialogProps } from "../dialog";
 import { observable } from "mobx";
-import { Namespace } from "../../api/endpoints";
+import { Namespace, Deploy } from "../../api/endpoints";
 import { Input } from "../input"
 import { Wizard, WizardStep } from "../wizard";
 import { t, Trans } from "@lingui/macro";
 import { SubTitle } from "../layout/sub-title";
 import { _i18n } from "../../i18n";
 import { NamespaceSelect } from "../+namespaces/namespace-select";
-import { apiBase } from "../../api";
 import { Notifications } from "../notifications";
 import { NamespaceAllowStorageClassSelect } from "../+namespaces/namespace-allow-storageclass-select";
 import { MultusCniNameSelect } from "../+deploy-multus-cni/multus-name-select";
-import { SelectOption } from "../select";
-import {
-  NetworkAttachmentDefinition,
-} from "../../api/endpoints";
+import { apiManager } from "../../../client/api/api-manager";
 
 interface Props extends Partial<DialogProps> {
 }
@@ -27,6 +23,7 @@ export class DeployDialog extends React.Component<Props> {
   @observable static isOpen = false;
   @observable static appName = "";
   @observable static templateName = "";
+  @observable static template: Deploy = null;
   @observable namespace = "";
   @observable replicas = "1";
   @observable storageClass = "";
@@ -34,10 +31,12 @@ export class DeployDialog extends React.Component<Props> {
   @observable networkCard = "";
   @observable cniNameMap = new Map<string, string>();
 
-  static open(appName: string, templateName: string) {
+
+  static open(template: Deploy) {
     DeployDialog.isOpen = true;
-    DeployDialog.appName = appName;
-    DeployDialog.templateName = templateName;
+    DeployDialog.appName = template.getAppName();
+    DeployDialog.templateName = template.getName();
+    DeployDialog.template = template;
   }
 
   static close() {
@@ -65,22 +64,8 @@ export class DeployDialog extends React.Component<Props> {
   }
 
   updateDeploy = async () => {
-    // k8s.v1.cni.cncf.io/networks: '[
-    //   { "name" : "macvlan-conf1" }, 
-    //   { "name" : "macvlan-conf" }
-    // ]'
-    // let keyPair: Map<string, string> = new Map<string, string>();
-    // keyPair.set("name", this.networkCard);
-    // this.networkCard.map((item) => {
-    //   keyPair.set("name", item)
-    // });
-    // console.log(this.networkCard);
-
-    // let cniNameMap: Map<string, string> = new Map<string, string>();
-    // let a = `${}`;
     if (this.networkCard !== "") {
       this.cniNameMap.set("k8s.v1.cni.cncf.io/networks", this.networkCard);
-
     }
 
     const data = {
@@ -92,12 +77,13 @@ export class DeployDialog extends React.Component<Props> {
       replicas: this.replicas,
     }
 
-
     try {
-      await apiBase.post("/deploy", { data }).then((data) => {
-        this.reset();
-        this.close();
-      })
+      const template = DeployDialog.template;
+      await apiManager.getApi(template.selfLink).deploy({ name: this.appName, namespace: "" }, { data }).
+        then(() => {
+          this.reset();
+          this.close();
+        })
       Notifications.ok(
         <>Deploy {data.appName} to namespace {data.namespace} succeeded</>
       );
@@ -131,11 +117,11 @@ export class DeployDialog extends React.Component<Props> {
                 onChange={(v) => this.namespace = v.value}
               />
 
-              <SubTitle title={<Trans>Multus NetWorkcat</Trans>} />
+              <SubTitle title={<Trans>Multus NetWork</Trans>} />
               <MultusCniNameSelect
                 isClearable
                 namespace={this.namespace}
-                placeholder={_i18n._(t`Multus NetWorkCat`)}
+                placeholder={_i18n._(t`Multus NetWork`)}
                 themeName="light"
                 className="box grow"
                 onChange={(v) => this.networkCard = v.value}
@@ -144,7 +130,6 @@ export class DeployDialog extends React.Component<Props> {
               //   this.networkCard.replace(unwrapCNiName(opts));
               // }}
               />
-
 
               <SubTitle title={<Trans>StorageClass</Trans>} />
               <NamespaceAllowStorageClassSelect
@@ -164,6 +149,7 @@ export class DeployDialog extends React.Component<Props> {
                 value={this.replicas}
                 onChange={v => this.replicas = v}
               />
+
             </div>
           </WizardStep>
         </Wizard>

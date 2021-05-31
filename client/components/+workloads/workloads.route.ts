@@ -43,9 +43,8 @@ export const injectorsRoute: RouteProps = {
   path: "/injectors"
 }
 
-
 export const deployRoute: RouteProps = {
-  path: "/deploy"
+  path: "/template"
 }
 
 // Route params

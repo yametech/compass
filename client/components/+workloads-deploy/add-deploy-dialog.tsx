@@ -52,7 +52,7 @@ export class AddDeployDialog extends React.Component<Props> {
   addDeployDialog = async () => {
 
     const { app, containers, service, volumeClaims } = this;
-    const name = app.name + '-' + Math.floor(Date.now() / 1000)
+    const name = app.name
 
     try {
 
@@ -73,7 +73,7 @@ export class AddDeployDialog extends React.Component<Props> {
         });
 
       Notifications.ok(
-        <>Deploy {name} succeeded</>
+        <>Add Workloads Template {name} succeeded</>
       );
       await this.close();
     } catch (err) {
@@ -82,7 +82,7 @@ export class AddDeployDialog extends React.Component<Props> {
   }
 
   render() {
-    const header = <h5><Trans>Apply Deploy Workload</Trans></h5>;
+    const header = <h5><Trans>Apply Workloads Template</Trans></h5>;
 
     return (
       <Dialog

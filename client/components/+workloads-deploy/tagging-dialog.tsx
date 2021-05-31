@@ -1,16 +1,17 @@
 import React from "react";
-import {observer} from "mobx-react";
-import {Dialog, DialogProps} from "../dialog";
-import {observable} from "mobx";
-import {t, Trans} from "@lingui/macro";
-import {Wizard, WizardStep} from "../wizard";
-import {app, App} from "../+deploy-app";
-import {deployStore} from "./deploy.store";
-import {Notifications} from "../notifications";
-import {Deploy} from "../../api/endpoints";
+import { observer } from "mobx-react";
+import { Dialog, DialogProps } from "../dialog";
+import { observable } from "mobx";
+import { t, Trans } from "@lingui/macro";
+import { Wizard, WizardStep } from "../wizard";
+import { app, App } from "../+deploy-app";
+import { deployStore } from "./deploy.store";
+import { Notifications } from "../notifications";
+import { Deploy } from "../../api/endpoints";
 import { Input } from "../input"
 import { SubTitle } from "../layout/sub-title";
 import { _i18n } from "../../i18n";
+import { apiManager } from "../../../client/api/api-manager";
 
 interface Props extends DialogProps {
 
@@ -52,19 +53,13 @@ export class TaggingDialog extends React.Component<Props> {
 
   updateDeploy = async () => {
 
-    const {app} = this;
+    const { app } = this;
+    const data = { tagName: this.tagName };
     try {
-      await deployStore.update(
-        this.deploy,
-        {
-          metadata: {
-            ...this.deploy.metadata,
-            labels: {
-              ...this.deploy.metadata.labels,
-              tagName: this.tagName
-            }
-          },
-        });
+      await apiManager.getApi(this.deploy.selfLink).updateLabel(
+        { name: this.deploy.getName(), namespace: "" },
+        data,
+      );
       await this.close();
       Notifications.ok(
         <>Tagging {app.name} as {this.tagName} succeeded</>

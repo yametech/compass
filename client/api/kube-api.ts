@@ -262,6 +262,14 @@ export class KubeApi<T extends KubeObject = any> {
     return this.request.post(apiUrl, { data }).then(this.parseResponse);
   }
 
+  async deploy(
+    { name = "", namespace = "default" } = {},
+    data?: Partial<T>
+  ): Promise<T> {
+    const apiUrl = this.getUrl({ namespace, name }) + "/deploy";
+    return this.request.post(apiUrl, { data }).then(this.parseResponse);
+  }
+
   async post(
     { path = "" } = {},
     data?: Partial<T>

@@ -1,13 +1,13 @@
-import {ActionMeta} from "react-select/src/types";
-import {observer} from "mobx-react";
+import { ActionMeta } from "react-select/src/types";
+import { observer } from "mobx-react";
 import React from "react";
-import {Button} from "../button";
-import {Collapse} from "../collapse";
-import {ContainerDetails} from "./container-details";
-import {observable} from "mobx";
-import {container, Container} from "./common";
-import {Trans} from "@lingui/macro";
-import {Icon} from "../icon";
+import { Button } from "../button";
+import { Collapse } from "../collapse";
+import { ContainerDetails } from "./container-details";
+import { observable } from "mobx";
+import { container, Container } from "./common";
+import { Trans } from "@lingui/macro";
+import { Icon } from "../icon";
 
 interface Props<T = any> extends Partial<Props> {
   value?: T;
@@ -59,7 +59,7 @@ export class MultiContainerDetails extends React.Component<Props> {
       return (
         <Icon
           material={"delete_outline"}
-          style={{color: '#ff4d4f'}}
+          style={{ color: '#ff4d4f' }}
           onClick={(event) => {
             this.remove(index);
             event.preventDefault();
@@ -90,9 +90,9 @@ export class MultiContainerDetails extends React.Component<Props> {
         <Button primary onClick={() => this.add()}>
           <Trans>Add Container</Trans>
         </Button>
-        <br/>
-        <br/>
-        {this.value.map((item: any, index: number) =>  this.rContainerDetails(index))}
+        <br />
+        <br />
+        {this.value.map((item: any, index: number) => this.rContainerDetails(index))}
       </>
     )
   }

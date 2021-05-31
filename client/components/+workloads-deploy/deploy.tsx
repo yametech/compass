@@ -7,7 +7,7 @@ import { Icon } from "../icon";
 import { _i18n } from "../../i18n"
 import { RouteComponentProps } from "react-router";
 import { t, Trans } from "@lingui/macro";
-import { Deploy, deployApi, Pipeline } from "../../api/endpoints";
+import { Deploy, deployApi } from "../../api/endpoints";
 import { KubeObjectMenu, KubeObjectMenuProps } from "../kube-object";
 import { KubeObjectListLayout } from "../kube-object";
 import { DeployDialog, AddDeployDialog, TaggingDialog } from "../+workloads-deploy";
@@ -33,7 +33,7 @@ interface Props extends RouteComponentProps<IDeployWorkloadsParams> {
 
 
 export function deployNameRender(deploy: Deploy) {
-  const name = deploy.getName();
+  const name = deploy.getAppName();
   return (
     <a onClick={(event) => { stopPropagation(event); ConfigDeployDialog.open(deploy) }}>
       <Tooltip title={name} placement="top-start">
@@ -65,9 +65,9 @@ export class Deploys extends React.Component<Props> {
             (deploy: Deploy) => deploy.getSearchFields(),
           ]}
           searchRegexpFilters={[
-            { prefix: '^tagName:', cb: (deploy: Deploy) => deploy.getTagName()}, //Regexp match
+            { prefix: '^tagName:', cb: (deploy: Deploy) => deploy.getTagName() }, //Regexp match
           ]}
-          renderHeaderTitle={< Trans> Deploys </Trans>}
+          renderHeaderTitle={< Trans> Workloads Template </Trans>}
           renderTableHeader={
             [
               { title: <Trans>AppName</Trans>, className: "appName", sortBy: sortBy.appName },
@@ -119,10 +119,10 @@ export function DeployMenu(props: KubeObjectMenuProps<Deploy>) {
           <span className="title"><Trans>Tagging</Trans></span>
         </MenuItem>
         <MenuItem onClick={() => {
-          DeployDialog.open(object.getAppName(), object.getName())
+          DeployDialog.open(object)
         }}>
-          <Icon material="play_circle_filled" title={_i18n._(t`Deploy`)} interactive={toolbar} />
-          <span className="title"><Trans>Deploy</Trans></span>
+          <Icon material="play_circle_filled" title={_i18n._(t`DeployTO`)} interactive={toolbar} />
+          <span className="title"><Trans>DeployTO</Trans></span>
         </MenuItem>
         <MenuItem onClick={() => {
           ConfigDeployDialog.open(object)

@@ -5,5 +5,5 @@ export interface App {
 
 export const app: App = {
   type: "Stone",
-  name: "your-app-name"
+  name: "app"
 }

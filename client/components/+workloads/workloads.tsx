@@ -62,7 +62,7 @@ export class Workloads extends React.Component<Props> {
         path: overviewRoute.path
       },
       {
-        title: <Trans>Deploy</Trans>,
+        title: <Trans>Template</Trans>,
         component: Deploys,
         url: deployURL({ query }),
         path: deployRoute.path
