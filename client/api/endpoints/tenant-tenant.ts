@@ -17,7 +17,7 @@ export class Tenant extends KubeObject {
 export const tenantApi = new KubeApi({
     kind: Tenant.kind,
     apiBase: "/apis/yamecloud.io/v1/basetenants",
-    isNamespaced: true,
+    isNamespaced: false,
     objectConstructor: Tenant,
     request: apiTenant
 });

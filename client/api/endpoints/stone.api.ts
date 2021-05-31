@@ -3,6 +3,7 @@ import { IPodContainer } from "./pods.api";
 import { IAffinity, WorkloadKubeObject } from "../workload-kube-object";
 import { autobind } from "../../utils";
 import { KubeApi } from "../kube-api";
+import { apiWorkloadPlus } from "../index";
 
 @autobind()
 export class Stone extends WorkloadKubeObject {
@@ -91,4 +92,5 @@ export const stoneApi = new KubeApi({
   apiBase: "/apis/nuwa.nip.io/v1/stones",
   isNamespaced: true,
   objectConstructor: Stone,
+  request: apiWorkloadPlus,
 });

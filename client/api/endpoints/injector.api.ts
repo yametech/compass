@@ -3,6 +3,7 @@ import { IPodContainer } from "./pods.api";
 import { WorkloadKubeObject } from "../workload-kube-object";
 import { autobind } from "../../utils";
 import { KubeApi } from "../kube-api";
+import { apiWorkloadPlus } from "../index";
 
 @autobind()
 export class Injector extends WorkloadKubeObject {
@@ -64,4 +65,5 @@ export const injectorApi = new KubeApi({
   apiBase: "/apis/nuwa.nip.io/v1/injectors",
   isNamespaced: true,
   objectConstructor: Injector,
+  request: apiWorkloadPlus,
 });

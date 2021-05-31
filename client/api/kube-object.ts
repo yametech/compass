@@ -80,7 +80,6 @@ export class KubeObject implements ItemObject {
 
   constructor(data: KubeJsonApiData) {
     Object.assign(this, data);
-    // this.metadata.ownerReferences = [];
   }
 
   apiVersion: string;
@@ -174,12 +173,7 @@ export class KubeObject implements ItemObject {
   }
 
   getAnnotation(key: string): string {
-    return this.getAnnotations().find(annotation => {
-      const annotationKeyValue = annotation.split("=");
-      if (annotationKeyValue[0] == key) {
-        return annotationKeyValue[1];
-      }
-    })
+    return KubeObject.mapperLablesOrAnnotations(this.getAnnotations()).get(key) || ""
   }
 
 

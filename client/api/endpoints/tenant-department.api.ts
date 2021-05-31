@@ -31,7 +31,7 @@ export class TenantDepartment extends KubeObject {
 export const tenantDepartmentApi = new KubeApi({
   kind: TenantDepartment.kind,
   apiBase: "/apis/yamecloud.io/v1/basedepartments",
-  isNamespaced: true,
+  isNamespaced: false,
   objectConstructor: TenantDepartment,
   request: apiTenant
 });

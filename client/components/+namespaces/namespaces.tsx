@@ -92,8 +92,8 @@ export function NamespaceMenu(props: KubeObjectMenuProps<Namespace>) {
         <span className="title"><Trans>Allow StorageClass</Trans></span>
       </MenuItem>
       <MenuItem onClick={() => { Namespace2Layernet.open(object); }}>
-        <Icon material="gesture" title={_i18n._(t`Add 2LayerNet`)} interactive={toolbar} />
-        <span className="title"><Trans>Add 2LayerNet</Trans></span>
+        <Icon material="gesture" title={_i18n._(t`Allow OtherNetWork`)} interactive={toolbar} />
+        <span className="title"><Trans>Allow OtherNetWork</Trans></span>
       </MenuItem>
     </KubeObjectMenu>
 

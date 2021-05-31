@@ -1,6 +1,7 @@
 import { KubeApi } from "../kube-api";
 import { KubeObject } from "../kube-object";
 import { autobind } from "../../utils";
+import { apiWorkloads } from "../index";
 
 export enum NamespaceStatus {
   ACTIVE = "Active",
@@ -25,4 +26,5 @@ export const namespacesApi = new KubeApi({
   apiBase: "/api/v1/namespaces",
   isNamespaced: false,
   objectConstructor: Namespace,
+  request: apiWorkloads,
 });

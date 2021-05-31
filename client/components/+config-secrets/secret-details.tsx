@@ -11,9 +11,9 @@ import { Button } from "../button";
 import { Notifications } from "../notifications";
 import { base64 } from "../../utils";
 import { Icon } from "../icon";
-import { secretsStore, opsSecretsStore } from "./secrets.store";
+import { secretsStore, tektonConfigStore } from "./secrets.store";
 import { KubeObjectDetailsProps } from "../kube-object";
-import { Secret, secretsApi, opsSecretsApi } from "../../api/endpoints";
+import { Secret, secretsApi, tektonConfigApi } from "../../api/endpoints";
 import { _i18n } from "../../i18n";
 import { apiManager } from "../../api/api-manager";
 import { KubeObjectMeta } from "../kube-object/kube-object-meta";
@@ -44,9 +44,9 @@ export class SecretDetails extends React.Component<Props> {
   saveSecret = async () => {
     const { object: secret } = this.props;
     this.isSaving = true;
-    const api = this.isSecret ? secretsApi : opsSecretsApi;
     try {
-      await api.update({ namespace: secret.getNs(), name: secret.getName() }, { ...secret, data: this.data });
+      await apiManager.getApi(secret.selfLink).update(
+        { namespace: secret.getNs(), name: secret.getName() }, { ...secret, data: this.data });
       if (this.isSecret) {
         Notifications.ok(<Trans>secret successfully updated.</Trans>);
       } else {
@@ -122,4 +122,4 @@ export class SecretDetails extends React.Component<Props> {
 }
 
 apiManager.registerViews(secretsApi, { Details: SecretDetails, })
-apiManager.registerViews(opsSecretsApi, { Details: SecretDetails, })
+apiManager.registerViews(tektonConfigApi, { Details: SecretDetails, })

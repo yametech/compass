@@ -1,26 +1,26 @@
 import "./stones.scss";
 
 import React from "react";
-import {observer} from "mobx-react";
-import {RouteComponentProps} from "react-router";
-import {t, Trans} from "@lingui/macro";
-import {Stone, stoneApi} from "../../api/endpoints";
-import {podsStore} from "../+workloads-pods/pods.store";
-import {stoneStore} from "./stones.store";
-import {nodesStore} from "../+nodes/nodes.store";
-import {eventStore} from "../+events/event.store";
-import {KubeObjectMenu, KubeObjectMenuProps} from "../kube-object";
-import {KubeObjectListLayout} from "../kube-object";
-import {IStatefulSetsRouteParams, IStonesRouteParams} from "../+workloads";
-import {apiManager} from "../../api/api-manager";
-import {enhanceStatefulSetStore} from "../+workloads-enhancestatefulsets/enhancestatefulset.store";
-import {MenuItem} from "../menu";
-import {Icon} from "../icon";
-import {_i18n} from "../../i18n";
-import {ConfigStoneDialog} from "./config-stone-dialog";
-import {Link} from "react-router-dom";
+import { observer } from "mobx-react";
+import { RouteComponentProps } from "react-router";
+import { t, Trans } from "@lingui/macro";
+import { Stone, stoneApi } from "../../api/endpoints";
+import { podsStore } from "../+workloads-pods/pods.store";
+import { stoneStore } from "./stones.store";
+import { nodesStore } from "../+nodes/nodes.store";
+import { eventStore } from "../+events/event.store";
+import { KubeObjectMenu, KubeObjectMenuProps } from "../kube-object";
+import { KubeObjectListLayout } from "../kube-object";
+import { IStatefulSetsRouteParams, IStonesRouteParams } from "../+workloads";
+import { apiManager } from "../../api/api-manager";
+import { enhanceStatefulSetStore } from "../+workloads-enhancestatefulsets/enhancestatefulset.store";
+import { MenuItem } from "../menu";
+import { Icon } from "../icon";
+import { _i18n } from "../../i18n";
+import { ConfigStoneDialog } from "./config-stone-dialog";
+import { Link } from "react-router-dom";
 import Tooltip from "@material-ui/core/Tooltip";
-import {stopPropagation} from "../../utils";
+import { stopPropagation } from "../../utils";
 
 enum sortBy {
   name = "name",
@@ -81,17 +81,17 @@ export class Stones extends React.Component<Props> {
           ]}
           renderHeaderTitle={<Trans>Stones</Trans>}
           renderTableHeader={[
-            {title: <Trans>Name</Trans>, className: "name", sortBy: sortBy.name},
-            {className: "warning"},
-            {title: <Trans>Namespace</Trans>, className: "namespace", sortBy: sortBy.namespace},
-            {title: <Trans>Pods</Trans>, className: "pods", sortBy: sortBy.pods},
-            {title: <Trans>Strategy</Trans>, className: "strategy", sortBy: sortBy.strategy},
-            {title: <Trans>StatefulSets</Trans>, className: "statefulSets", sortBy: sortBy.statefulSets},
-            {title: <Trans>Age</Trans>, className: "age", sortBy: sortBy.age},
+            { title: <Trans>Name</Trans>, className: "name", sortBy: sortBy.name },
+            { className: "warning" },
+            { title: <Trans>Namespace</Trans>, className: "namespace", sortBy: sortBy.namespace },
+            { title: <Trans>Pods</Trans>, className: "pods", sortBy: sortBy.pods },
+            { title: <Trans>Strategy</Trans>, className: "strategy", sortBy: sortBy.strategy },
+            { title: <Trans>StatefulSets</Trans>, className: "statefulSets", sortBy: sortBy.statefulSets },
+            { title: <Trans>Age</Trans>, className: "age", sortBy: sortBy.age },
           ]}
           renderTableContents={(stone: Stone) => [
             this.renderStoneName(stone),
-            this.hasPodIssues(stone) && <Icon material="warning" className={"StoneWarningIcon"}/>,
+            this.hasPodIssues(stone) && <Icon material="warning" className={"StoneWarningIcon"} />,
             stone.getNs(),
             this.getPodsLength(stone),
             stone.getStrategy(),
@@ -99,10 +99,10 @@ export class Stones extends React.Component<Props> {
             stone.getAge(),
           ]}
           renderItemMenu={(item: Stone) => {
-            return <StoneMenu object={item}/>
+            return <StoneMenu object={item} />
           }}
         />
-        <ConfigStoneDialog/>
+        <ConfigStoneDialog />
       </>
     )
   }
@@ -110,12 +110,12 @@ export class Stones extends React.Component<Props> {
 
 export function StoneMenu(props: KubeObjectMenuProps<Stone>) {
 
-  const {object, toolbar} = props
+  const { object, toolbar } = props
 
   return (
     <KubeObjectMenu {...props} >
       <MenuItem onClick={() => ConfigStoneDialog.open(object)}>
-        <Icon material="sync_alt" title={_i18n._(t`Config`)} interactive={toolbar}/>
+        <Icon material="sync_alt" title={_i18n._(t`Config`)} interactive={toolbar} />
         <span className="title"><Trans>Config</Trans></span>
       </MenuItem>
     </KubeObjectMenu>

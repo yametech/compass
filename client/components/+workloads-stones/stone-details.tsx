@@ -90,9 +90,11 @@ export class StoneDetails extends React.Component<Props> {
             </DrawerItem>
             <ResourceMetricsText metrics={metrics} />
           </BookTabsNode>
+          
           <BookTabsNode name="Pods" iconName="mail">
             <PodDetailsList pods={childPods} owner={stone} />
           </BookTabsNode>
+
           <BookTabsNode name="Events" iconName="view_stream">
             <KubeEventDetails object={stone} />
 
@@ -108,6 +110,7 @@ export class StoneDetails extends React.Component<Props> {
               </>
             }
           </BookTabsNode>
+
         </BookTabs>
       </div>
     )

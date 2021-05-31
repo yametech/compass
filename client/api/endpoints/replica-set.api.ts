@@ -3,6 +3,7 @@ import { autobind } from "../../utils";
 import { IAffinity, WorkloadKubeObject } from "../workload-kube-object";
 import { IPodContainer } from "./pods.api";
 import { KubeApi } from "../kube-api";
+import { apiWorkloads } from "../index";
 
 @autobind()
 export class ReplicaSet extends WorkloadKubeObject {
@@ -55,4 +56,5 @@ export const replicaSetApi = new KubeApi({
   apiBase: "/apis/apps/v1/replicasets",
   isNamespaced: true,
   objectConstructor: ReplicaSet,
+  request: apiWorkloads,
 });

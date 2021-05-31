@@ -50,6 +50,7 @@ export class JsonApi<D = JsonApiData, P extends JsonApiParams = JsonApiParams> {
   public onData = new EventEmitter<[D, Response]>();
   public onError = new EventEmitter<[JsonApiErrorParsed, Response]>();
 
+
   get<T = D>(path: string, params?: P, reqInit: RequestInit = {}) {
     const userConfig = store.get('u_config')
     const token = userConfig.token
@@ -89,7 +90,6 @@ export class JsonApi<D = JsonApiData, P extends JsonApiParams = JsonApiParams> {
     let reqConfig = { ...reqInit, method: "delete", headers: { Authorization: token } }
     return this.request<T>(path, params, { ...reqConfig });
   }
-
   protected request<D>(path: string, params?: P, init: RequestInit = {}) {
     let reqUrl = this.config.apiPrefix + path;
     const reqInit: RequestInit = { ...this.reqInit, ...init };

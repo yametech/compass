@@ -3,6 +3,7 @@ import { KubeObject } from "../kube-object";
 import { formatDuration } from "../../utils/formatDuration";
 import { autobind } from "../../utils";
 import { KubeApi } from "../kube-api";
+import { apiWorkloads } from "../index";
 
 @autobind()
 export class KubeEvent extends KubeObject {
@@ -56,4 +57,5 @@ export const eventApi = new KubeApi({
   apiBase: "/api/v1/events",
   isNamespaced: true,
   objectConstructor: KubeEvent,
+  request: apiWorkloads,
 })

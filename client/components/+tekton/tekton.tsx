@@ -31,7 +31,7 @@ import {
 } from "./tekton.route";
 import { Tasks } from "../+tekton-task";
 import { TaskRuns } from "../+tekton-taskrun";
-import { OpsSecrets } from "../+tekton-ops-secret";
+import { TektonConfg } from "../+tekton-config";
 import { TektonStoreLayout } from "../+tekton-store";
 
 interface Props extends RouteComponentProps { }
@@ -78,7 +78,7 @@ export class Tekton extends React.Component<Props> {
       },
       {
         title: <Trans>Config</Trans>,
-        component: OpsSecrets,
+        component: TektonConfg,
         url: opsSecretURL({ query }),
         path: opsSecretRoute.path,
       },

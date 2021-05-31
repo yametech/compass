@@ -16,10 +16,10 @@ import { storageRoute, storageURL } from "../+storage";
 import { clusterURL } from "../+cluster";
 import { tektonURL, tektonRoute, Tekton } from "../+tekton";
 import { Istio, istioRoute, istioGatewayURL } from "../+istio";
-import { ovnURL, ovnRoute, Ovn } from "../+ovn";
+import { ovnURL, ovnRoute, SDN } from "../+sdn";
 import { Config, configRoute, configURL } from "../+config";
 import { eventRoute, eventsURL } from "../+events";
-import { tenantRoute, tenantURL, Tenant } from "../+tenant";
+import { tenantRoute, tenantURL, Tenant } from "../+tenant-manage";
 import { Apps, appsRoute, appsURL } from "../+apps";
 import { namespaceStore } from "../+namespaces/namespace.store";
 import { TabRoute } from "./main-layout";
@@ -155,13 +155,6 @@ export class Sidebar extends React.Component<Props> {
               icon={<Icon svg="storage" />}
               text={<Trans>Storage</Trans>}
             />
-            {/* <SidebarNavItem
-              id="events"
-              url={eventsURL({ query })}
-              routePath={eventRoute.path}
-              icon={<Icon material="access_time" />}
-              text={<Trans>Events</Trans>}
-            /> */}
             <SidebarNavItem
               isHidden={!isClusterAdmin}
               id="namespaces"
@@ -174,9 +167,9 @@ export class Sidebar extends React.Component<Props> {
               id="ovn"
               url={ovnURL({ query })}
               routePath={ovnRoute.path}
-              subMenus={Ovn.tabRoutes}
+              subMenus={SDN.tabRoutes}
               icon={<Icon material="wifi_tethering" />}
-              text={<Trans>OVN Config</Trans>}
+              text={<Trans>SDN</Trans>}
             />
             <SidebarNavItem
               isHidden={!isClusterAdmin && !isTenantOwner}
@@ -184,7 +177,7 @@ export class Sidebar extends React.Component<Props> {
               url={tenantURL({ query })}
               routePath={tenantRoute.path}
               subMenus={Tenant.tabRoutes}
-              text={<Trans>Tenant</Trans>}
+              text={<Trans>Tenant Manage</Trans>}
               icon={<Icon material="people" />}
             />
             <SidebarNavItem

@@ -7,7 +7,7 @@ import { Spinner } from "../spinner";
 import { ServiceAccountsSecret } from "./service-accounts-secret";
 import { DrawerItem, DrawerTitle } from "../drawer";
 import { disposeOnUnmount, observer } from "mobx-react";
-import { secretsStore, opsSecretsStore } from "../+config-secrets";
+import { secretsStore, tektonConfigStore } from "../+config-secrets";
 import { Link } from "react-router-dom";
 import { Secret, ServiceAccount, serviceAccountsApi } from "../../api/endpoints";
 import { KubeEventDetails } from "../+events/kube-event-details";
@@ -35,7 +35,7 @@ export class ServiceAccountsDetails extends React.Component<Props> {
     const secrets = serviceAccount.getSecrets().map(({ name }) => {
       let secret = secretsStore.getByName(name, namespace);
       if (!secret) {
-        secret = opsSecretsStore.getByName(name, namespace);
+        secret = tektonConfigStore.getByName(name, namespace);
       }
       return secret;
     });

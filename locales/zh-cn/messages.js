@@ -1,13 +1,13 @@
 module.exports = {
     localeData: {
-        "plurals": function(n, ord) {
+        "plurals": function (n, ord) {
             var s = String(n).split("."),
-            v0 = !s[1],
-            t0 = Number(s[0]) == n,
-            n10 = t0 && s[0].slice( - 1),
-            n100 = t0 && s[0].slice( - 2);
-            if (ord) return n10 == 1 && n100 != 11 ? "one": n10 == 2 && n100 != 12 ? "two": n10 == 3 && n100 != 13 ? "few": "other";
-            return n == 1 && v0 ? "one": "other"
+                v0 = !s[1],
+                t0 = Number(s[0]) == n,
+                n10 = t0 && s[0].slice(- 1),
+                n100 = t0 && s[0].slice(- 2);
+            if (ord) return n10 == 1 && n100 != 11 ? "one" : n10 == 2 && n100 != 12 ? "two" : n10 == 3 && n100 != 13 ? "few" : "other";
+            return n == 1 && v0 ? "one" : "other"
         }
     },
     messages: {
@@ -146,7 +146,8 @@ module.exports = {
         "Default Runtime Class Name": "Default Runtime Class Name",
         "Definitions": "Definitions",
         "Delete": "Delete",
-        "Deploy":'部署',
+        "Template": "部署模板",
+        "DeployTo": "部署至",
         "Deploy Revisions": "Deploy Revisions",
         "Deployments": "Deployments",
         "Description": "Description",
@@ -272,7 +273,8 @@ module.exports = {
         "Name": "Name(名称)",
         "Name (optional)": "Name (optional)",
         "Names": "Names",
-        "Tekton": "Tekton(流水线)",
+        "Tekton": "流水线",
+        "ServiceMesh": "服务网格",
         "Namespace": "Namespace",
         "Namespace: {0}": ["Namespace: ", ["0"]],
         "Namespaces": "命名空间",
@@ -302,7 +304,7 @@ module.exports = {
         "Note: StatefulSet Volumes won't be deleted automatically": "Note: StatefulSet Volumes won't be deleted automatically",
         "Notes": "Notes",
         "Number of running Pods": "Number of running Pods",
-        "OVN Config":"OVN 配置",
+        "SDN": "自定义网络",
         "OS": "OS",
         "OS Image": "OS Image",
         "Object": "Object",
@@ -446,7 +448,11 @@ module.exports = {
         "Suspend": "Suspend",
         "TLS": "TLS",
         "Taints": "Taints",
-        "Tenant": "租户管理",
+        "Tenant Manage": "租户管理",
+        "Tenant": "租户",
+        "Department": "部门",
+        "Role": "角色",
+        "User": "用户",
         "Terminal": "Terminal",
         "Terminal session": "Terminal session",
         "There are no logs available for container.": "There are no logs available for container.",
@@ -470,7 +476,6 @@ module.exports = {
         "Usage": "Usage",
         "Use same name for RoleBinding": "Use same name for RoleBinding",
         "Used": "Used",
-        "User": "User",
         "Validation": "Validation",
         "Value": "Value",
         "Values": "Values",

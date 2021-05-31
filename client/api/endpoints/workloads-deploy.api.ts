@@ -4,13 +4,13 @@ import { autobind } from "../../utils";
 import { KubeApi } from "../kube-api";
 import moment from "moment";
 import { advanceFormatDuration } from "../../utils";
+import { apiWorkloads } from "../index";
 
 @autobind()
 export class Deploy extends WorkloadKubeObject {
   static kind = "Workloads";
 
   spec: {
-    // 这里需要优化,引用到外部的interface
     appName: string; // the app name
     resourceType: string;
     metadata: string; // the field record array container configuration
@@ -67,7 +67,8 @@ export class Deploy extends WorkloadKubeObject {
 
 export const deployApi = new KubeApi({
   kind: Deploy.kind,
-  apiBase: "/apis/fuxi.nip.io/v1/workloads",
-  isNamespaced: true,
+  apiBase: "/apis/yamecloud.io/v1/workloads",
+  isNamespaced: false,
   objectConstructor: Deploy,
+  request: apiWorkloads,
 });

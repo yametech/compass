@@ -22,7 +22,7 @@ export class TenantUser extends KubeObject {
 export const tenantUserApi = new KubeApi({
     kind: TenantUser.kind,
     apiBase: "/apis/yamecloud.io/v1/baseusers",
-    isNamespaced: true,
+    isNamespaced: false,
     objectConstructor: TenantUser,
     request: apiTenant
 });

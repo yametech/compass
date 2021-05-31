@@ -10,7 +10,7 @@ import { AddSecretDialog } from "./add-secret-dialog";
 import { ISecretsRouteParams } from "./secrets.route";
 import { KubeObjectListLayout } from "../kube-object";
 import { Badge } from "../badge";
-import { secretsStore, opsSecretsStore } from "./secrets.store";
+import { secretsStore, tektonConfigStore } from "./secrets.store";
 import { apiManager } from "../../api/api-manager";
 import { ConfigSecretDialog } from "./config-secret-dialog";
 import { MenuItem } from "../menu";
@@ -21,8 +21,8 @@ import { namespaceStore } from "../+namespaces/namespace.store";
 import { useEffect, useState } from "react";
 import { Notifications } from "../notifications";
 import { apiBase } from "../../api";
-import {Link} from "react-router-dom";
-import {stopPropagation} from "../../utils";
+import { Link } from "react-router-dom";
+import { stopPropagation } from "../../utils";
 import Tooltip from "@material-ui/core/Tooltip";
 
 enum sortBy {
@@ -46,7 +46,7 @@ export class Secrets extends React.Component<Props> {
   renderSecretName(secret: Secret) {
     const name = secret.getName();
     return (
-      <Link  onClick={(event) => { stopPropagation(event); ConfigSecretDialog.open(secret) }} to={null}>
+      <Link onClick={(event) => { stopPropagation(event); ConfigSecretDialog.open(secret) }} to={null}>
         <Tooltip title={name} placement="top-start">
           <span>{name}</span>
         </Tooltip>
@@ -55,7 +55,7 @@ export class Secrets extends React.Component<Props> {
   }
 
   render() {
-    const store = this.className == "Secrets" ? secretsStore : opsSecretsStore;
+    const store = this.className == "Secrets" ? secretsStore : tektonConfigStore;
     return (
       <>
         <KubeObjectListLayout
@@ -156,7 +156,7 @@ export function SecretMenu(props: KubeObjectMenuProps<Secret>) {
     if (mount == "Unmount") {
       try {
         object.removeLable("mount")
-        opsSecretsStore.update(object, { ...object })
+        tektonConfigStore.update(object, { ...object })
         patchRemoveFromServiceAccount()
         setMount("Mount");
         setMountIcon("add");
@@ -166,7 +166,7 @@ export function SecretMenu(props: KubeObjectMenuProps<Secret>) {
     } else {
       try {
         object.addLabel("mount", "1");
-        opsSecretsStore.update(object, { ...object })
+        tektonConfigStore.update(object, { ...object })
         patchAddToServiceAccount()
         setMount("Unmount");
         setMountIcon("remove");

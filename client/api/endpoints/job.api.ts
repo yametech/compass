@@ -3,6 +3,7 @@ import { autobind } from "../../utils";
 import { IAffinity, WorkloadKubeObject } from "../workload-kube-object";
 import { IPodContainer } from "./pods.api";
 import { KubeApi } from "../kube-api";
+import { apiWorkloads } from "../index";
 
 @autobind()
 export class Job extends WorkloadKubeObject {
@@ -95,4 +96,5 @@ export const jobApi = new KubeApi({
   apiBase: "/apis/batch/v1/jobs",
   isNamespaced: true,
   objectConstructor: Job,
+  request: apiWorkloads,
 });

@@ -28,7 +28,7 @@ export class CRDDetails extends React.Component<Props> {
     const validation = crd.getValidation();
     return (
       <div className="CRDDetails">
-        <KubeObjectMeta object={crd}/>
+        <KubeObjectMeta object={crd} />
 
         <DrawerItem name={<Trans>Group</Trans>}>
           {crd.getGroup()}
@@ -76,7 +76,7 @@ export class CRDDetails extends React.Component<Props> {
             })
           }
         </DrawerItem>
-        <DrawerTitle title={<Trans>Names</Trans>}/>
+        <DrawerTitle title={<Trans>Names</Trans>} />
         <Table selectable className="names box grow">
           <TableHead>
             <TableCell><Trans>plural</Trans></TableCell>
@@ -92,41 +92,41 @@ export class CRDDetails extends React.Component<Props> {
           </TableRow>
         </Table>
         {printerColumns.length > 0 &&
-        <>
-          <DrawerTitle title={<Trans>Additional Printer Columns</Trans>}/>
-          <Table selectable className="printer-columns box grow">
-            <TableHead>
-              <TableCell className="name"><Trans>Name</Trans></TableCell>
-              <TableCell className="type"><Trans>Type</Trans></TableCell>
-              <TableCell className="json-path"><Trans>JSON Path</Trans></TableCell>
-            </TableHead>
-            {
-              printerColumns.map((column, index) => {
-                const { name, type, JSONPath } = column;
-                return (
-                  <TableRow key={index}>
-                    <TableCell className="name">{name}</TableCell>
-                    <TableCell className="type">{type}</TableCell>
-                    <TableCell className="json-path">
-                      <Badge label={JSONPath}/>
-                    </TableCell>
-                  </TableRow>
-                )
-              })
-            }
-          </Table>
-        </>
+          <>
+            <DrawerTitle title={<Trans>Additional Printer Columns</Trans>} />
+            <Table selectable className="printer-columns box grow">
+              <TableHead>
+                <TableCell className="name"><Trans>Name</Trans></TableCell>
+                <TableCell className="type"><Trans>Type</Trans></TableCell>
+                <TableCell className="json-path"><Trans>JSON Path</Trans></TableCell>
+              </TableHead>
+              {
+                printerColumns.map((column, index) => {
+                  const { name, type, JSONPath } = column;
+                  return (
+                    <TableRow key={index}>
+                      <TableCell className="name">{name}</TableCell>
+                      <TableCell className="type">{type}</TableCell>
+                      <TableCell className="json-path">
+                        <Badge label={JSONPath} />
+                      </TableCell>
+                    </TableRow>
+                  )
+                })
+              }
+            </Table>
+          </>
         }
         {validation &&
-        <>
-          <DrawerTitle title={<Trans>Validation</Trans>}/>
-          <AceEditor
-            mode="json"
-            className="validation"
-            value={validation}
-            readOnly
-          />
-        </>
+          <>
+            <DrawerTitle title={<Trans>Validation</Trans>} />
+            <AceEditor
+              mode="json"
+              className="validation"
+              value={validation}
+              readOnly
+            />
+          </>
         }
       </div>
     )

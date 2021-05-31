@@ -1,16 +1,16 @@
 import "./config-maps.scss"
 
 import * as React from "react";
-import {observer} from "mobx-react";
-import {Trans} from "@lingui/macro";
-import {RouteComponentProps} from "react-router";
-import {configMapsStore} from "./config-maps.store";
-import {ConfigMap, configMapApi} from "../../api/endpoints";
-import {KubeObjectMenu, KubeObjectMenuProps} from "../kube-object";
-import {KubeObjectListLayout} from "../kube-object";
-import {IConfigMapsRouteParams} from "./config-maps.route";
-import {apiManager} from "../../api/api-manager";
-import {AddConfigMapDialog} from "./add-config-map-dialog";
+import { observer } from "mobx-react";
+import { Trans } from "@lingui/macro";
+import { RouteComponentProps } from "react-router";
+import { configMapsStore } from "./config-maps.store";
+import { ConfigMap, configMapApi } from "../../api/endpoints";
+import { KubeObjectMenu, KubeObjectMenuProps } from "../kube-object";
+import { KubeObjectListLayout } from "../kube-object";
+import { IConfigMapsRouteParams } from "./config-maps.route";
+import { apiManager } from "../../api/api-manager";
+import { AddConfigMapDialog } from "./add-config-map-dialog";
 
 enum sortBy {
   name = "name",
@@ -41,10 +41,10 @@ export class ConfigMaps extends React.Component<Props> {
           ]}
           renderHeaderTitle={<Trans>Config Maps</Trans>}
           renderTableHeader={[
-            {title: <Trans>Name</Trans>, className: "name", sortBy: sortBy.name},
-            {title: <Trans>Namespace</Trans>, className: "namespace", sortBy: sortBy.namespace},
-            {title: <Trans>Keys</Trans>, className: "keys", sortBy: sortBy.keys},
-            {title: <Trans>Age</Trans>, className: "age", sortBy: sortBy.age},
+            { title: <Trans>Name</Trans>, className: "name", sortBy: sortBy.name },
+            { title: <Trans>Namespace</Trans>, className: "namespace", sortBy: sortBy.namespace },
+            { title: <Trans>Keys</Trans>, className: "keys", sortBy: sortBy.keys },
+            { title: <Trans>Age</Trans>, className: "age", sortBy: sortBy.age },
           ]}
           renderTableContents={(configMap: ConfigMap) => [
             configMap.getName(),
@@ -53,7 +53,7 @@ export class ConfigMaps extends React.Component<Props> {
             configMap.getAge(),
           ]}
           renderItemMenu={(item: ConfigMap) => {
-            return <ConfigMapMenu object={item}/>
+            return <ConfigMapMenu object={item} />
           }}
           addRemoveButtons={{
             onAdd: () => AddConfigMapDialog.open(),
@@ -68,7 +68,7 @@ export class ConfigMaps extends React.Component<Props> {
 
 export function ConfigMapMenu(props: KubeObjectMenuProps<ConfigMap>) {
   return (
-    <KubeObjectMenu {...props}/>
+    <KubeObjectMenu {...props} />
   )
 }
 

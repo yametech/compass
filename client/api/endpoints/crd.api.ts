@@ -1,6 +1,7 @@
 import { KubeObject } from "../kube-object";
 import { KubeApi } from "../kube-api";
 import { crdResourcesURL } from "../../components/+custom-resources/crd.route";
+import { apiWorkloads } from "../index";
 
 export class CustomResourceDefinition extends KubeObject {
   static kind = "CustomResourceDefinition";
@@ -132,7 +133,8 @@ export class CustomResourceDefinition extends KubeObject {
 
 export const crdApi = new KubeApi<CustomResourceDefinition>({
   kind: CustomResourceDefinition.kind,
-  apiBase: "/apis/apiextensions.k8s.io/v1beta1/customresourcedefinitions",
+  apiBase: "/apis/apiextensions.k8s.io/v1/customresourcedefinitions",
   isNamespaced: false,
   objectConstructor: CustomResourceDefinition,
+  request: apiWorkloads,
 });

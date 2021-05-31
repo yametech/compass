@@ -56,12 +56,6 @@ export class TerminalApi extends WebSocketApi {
       flushOnOpen: false,
       pingIntervalSeconds: 30,
     });
-    // setTimeout(() => {
-    //   const dataObj = {
-    //     Data: "export COLUMNS=1000000000 && export TERM=xterm" + "\r",
-    //   };
-    //   this.sendCommand(dataObj);
-    // }, 5000);
   }
 
   async getUrl() {

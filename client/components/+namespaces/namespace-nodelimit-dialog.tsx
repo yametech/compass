@@ -2,16 +2,15 @@ import React from "react";
 import { observer } from "mobx-react";
 import { Dialog, DialogProps } from "../dialog";
 import { observable } from "mobx";
-import { Input } from "../input"
 import { Wizard, WizardStep } from "../wizard";
 import { t, Trans } from "@lingui/macro";
 import { SubTitle } from "../layout/sub-title";
 import { _i18n } from "../../i18n";
 import { NodeSelect } from "../+nodes"
-import { apiBase } from "../../api";
 import { Notifications } from "../notifications";
 import { Namespace } from "../../api/endpoints"
 import { SelectOption } from "../select/select";
+import { apiManager } from "../../../client/api/api-manager";
 
 
 interface NodeResourceLimit {
@@ -50,13 +49,7 @@ export class NamespaceNodeRangeLimitDialog extends React.Component<Props> {
     }
 
     onOpen = () => {
-        let nodeResourceLimitTemps: NodeResourceLimit[] = [];
-        NamespaceNodeRangeLimitDialog.namespace.getAnnotations().map(annotation => {
-            const annotationKeyValue = annotation.split("=");
-            if (annotationKeyValue[0] == "nuwa.kubernetes.io/default_resource_limit") {
-                nodeResourceLimitTemps = JSON.parse(annotationKeyValue[1]);
-            }
-        })
+        let nodeResourceLimitTemps: NodeResourceLimit[] = JSON.parse(NamespaceNodeRangeLimitDialog.namespace.getAnnotation("nuwa.kubernetes.io/default_resource_limit"));
         nodeResourceLimitTemps.map(node => {
             if (this.nodes === null) { this.nodes = observable.array<any>([], { deep: false }) };
             this.nodes.push(node.host)
@@ -64,8 +57,10 @@ export class NamespaceNodeRangeLimitDialog extends React.Component<Props> {
     }
 
     updateAnnotate = async () => {
+        const ns = NamespaceNodeRangeLimitDialog.namespace;
+
         const data = {
-            namespace: NamespaceNodeRangeLimitDialog.namespace.getName(),
+            namespace: ns.getName(),
             nodes: new Array<string>()
         };
         this.nodes.map(node => {
@@ -73,7 +68,7 @@ export class NamespaceNodeRangeLimitDialog extends React.Component<Props> {
         })
 
         try {
-            await apiBase.post("/namespaces/annotation/node", { data }).
+            await apiManager.getApi(ns.selfLink).annotate({ name: ns.getName(), namespace: "", subresource: "node" }, { data }).
                 then((data) => {
                     this.close();
                 })

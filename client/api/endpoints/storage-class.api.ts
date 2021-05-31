@@ -1,6 +1,7 @@
 import { autobind } from "../../utils";
 import { KubeObject } from "../kube-object";
 import { KubeApi } from "../kube-api";
+import { apiWorkloads } from "../index";
 
 @autobind()
 export class StorageClass extends KubeObject {
@@ -36,4 +37,5 @@ export const storageClassApi = new KubeApi({
   apiBase: "/apis/storage.k8s.io/v1/storageclasses",
   isNamespaced: false,
   objectConstructor: StorageClass,
+  request: apiWorkloads,
 });

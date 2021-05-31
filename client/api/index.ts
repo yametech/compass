@@ -1,7 +1,7 @@
-import {JsonApi, JsonApiErrorParsed} from "./json-api";
-import {KubeJsonApi} from "./kube-json-api";
-import {Notifications} from "../components/notifications";
-import {clientVars} from "../../server/config";
+import { JsonApi, JsonApiErrorParsed } from "./json-api";
+import { KubeJsonApi } from "./kube-json-api";
+import { Notifications } from "../components/notifications";
+import { clientVars } from "../../server/config";
 import debounce from 'lodash/debounce';
 //-- JSON HTTP APIS
 
@@ -20,6 +20,11 @@ export const apiPermission = new JsonApi({
     apiPrefix: clientVars.API_PREFIX.TENANT,
 })
 
+export const apiTerminal = new KubeJsonApi({
+    debug: !clientVars.IS_PRODUCTION,
+    apiPrefix: clientVars.TENANT_PREFIX.TERMINAL
+});
+
 export const apiTenant = new KubeJsonApi({
     debug: !clientVars.IS_PRODUCTION,
     apiPrefix: clientVars.TENANT_PREFIX.TENANT
@@ -30,9 +35,25 @@ export const apiIstio = new KubeJsonApi({
     apiPrefix: clientVars.TENANT_PREFIX.ISTIO
 });
 
+export const apiWorkloadPlus = new KubeJsonApi({
+    debug: !clientVars.IS_PRODUCTION,
+    apiPrefix: clientVars.API_PREFIX.WORKLOADPLUS,
+});
+
+
+export const apiWorkloads = new KubeJsonApi({
+    debug: !clientVars.IS_PRODUCTION,
+    apiPrefix: clientVars.API_PREFIX.WORKLOADS,
+});
+
 export const apiTekton = new KubeJsonApi({
     debug: !clientVars.IS_PRODUCTION,
     apiPrefix: clientVars.API_PREFIX.TEKTON,
+});
+
+export const apiSDN = new KubeJsonApi({
+    debug: !clientVars.IS_PRODUCTION,
+    apiPrefix: clientVars.API_PREFIX.SDN,
 });
 
 export const apiService = new KubeJsonApi({
@@ -58,18 +79,18 @@ export const apiKubeResourceApplier = new KubeJsonApi({
 });
 
 const de_loginout = debounce(loginout, 800);
-function loginout(){
+function loginout() {
     Notifications.error('401 Unauthorized, Please Login Again');
-    if(!window.location.href.includes('login')){
-        setTimeout(()=>{
+    if (!window.location.href.includes('login')) {
+        setTimeout(() => {
             window.location.replace('/login')
-        },2000)
+        }, 2000)
     }
-    window.localStorage.removeItem('u_config');  
+    window.localStorage.removeItem('u_config');
 }
 
 const de_showMessage = debounce(showMessage, 800);
-function showMessage(msg:string){
+function showMessage(msg: string) {
     Notifications.error(msg);
 }
 
@@ -82,13 +103,13 @@ function onApiError(error: JsonApiErrorParsed, res: Response) {
             break;
         case 500:
             de_showMessage('500 Internal Server Error')
-            break;   
+            break;
         case 502:
             de_showMessage('502 Bad Gateway')
-            break;    
+            break;
         case 401:
             de_loginout()
-            break; 
+            break;
     }
 }
 

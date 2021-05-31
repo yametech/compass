@@ -1,5 +1,6 @@
 import { KubeObject } from "../kube-object";
 import { KubeApi } from "../kube-api";
+import { apiWorkloads } from "../index";
 
 export enum HpaMetricType {
   Resource = "Resource",
@@ -99,14 +100,14 @@ export class HorizontalPodAutoscaler extends KubeObject {
   protected getMetricName(metric: IHpaMetric): string {
     const { type, resource, pods, object, external } = metric;
     switch (type) {
-    case HpaMetricType.Resource:
-      return resource.name
-    case HpaMetricType.Pods:
-      return pods.metricName;
-    case HpaMetricType.Object:
-      return object.metricName;
-    case HpaMetricType.External:
-      return external.metricName;
+      case HpaMetricType.Resource:
+        return resource.name
+      case HpaMetricType.Pods:
+        return pods.metricName;
+      case HpaMetricType.Object:
+        return object.metricName;
+      case HpaMetricType.External:
+        return external.metricName;
     }
   }
 
@@ -137,4 +138,5 @@ export const hpaApi = new KubeApi({
   apiBase: "/apis/autoscaling/v2beta1/horizontalpodautoscalers",
   isNamespaced: true,
   objectConstructor: HorizontalPodAutoscaler,
+  request: apiWorkloads,
 });

@@ -1,5 +1,5 @@
 // Kubernetes watch-api consumer
-import store from 'store'
+import store from 'store'
 import { computed, observable, reaction } from "mobx";
 import { stringify } from "querystring"
 import { autobind, EventEmitter, interval } from "../utils";
@@ -9,6 +9,7 @@ import { KubeObjectStore } from "../kube-object.store";
 import { KubeApi } from "./kube-api";
 import { configStore } from "../config.store";
 import { apiManager } from "./api-manager";
+import { KubeObject } from './kube-object';
 
 const obj = require('event-source-polyfill/src/eventsource.min.js');
 let EventSource = obj.EventSourcePolyfill
@@ -20,7 +21,7 @@ export {
 export class KubeWatchApi {
   protected evtSource: EventSource;
   protected onData = new EventEmitter<[IKubeWatchEvent]>();
-  protected apiUrl = configStore.apiPrefix.BASE + "/watch";
+  protected apiUrl = configStore.apiPrefix.WATCHER + "/watch";
   protected subscribers = observable.map<KubeApi, number>();
   protected reconnectInterval = interval(60 * 5, this.reconnect); // background reconnect every 5min
   protected reconnectTimeoutMs = 5000;
@@ -72,12 +73,13 @@ export class KubeWatchApi {
     }
     const query = this.getQuery();
     const apiUrl = this.apiUrl + "?" + stringify(query);
-    const userConfig = store.get('u_config')
-    this.evtSource = new EventSource(apiUrl,{
+    const userConfig = store.get('u_config')
+    this.evtSource = new EventSource(apiUrl, {
       headers: {
         "Authorization": userConfig.token
       }
     });
+
     this.evtSource.onmessage = this.onMessage;
     this.evtSource.onerror = this.onError;
     this.writeLog("CONNECTING", query.api);
@@ -98,14 +100,15 @@ export class KubeWatchApi {
   }
 
   protected onMessage(evt: MessageEvent) {
+    // console.log("onMessage: ->", evt.data);
+
     if (!evt.data) return;
     let data = JSON.parse(evt.data);
     if ((data as IKubeWatchEvent).object) {
       this.onData.emit(data);
-    }
-    else {
+      // console.log("onMessage.emit: ->", evt.data);
+    } else {
       this.onRouteEvent(data);
-
     }
   }
 
@@ -118,10 +121,13 @@ export class KubeWatchApi {
         await api.refreshResourceVersion({ namespace });
         this.reconnect();
       }
+    } else if (type == "PING") {
+      console.log("onMessage: PING");
     }
   }
 
   protected onError(evt: MessageEvent) {
+    // console.log("onError: ->", evt.data);
     const { reconnectAttempts: attemptsRemain, reconnectTimeoutMs } = this;
     if (evt.eventPhase === EventSource.CLOSED) {
       if (attemptsRemain > 0) {

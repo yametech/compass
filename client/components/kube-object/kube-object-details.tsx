@@ -82,7 +82,7 @@ export class KubeObjectDetails extends React.Component {
         kind == "StatefulSet" ||
         kind == "Stone" ||
         kind == "Injector" ||
-        kind == "Water" ||
+    
         kind == "Workloads" ||
         kind == "Field" ||
         kind == "Form" ||
@@ -97,7 +97,11 @@ export class KubeObjectDetails extends React.Component {
         kind == "BaseDepartment" ||
         kind == "BaseRoleUser" ||
         kind == "TektonStore" ||
-        kind == "TektonWebHook"
+        kind == "TektonWebHook" ||
+        kind == "IP" ||
+        kind == "Subnet" ||
+        kind == "NetworkAttachmentDefinition" ||
+        kind == "BaseTenant"
       ) {
         isCrdInstanceLocal = false;
       }

@@ -2,6 +2,7 @@ import { KubeObject } from "../kube-object";
 import { autobind, cpuUnitsToNumber, unitsToBytes } from "../../utils";
 import { IMetrics, metricsApi } from "./metrics.api";
 import { KubeApi } from "../kube-api";
+import { apiWorkloads } from "../index";
 
 export class NodesApi extends KubeApi<Node> {
   getMetrics(): Promise<INodeMetrics> {
@@ -165,4 +166,5 @@ export const nodesApi = new NodesApi({
   apiBase: "/api/v1/nodes",
   isNamespaced: false,
   objectConstructor: Node,
+  request: apiWorkloads,
 });

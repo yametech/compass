@@ -11,7 +11,7 @@ import { _i18n } from "../../i18n";
 import { FilterIcon } from "../item-object-list/filter-icon";
 import { FilterType } from "../item-object-list/page-filters.store";
 import { themeStore } from "../../theme.store";
-import { networkAttachmentDefinitionStore } from "../+ovn-network-attachment-definition/network-attachment-definition.store"
+import { networkAttachmentDefinitionStore } from "../+sdn-multus-network-attachment-definition/network-attachment-definition.store"
 
 interface Props extends SelectProps {
     namespace?: string
