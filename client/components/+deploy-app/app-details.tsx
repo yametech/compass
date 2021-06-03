@@ -30,7 +30,7 @@ export class AppDetails extends React.Component<Props> {
     return [
       "Stone",
       // "Water",
-      // "Deployment",
+      "Deployment",
       // "Statefulset"
     ]
   }
