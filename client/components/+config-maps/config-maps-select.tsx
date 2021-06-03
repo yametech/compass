@@ -23,7 +23,7 @@ const defaultProps: Partial<Props> = {
   showClusterOption: false,
   namespace: '',
   get clusterOptionLabel() {
-    return _i18n._(t`Secret`);
+    return _i18n._(t`ConfigMap`);
   },
 };
 

@@ -18,6 +18,8 @@ import { ConfigDeployDialog } from "./config-deploy-dialog";
 import { Link } from "react-router-dom";
 import { stopPropagation } from "../../utils";
 import Tooltip from "@material-ui/core/Tooltip";
+import { namespaceStore } from "../+namespaces/namespace.store";
+import { networkAttachmentDefinitionStore } from "../+sdn-multus-network-attachment-definition";
 
 enum sortBy {
   templateName = "templateName",

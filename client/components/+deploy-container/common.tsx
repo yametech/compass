@@ -14,6 +14,7 @@ export interface Base {
   image: string;
   imagePullPolicy: string;
   resource: Resource;
+  imagePullSecretNamespace?: string,
   imagePullSecret?: string;
 }
 
@@ -74,11 +75,11 @@ export const base: Base = {
   imagePullPolicy: "IfNotPresent",
   resource: {
     limits: {
-      cpu: "0.3",
+      cpu: "300",
       memory: "170",
     },
     requests: {
-      cpu: "0.1",
+      cpu: "100",
       memory: "30",
     },
   },

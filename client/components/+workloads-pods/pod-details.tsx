@@ -150,7 +150,7 @@ export class PodDetails extends React.Component<Props> {
               </DrawerItem>
             )}
           </BookTabsNode>
-          <BookTabsNode name="Init Containers" iconName="mail">
+          <BookTabsNode name="Init Containers" iconName="insert_chart_outlined">
             {pod.getInitContainers() && pod.getInitContainers().length > 0 &&
             <DrawerTitle title={<Trans>Init Containers</Trans>}/>
             }

@@ -35,16 +35,16 @@ const defaultProps: Partial<Props> = {
 @observer
 export class MultusCniNameSelect extends React.Component<Props> {
     static defaultProps = defaultProps as object;
-    private unsubscribe = noop;
+    // private unsubscribe = noop;
 
-    async componentDidMount() {
-        if (true) await networkAttachmentDefinitionStore.loadAll();
-        this.unsubscribe = networkAttachmentDefinitionStore.subscribe();
+    componentDidMount() {
+        networkAttachmentDefinitionStore.loadAll();
+        // this.unsubscribe = networkAttachmentDefinitionStore.subscribe();
     }
 
-    componentWillUnmount() {
-        this.unsubscribe();
-    }
+    // componentWillUnmount() {
+    //     this.unsubscribe();
+    // }
 
     @computed get options(): SelectOption[] {
         const { customizeOptions, showClusterOption, clusterOptionLabel } = this.props;

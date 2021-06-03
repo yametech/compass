@@ -1,17 +1,17 @@
-import {observer} from "mobx-react";
+import { observer } from "mobx-react";
 import React from "react";
-import {computed, observable} from "mobx";
-import {Select} from "../select";
-import {SubTitle} from "../layout/sub-title";
-import {Input} from "../input";
-import {_i18n} from "../../i18n";
-import {isNumber} from "../input/input.validators";
-import {ActionMeta} from "react-select/src/types";
-import {base, Base} from "./common";
-import {SecretsSelect} from "../+config-secrets/secrets-select";
-import {NamespaceSelect} from "../+namespaces/namespace-select";
-import {t, Trans} from "@lingui/macro";
-import {Grid} from "@material-ui/core";
+import { computed, observable } from "mobx";
+import { Select } from "../select";
+import { SubTitle } from "../layout/sub-title";
+import { Input } from "../input";
+import { _i18n } from "../../i18n";
+import { isNumber } from "../input/input.validators";
+import { ActionMeta } from "react-select/src/types";
+import { base, Base } from "./common";
+import { SecretsSelect } from "../+config-secrets/secrets-select";
+import { NamespaceSelect } from "../+namespaces/namespace-select";
+import { t, Trans } from "@lingui/macro";
+import { Grid } from "@material-ui/core";
 
 interface Props<T = any> extends Partial<Props> {
   value?: T;
@@ -52,7 +52,7 @@ export class BaseDetails extends React.Component<Props> {
       <>
         {this.value.imageFrom ?
           <>
-            <SubTitle title={<Trans>Image Address</Trans>}/>
+            <SubTitle title={<Trans>Image Address</Trans>} />
             <Input
               required={true}
               placeholder={_i18n._(t`Image Address`)}
@@ -62,27 +62,27 @@ export class BaseDetails extends React.Component<Props> {
           </> : null}
         {this.value.imageFrom == "private" ?
           <>
-            <br/>
+            <br />
             <Grid container spacing={5} alignItems="center" direction="row">
               <Grid item xs zeroMinWidth>
-                <SubTitle title={<Trans>Secret Namespace</Trans>}/>
+                <SubTitle title={<Trans>Private Secret Namespace</Trans>} />
                 <NamespaceSelect
-                  value={this.namespace}
                   placeholder={_i18n._(t`Secret Namespace`)}
                   themeName="light"
                   className="box grow"
+                  value={this.value.imagePullSecretNamespace}
                   onChange={(value) => {
-                    this.namespace = value.value
+                    this.value.imagePullSecretNamespace = value.value
                   }}
                 />
               </Grid>
-              {this.namespace ?
+              {this.value.imagePullSecretNamespace ?
                 <Grid item xs zeroMinWidth>
-                  <SubTitle title={<Trans>Image Pull Secret</Trans>}/>
+                  <SubTitle title={<Trans>Private Secret</Trans>} />
                   <SecretsSelect
                     required autoFocus
                     value={this.value.imagePullSecret}
-                    namespace={this.namespace}
+                    namespace={this.value.imagePullSecretNamespace}
                     onChange={value => this.value.imagePullSecret = value.value}
                   />
                 </Grid> : null
@@ -96,10 +96,10 @@ export class BaseDetails extends React.Component<Props> {
   rLimit() {
     return (
       <>
-        <br/>
+        <br />
         <Grid container spacing={5} alignItems="center" direction="row">
           <Grid item xs zeroMinWidth>
-            <SubTitle title={<Trans>Limit CPU</Trans>}/>
+            <SubTitle title={<Trans>Limit CPU</Trans>} />
             <Input
               required={true}
               placeholder={_i18n._(t`Limit CPU`)}
@@ -110,7 +110,7 @@ export class BaseDetails extends React.Component<Props> {
             />
           </Grid>
           <Grid item xs zeroMinWidth>
-            <SubTitle title={<Trans>Limit Memory</Trans>}/>
+            <SubTitle title={<Trans>Limit Memory</Trans>} />
             <Input
               required={true}
               placeholder={_i18n._(t`Limit Memory`)}
@@ -128,10 +128,10 @@ export class BaseDetails extends React.Component<Props> {
   rRequired() {
     return (
       <>
-        <br/>
+        <br />
         <Grid container spacing={5} alignItems="center" direction="row">
           <Grid item xs zeroMinWidth>
-            <SubTitle title={<Trans>Required CPU</Trans>}/>
+            <SubTitle title={<Trans>Required CPU</Trans>} />
             <Input
               required={true}
               placeholder={_i18n._(t`Required CPU`)}
@@ -161,14 +161,14 @@ export class BaseDetails extends React.Component<Props> {
 
     return (
       <div>
-        <SubTitle title={<Trans>Container Name</Trans>}/>
+        <SubTitle title={<Trans>Container Name</Trans>} />
         <Input
           required={true}
           placeholder={_i18n._(t`Container Name`)}
           value={this.value.name}
           onChange={v => this.value.name = v}
         />
-        <br/>
+        <br />
         <Grid
           container
           spacing={5}
@@ -176,7 +176,7 @@ export class BaseDetails extends React.Component<Props> {
           direction={"row"}
         >
           <Grid item xs zeroMinWidth>
-            <SubTitle title={<Trans>Image From</Trans>}/>
+            <SubTitle title={<Trans>Image From</Trans>} />
             <Select
               themeName={"light"}
               options={this.selectImageAddressOptions}
@@ -187,7 +187,7 @@ export class BaseDetails extends React.Component<Props> {
             />
           </Grid>
           <Grid item xs zeroMinWidth>
-            <SubTitle title={<Trans>Image Pull Policy</Trans>}/>
+            <SubTitle title={<Trans>Image Pull Policy</Trans>} />
             <Select
               required={true}
               options={this.selectOptions}

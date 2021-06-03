@@ -17,6 +17,7 @@ interface NodeResourceLimit {
     zone: string;
     rack: string;
     host: string;
+    name: string;
 }
 
 interface Props extends Partial<DialogProps> {
@@ -41,6 +42,7 @@ export class NamespaceNodeRangeLimitDialog extends React.Component<Props> {
 
 
     close = () => {
+        this.reset();
         NamespaceNodeRangeLimitDialog.close();
     }
 
@@ -52,7 +54,7 @@ export class NamespaceNodeRangeLimitDialog extends React.Component<Props> {
         let nodeResourceLimitTemps: NodeResourceLimit[] = JSON.parse(NamespaceNodeRangeLimitDialog.namespace.getAnnotation("nuwa.kubernetes.io/default_resource_limit"));
         nodeResourceLimitTemps.map(node => {
             if (this.nodes === null) { this.nodes = observable.array<any>([], { deep: false }) };
-            this.nodes.push(node.host)
+            this.nodes.push(node.name)
         })
     }
 
@@ -68,15 +70,14 @@ export class NamespaceNodeRangeLimitDialog extends React.Component<Props> {
         })
 
         try {
-            await apiManager.getApi(ns.selfLink).annotate({ name: ns.getName(), namespace: "", subresource: "node" }, { data }).
-                then((data) => {
-                    this.close();
-                })
+            await apiManager.getApi(ns.selfLink).annotate({ name: ns.getName(), namespace: "", subresource: "node" }, { data })
             Notifications.ok(
                 <>{NamespaceNodeRangeLimitDialog.namespace.getName()} annotation node succeeded</>)
                 ;
         } catch (err) {
             Notifications.error(err);
+        } finally {
+            this.close();
         }
     }
 
