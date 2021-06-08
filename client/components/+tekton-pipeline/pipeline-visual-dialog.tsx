@@ -228,7 +228,7 @@ export class PipelineVisualDialog extends React.Component<Props> {
           this.pipeline.getNs()
         );
         if (tektonGraph.spec.data !== data) {
-          await this.updateTektonGraph(data);
+    await this.updateTektonGraph(data);
         }
       } catch (e) {
         await this.updateTektonGraph(data);
