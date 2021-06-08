@@ -37,10 +37,7 @@ export const pipeline: PipelineResult = {
 export class PipelineSaveDetails extends React.Component<Props> {
 
   @observable value: PipelineResult = this.props.value || pipeline;
-  // @computed get value(): PipelineResult {
-  //   return this.props.value || pipeline;
-  // }
-
+  
   render() {
     return (
       <div>

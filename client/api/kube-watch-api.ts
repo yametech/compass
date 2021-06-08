@@ -115,7 +115,11 @@ export class KubeWatchApi {
   protected async onRouteEvent({ type, url }: IKubeWatchRouteEvent) {
     if (type === "STREAM_END") {
       this.disconnect();
+      // console.log("onRouteEvent ->type,url", type, url)
       const { apiBase, namespace } = KubeApi.parseApi(url);
+      if (apiBase === "" || namespace === "") {
+        return;
+      }
       const api = apiManager.getApi(apiBase);
       if (api) {
         await api.refreshResourceVersion({ namespace });

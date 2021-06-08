@@ -13,7 +13,7 @@ export class FormRender extends KubeObject {
 
 export const formRenderApi = new FormRenderApi({
     kind: FormRender.kind,
-    apiBase: "apis/fuxi.nip.io/v1/formrenders",
+    apiBase: "apis/yamecloud.io/v1/formrenders",
     isNamespaced: true,
     objectConstructor: FormRender
 })

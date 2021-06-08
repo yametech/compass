@@ -128,6 +128,10 @@ export class KubeObject implements ItemObject {
     return this.metadata.finalizers || [];
   }
 
+  getLabel(key: string): string {
+    return KubeObject.mapperLablesOrAnnotations(this.getLabels()).get(key) || ""
+  }
+
   getLabels(): string[] {
     return KubeObject.stringifyLabels(this.metadata.labels);
   }

@@ -83,8 +83,6 @@ export class Pipelines extends React.Component<Props> {
           sortingCallbacks={{
             [sortBy.name]: (pipeline: Pipeline) => pipeline.getName(),
             [sortBy.namespace]: (pipeline: Pipeline) => pipeline.getNs(),
-            [sortBy.ownernamespace]: (pipeline: Pipeline) =>
-              pipeline.getOwnerNamespace(),
             [sortBy.age]: (pipeline: Pipeline) => pipeline.getAge(false),
             [sortBy.tasks]: (pipeline: Pipeline) => pipeline.getTasks().length,
           }}
@@ -102,11 +100,6 @@ export class Pipelines extends React.Component<Props> {
               sortBy: sortBy.namespace,
             },
             {
-              title: <Trans>OwnerNamespace</Trans>,
-              className: "ownernamespace",
-              sortBy: sortBy.ownernamespace,
-            },
-            {
               title: <Trans>Tasks</Trans>,
               className: "tasks",
               sortBy: sortBy.tasks,
@@ -117,7 +110,6 @@ export class Pipelines extends React.Component<Props> {
           renderTableContents={(pipeline: Pipeline) => [
             this.renderPipelineName(pipeline),
             pipeline.getNs(),
-            pipeline.getOwnerNamespace(),
             pipeline.getTasks().length,
             pipeline.getAge(),
           ]}
@@ -135,7 +127,7 @@ export class Pipelines extends React.Component<Props> {
           G6Render={this.G6Render}
           stopRender={() => {
             this.G6Render = false;
-          }} 
+          }}
         />
         <CopyTaskDialog />
         <AddPipelineDialog />

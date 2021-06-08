@@ -35,6 +35,7 @@ import { PipelineGraph } from "../+tekton-graph/graph";
 import { INode } from "@antv/g6/lib/interface/item";
 import { taskName } from "../+constant";
 import { taskApi } from "../../api/endpoints";
+import { apiManager } from "../../../client/api/api-manager";
 
 interface Props<T = any> extends Partial<Props> {
   value?: T;
@@ -72,10 +73,6 @@ export const task: TaskResult = {
 export class CopyTaskDialog extends React.Component<Props> {
 
   @observable value: TaskResult = this.props.value || task;
-  // @computed get value(): TaskResult {
-  //   return this.props.value || task;
-  // }
-
   @observable static isOpen = false;
   @observable static graph: PipelineGraph;
   @observable static node: INode;
@@ -164,10 +161,6 @@ export class CopyTaskDialog extends React.Component<Props> {
           {
             name: this.value.taskName,
             namespace: configStore.getOpsNamespace(),
-            labels: new Map<string, string>().set(
-              "namespace",
-              configStore.getDefaultNamespace()
-            ),
           },
           {
             spec: {
@@ -186,7 +179,7 @@ export class CopyTaskDialog extends React.Component<Props> {
           task.spec.resources = resources;
           task.spec.workspaces = workspaces;
           task.spec.steps = steps;
-          await taskStore.update(task, { ...task });
+          await apiManager.getApi(task.selfLink).update({ name: task.getName(), namespace: task.getNs() }, { ...task });
         }
       }
       Notifications.ok(<>Task {this.value.taskName} save succeeded</>);

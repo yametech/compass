@@ -7,7 +7,7 @@ import { Trans } from "@lingui/macro";
 import { Dialog } from "../dialog";
 import { Wizard, WizardStep } from "../wizard";
 import { observer } from "mobx-react";
-import { Pipeline, PipelineTask, TektonGraph } from "../../api/endpoints";
+import { Pipeline, PipelineTask, TektonGraph, tektonGraphApi } from "../../api/endpoints";
 import { PipelineGraph } from "../+tekton-graph/graph";
 import { CopyTaskDialog } from "../+tekton-task/copy-task-dialog";
 import { PipelineSaveDialog } from "./pipeline-save-dialog";
@@ -17,6 +17,7 @@ import { IKubeObjectMetadata } from "../../api/kube-object";
 import { defaultInitConfig } from "../+tekton-graph/common";
 import { graphAnnotationKey } from '../+constant/tekton-constants'
 import { OwnerReferences } from '../../api/kube-object'
+import { apiManager } from "../../../client/api/api-manager";
 
 const wizardSpacing = parseInt(styles.wizardSpacing, 10) * 6;
 const wizardContentMaxHeight = parseInt(styles.wizardContentMaxHeight);
@@ -163,51 +164,50 @@ export class PipelineVisualDialog extends React.Component<Props> {
   }
 
   updateTektonGraph = async (data: string) => {
-    const graphName =
-      this.pipeline.getName() + "-" + new Date().getTime().toString();
+    const tektonGraph = tektonGraphStore.getByName(this.pipeline.getName());
 
-    const tektonGraph: Partial<TektonGraph> = {
-      metadata: {
-        name: graphName,
-        namespace: this.pipeline.getNs(),
-        labels: Object.fromEntries(
-          new Map<string, string>().set(
-            "namespace",
-            this.pipeline.getNs().split("-")[0]
-          )
-        ),
-      } as IKubeObjectMetadata,
-      spec: {
-        data: data,
-        width: this.graph.width,
-        height: this.graph.height,
-      },
-    };
+    if (tektonGraph == undefined) {
+      const tektonGraph: Partial<TektonGraph> = {
+        metadata: {
+          name: this.pipeline.getName(),
+          namespace: this.pipeline.getNs(),
+          ownerReferences: [{
+            apiVersion: this.pipeline.apiVersion,
+            kind: this.pipeline.kind,
+            name: this.pipeline.getName(),
+            uid: this.pipeline.getId(),
+            controller: true,
+            blockOwnerDeletion: true,
+          }]
+        } as IKubeObjectMetadata,
+        spec: {
+          data: data,
+          width: this.graph.width,
+          height: this.graph.height,
+        },
+      };
 
-    const newTektonGraph = await tektonGraphStore.create(
-      { namespace: this.pipeline.getNs(), name: graphName },
-      { ...tektonGraph }
-    );
-
-    const ownerReferences: OwnerReferences = {
-      apiVersion: this.pipeline.getResourceVersion(),
-      kind: this.pipeline.kind,
-      name: this.pipeline.getName(),
-      uid: this.pipeline.getId(),
-      controller: false,
-      blockOwnerDeletion: false,
+      await tektonGraphApi.create(
+        { name: this.pipeline.getName(), namespace: this.pipeline.getNs() },
+        { ...tektonGraph },
+      )
+    } else {
+      await apiManager.getApi(tektonGraph.selfLink).update(
+        { name: this.pipeline.getName(), namespace: this.pipeline.getNs() },
+        { ...tektonGraph },
+      )
     }
-    newTektonGraph.addOwnerReferences([ownerReferences]);
-    await tektonGraphStore.update(newTektonGraph, { ...newTektonGraph })
 
+    const annotation = this.pipeline.getAnnotation(graphAnnotationKey);
+    if (annotation === "") {
+      this.pipeline.addAnnotation(graphAnnotationKey, this.pipeline.getName());
 
+      await apiManager.getApi(this.pipeline.selfLink).update(
+        { namespace: this.pipeline.getNs(), name: this.pipeline.getName() },
+        { ...this.pipeline },
+      );
+    }
 
-    this.pipeline.addAnnotation(
-      graphAnnotationKey,
-      newTektonGraph.getName()
-    );
-
-    await pipelineStore.update(this.pipeline, { ...this.pipeline });
   };
 
   save = async () => {
@@ -221,21 +221,7 @@ export class PipelineVisualDialog extends React.Component<Props> {
       ? annotations[graphAnnotationKey]
       : "";
 
-    if (graphName != "") {
-      try {
-        let tektonGraph = tektonGraphStore.getByName(
-          graphName,
-          this.pipeline.getNs()
-        );
-        if (tektonGraph.spec.data !== data) {
     await this.updateTektonGraph(data);
-        }
-      } catch (e) {
-        await this.updateTektonGraph(data);
-      }
-    } else {
-      await this.updateTektonGraph(data);
-    }
 
 
     const pipelineTasks = this.pipeline.spec.tasks

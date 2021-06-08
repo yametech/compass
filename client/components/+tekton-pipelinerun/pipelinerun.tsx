@@ -1,33 +1,32 @@
 import "./pipelinerun.scss";
 
-import React, {Fragment} from "react";
-import {observer} from "mobx-react";
-import {RouteComponentProps} from "react-router";
-import {Trans} from "@lingui/macro";
-import {advanceSecondsToHms, PipelineRun, pipelineRunApi} from "../../api/endpoints";
-import {pipelineRunStore} from "./pipelinerun.store";
-import {pipelineStore} from "../+tekton-pipeline/pipeline.store";
-import {KubeObjectListLayout, KubeObjectMenu, KubeObjectMenuProps} from "../kube-object";
-import {ApiManager, apiManager} from "../../api/api-manager";
-import {observable} from "mobx";
-import {taskRunStore} from "../+tekton-taskrun";
-import {TooltipContent} from "../tooltip";
-import {StatusBrick} from "../status-brick";
-import {cssNames, stopPropagation} from "../../utils";
-import {MenuItem} from "../menu";
-import {Icon} from "../icon";
-import {Notifications} from "../notifications";
-import {PipelineRunIcon} from "./pipeline-run-icon";
-import {podsStore} from "../+workloads-pods/pods.store";
+import React, { Fragment } from "react";
+import { observer } from "mobx-react";
+import { RouteComponentProps } from "react-router";
+import { Trans } from "@lingui/macro";
+import { advanceSecondsToHms, PipelineRun, pipelineRunApi } from "../../api/endpoints";
+import { pipelineRunStore } from "./pipelinerun.store";
+import { pipelineStore } from "../+tekton-pipeline/pipeline.store";
+import { KubeObjectListLayout, KubeObjectMenu, KubeObjectMenuProps } from "../kube-object";
+import { ApiManager, apiManager } from "../../api/api-manager";
+import { observable } from "mobx";
+import { taskRunStore } from "../+tekton-taskrun";
+import { TooltipContent } from "../tooltip";
+import { StatusBrick } from "../status-brick";
+import { cssNames, stopPropagation } from "../../utils";
+import { MenuItem } from "../menu";
+import { Icon } from "../icon";
+import { Notifications } from "../notifications";
+import { PipelineRunIcon } from "./pipeline-run-icon";
+import { podsStore } from "../+workloads-pods/pods.store";
 import Tooltip from "@material-ui/core/Tooltip";
-import {PipelineRunVisualDialog} from "./pipelinerun-visual-dialog";
-import {tektonGraphStore} from "../+tekton-graph/tekton-graph.store";
-import {KubeEventIcon} from "../+events/kube-event-icon";
-import {eventStore} from "../+events/event.store";
-import {TaskRunLogsDialog} from "../+tekton-taskrun/task-run-logs-dialog";
-import {configStore} from "../../config.store";
-import {PipelineStatus, runGraphAnnotationKey} from "../+constant/tekton-constants";
-import {IKubeObjectMetadata} from "../../api/kube-object";
+import { PipelineRunVisualDialog } from "./pipelinerun-visual-dialog";
+import { tektonGraphStore } from "../+tekton-graph/tekton-graph.store";
+import { KubeEventIcon } from "../+events/kube-event-icon";
+import { eventStore } from "../+events/event.store";
+import { TaskRunLogsDialog } from "../+tekton-taskrun/task-run-logs-dialog";
+import { configStore } from "../../config.store";
+import { PipelineStatus } from "../+constant/tekton-constants";
 
 enum sortBy {
   name = "name",
@@ -207,8 +206,6 @@ export class PipelineRuns extends React.Component<Props> {
             [sortBy.name]: (pipelineRun: PipelineRun) => pipelineRun.getName(),
             [sortBy.namespace]: (pipelineRun: PipelineRun) =>
               pipelineRun.getNs(),
-            [sortBy.ownernamespace]: (pipelineRun: PipelineRun) =>
-              pipelineRun.getOwnerNamespace(),
             [sortBy.reason]: (pipelineRun: PipelineRun) =>
               pipelineRun.getErrorReason(),
             [sortBy.age]: (pipelineRun: PipelineRun) =>
@@ -229,11 +226,6 @@ export class PipelineRuns extends React.Component<Props> {
               className: "namespace",
               sortBy: sortBy.namespace,
             },
-            {
-              title: <Trans>OwnerNamespace</Trans>,
-              className: "ownernamespace",
-              sortBy: sortBy.ownernamespace,
-            },
             { title: "", className: "event" },
             { title: "", className: "reason" },
             { title: <Trans>Tasks</Trans>, className: "tasks" },
@@ -248,7 +240,6 @@ export class PipelineRuns extends React.Component<Props> {
           renderTableContents={(pipelineRun: PipelineRun) => [
             this.renderPipelineName(pipelineRun),
             pipelineRun.getNs(),
-            pipelineRun.getOwnerNamespace(),
             <KubeEventIcon
               namespace={configStore.getOpsNamespace()}
               object={pipelineRun}
@@ -285,7 +276,10 @@ export function PipelineRunMenu(props: KubeObjectMenuProps<PipelineRun>) {
         onClick={() => {
           object.spec.status = "PipelineRunCancelled";
           try {
-            pipelineRunStore.update(object, { ...object });
+            apiManager.getApi(object.selfLink).update(
+              { name: object.getName(), namespace: object.getNs() },
+              { ...object },
+            );
             Notifications.ok(
               <>PipelineRun {object.getName()} cancel succeeded</>
             );
@@ -304,59 +298,10 @@ export function PipelineRunMenu(props: KubeObjectMenuProps<PipelineRun>) {
         onClick={async () => {
           const pipelineRun = object;
           try {
-           /* // will delete pipelineRun
-            const annotations = pipelineRun.metadata.annotations;
-            const pipelineRunGraphName = annotations
-              ? annotations[runGraphAnnotationKey]
-              : "";
-            let currentPipelineRunGraph;
-            currentPipelineRunGraph = tektonGraphStore.getByName(pipelineRunGraphName);
-            if (currentPipelineRunGraph === undefined) {
-              Notifications.error(
-                <>Not found current pipeline run graph,please check again!</>
-              );
-              return
-            }
-            currentPipelineRunGraph.metadata.name = pipelineRun.getName() + new Date().getTime().toString();
-
-            await tektonGraphStore.create({
-              namespace: currentPipelineRunGraph.getNs(), name: currentPipelineRunGraph.getName()
-            }, { spec: currentPipelineRunGraph.spec })
-            await pipelineRunStore.remove(pipelineRun);
-            annotations[runGraphAnnotationKey] = currentPipelineRunGraph.getName();
-            const newPipelineRun: Partial<PipelineRun> = {
-              metadata: {
-                name: pipelineRun.getName(),
-                namespace: pipelineRun.getNs(),
-                annotations: annotations,
-                labels: pipelineRun.copyLabels(),
-              } as IKubeObjectMetadata,
-              spec: {
-                pipelineRef: pipelineRun.spec.pipelineRef,
-                pipelineSpec: pipelineRun.spec.pipelineSpec,
-                resources: pipelineRun.spec.resources,
-                params: pipelineRun.spec.params,
-                serviceAccountName: pipelineRun.spec.serviceAccountName,
-                serviceAccountNames: pipelineRun.spec.serviceAccountNames,
-                timeout: pipelineRun.spec.timeout,
-                podTemplate: pipelineRun.spec.podTemplate,
-                workspaces: pipelineRun.spec.workspaces,
-              },
-            };
-            //create it. will re-run
-            await pipelineRunApi.create(
-              { name: pipelineRun.getName(), namespace: pipelineRun.getNs() },
-              { ...newPipelineRun }
-            );
+            await pipelineRunApi.post({ path: pipelineRun.selfLink + "/rerun" })
 
             Notifications.ok(
               <>PipelineRun: {pipelineRun.getName()} rerun succeeded</>
-            );*/
-
-            await pipelineRunApi.post({path:  pipelineRun.selfLink + "/rerun"})
-
-            Notifications.ok(
-                <>PipelineRun: {pipelineRun.getName()} rerun succeeded</>
             );
 
           } catch (err) {
@@ -370,17 +315,6 @@ export function PipelineRunMenu(props: KubeObjectMenuProps<PipelineRun>) {
         </span>
       </MenuItem>
 
-      {/* <MenuItem
-        onClick={async () => {
-          let pipelineRun = object;
-          PipelineRunLogDialog.open(pipelineRun.getName());
-        }}
-      >
-        <Icon material="toc" title={"logs"} interactive={toolbar} />
-        <span className="title">
-          <Trans>Logs</Trans>
-        </span>
-      </MenuItem> */}
     </KubeObjectMenu>
   );
 }

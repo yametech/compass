@@ -31,10 +31,8 @@ export class TaskSelect extends React.Component<Props> {
   static defaultProps = defaultProps as object;
   private unsubscribe = noop;
 
-  async componentDidMount() {
-    // if (true) await namespaceStore.loadAll();
-    // this.unsubscribe = namespaceStore.subscribe();
-    if (true) await taskStore.getAllByNs(configStore.getOpsNamespace());
+  componentDidMount() {
+    taskStore.getAllByNs(configStore.getOpsNamespace());
     this.unsubscribe = taskStore.subscribe();
   }
 

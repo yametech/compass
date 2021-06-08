@@ -125,7 +125,7 @@ export class TektonGraph extends KubeObject {
 
 export const tektonGraphApi = new KubeApi({
   kind: TektonGraph.kind,
-  apiBase: "/apis/fuxi.nip.io/v1/tektongraphs",
+  apiBase: "/apis/yamecloud.io/v1/tektongraphs",
   isNamespaced: true,
   objectConstructor: TektonGraph,
   request: apiTekton,

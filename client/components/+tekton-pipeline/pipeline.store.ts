@@ -1,11 +1,6 @@
 import { autobind } from "../../utils";
 import { KubeObjectStore } from "../../kube-object.store";
-import {
-  pipelineApi,
-  Pipeline,
-  tektonGraphApi,
-  PipelineRun,
-} from "../../api/endpoints";
+import { pipelineApi, Pipeline } from "../../api/endpoints";
 import { apiManager } from "../../api/api-manager";
 import { tektonGraphStore } from "../+tekton-graph/tekton-graph.store";
 import { defaultInitData } from "../+tekton-graph/common";
@@ -17,7 +12,7 @@ export class PipelineStore extends KubeObjectStore<Pipeline> {
   getNodeData(pipeline: Pipeline) {
     //TODO hard code needs fix
     const graphName = pipeline.getValueFromAnnotations(
-      "fuxi.nip.io/tektongraphs"
+      "yamecloud.io/tektongraphs"
     );
     if (graphName != "") {
       return JSON.parse(tektonGraphStore.getDataByName(graphName));
@@ -27,7 +22,7 @@ export class PipelineStore extends KubeObjectStore<Pipeline> {
 
   getNodeSize(pipeline: Pipeline) {
     const graphName = pipeline.getValueFromAnnotations(
-      "fuxi.nip.io/tektongraphs"
+      "yamecloud.io/tektongraphs"
     );
     if (graphName != "") {
       const tektonGraph = tektonGraphStore.getByName(graphName);

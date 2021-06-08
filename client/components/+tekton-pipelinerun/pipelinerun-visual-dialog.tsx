@@ -86,7 +86,6 @@ export class PipelineRunVisualDialog extends React.Component<Props> {
       })
 
       if (this.graph == null && this.props.G6Render) {
-        
         this.pipelineGraphConfig = defaultInitConfig(this.width, this.height, graphId);
         this.graph = new PipelineGraph(this.pipelineGraphConfig);
         this.props.stopRender();
@@ -138,54 +137,49 @@ export class PipelineRunVisualDialog extends React.Component<Props> {
     //Interval 1s update status and time in graph
     this.updateTimeInterval = setInterval(() => {
       if (!this.pipelineRun || !this.graph) return;
-      const names = pipelineRunStore
-        .getByName(this.pipelineRun.getName())
-        .getTaskRunName();
+      const names = pipelineRunStore.getByName(this.pipelineRun.getName()).getTaskRunName();
+
       clearInterval(this.pendingTimeInterval);
-      if (names.length > 0) {
-        const currentTaskRunMap = pipelineRunStore.getTaskRun(names);
-        this.nodeData.nodes.map((item: any, index: number) => {
-          //set current node status,just like:Failed Succeed... and so on.
 
-          const currentTaskRun = currentTaskRunMap[item.taskName];
-          if (currentTaskRun !== undefined) {
-            //should get current node itme and update the time.
-            let currentItem = this.graph.findById(
-              this.nodeData.nodes[index].id
-            );
-            //dynimic set the state: missing notreay
+      if (names.length <= 0) { return; }
 
-            // if (currentTaskRun?.status?.conditions[0]?.reason == undefined) {
-            //   return;
-            // }
+      const currentTaskRunMap = pipelineRunStore.getTaskRun(names);
+      this.nodeData.nodes.map((item: any, index: number) => {
+        //set current node status,just like:Failed Succeed... and so on.
 
-            this.graph.setItemState(
-              currentItem,
-              currentTaskRun?.status?.conditions[0]?.reason,
-              ""
-            );
+        const currentTaskRun = currentTaskRunMap[item.taskName];
+        if (currentTaskRun !== undefined) {
+          //should get current node itme and update the time.
+          let currentItem = this.graph.findById(this.nodeData.nodes[index].id);
 
-            //when show pipeline will use current date time  less start time and then self-increment。
-            let completionTime = currentTaskRun.status?.completionTime;
-            let totalTime: string;
-            const currentStartTime = currentTaskRun.metadata.creationTimestamp;
-            const st = new Date(currentStartTime).getTime();
-            if (completionTime !== undefined) {
-              const ct = new Date(completionTime).getTime();
-              let result = Math.floor((ct - st) / 1000);
-              totalTime = secondsToHms(result);
-            } else {
-              const ct = new Date().getTime();
-              let result = Math.floor((ct - st) / 1000);
-              totalTime = secondsToHms(result);
-            }
+          this.graph.setItemState(
+            currentItem,
+            currentTaskRun?.status?.conditions[0]?.reason,
+            ""
+          );
 
-            //set the time
-            this.graph.setItemState(currentItem, "time", totalTime);
+          //when show pipeline will use current date time  less start time and then self-increment。
+          let completionTime = currentTaskRun.status?.completionTime;
+          let totalTime: string;
+
+          const currentStartTime = currentTaskRun.metadata.creationTimestamp;
+          const st = new Date(currentStartTime).getTime();
+          if (completionTime !== undefined) {
+            const ct = new Date(completionTime).getTime();
+            let result = Math.floor((ct - st) / 1000);
+            totalTime = secondsToHms(result);
+          } else {
+            const ct = new Date().getTime();
+            let result = Math.floor((ct - st) / 1000);
+            totalTime = secondsToHms(result);
           }
-        });
-      }
-    }, 500);
+
+          //set the time
+          this.graph.setItemState(currentItem, "time", totalTime);
+        }
+      });
+    }
+      , 500);
   }
 
   onOpen = async () => {

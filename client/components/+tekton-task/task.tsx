@@ -25,7 +25,7 @@ enum sortBy {
   age = "age",
 }
 
-interface Props extends RouteComponentProps {}
+interface Props extends RouteComponentProps { }
 
 @observer
 export class Tasks extends React.Component<Props> {
@@ -55,7 +55,6 @@ export class Tasks extends React.Component<Props> {
           sortingCallbacks={{
             [sortBy.name]: (task: Task) => task.getName(),
             [sortBy.namespace]: (task: Task) => task.getNs(),
-            [sortBy.ownernamespace]: (task: Task) => task.getOwnerNamespace(),
             [sortBy.age]: (task: Task) => task.getAge(false),
           }}
           searchFilters={[(task: Task) => task.getSearchFields()]}
@@ -71,17 +70,11 @@ export class Tasks extends React.Component<Props> {
               className: "namespace",
               sortBy: sortBy.namespace,
             },
-            {
-              title: <Trans>OwnerNamespace</Trans>,
-              className: "ownernamespace",
-              sortBy: sortBy.ownernamespace,
-            },
             { title: <Trans>Age</Trans>, className: "age", sortBy: sortBy.age },
           ]}
           renderTableContents={(task: Task) => [
             this.renderTaskName(task),
             task.getNs(),
-            task.getOwnerNamespace(),
             task.getAge(),
           ]}
           renderItemMenu={(item: Task) => {

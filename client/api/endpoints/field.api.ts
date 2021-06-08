@@ -20,7 +20,7 @@ export class Field extends KubeObject {
 
 export const fieldApi = new KubeApi({
     kind: Field.kind,
-    apiBase: "/apis/fuxi.nip.io/v1/fields",
+    apiBase: "/apis/yamecloud.io/v1/fields",
     isNamespaced: true,
     objectConstructor: Field,
 });

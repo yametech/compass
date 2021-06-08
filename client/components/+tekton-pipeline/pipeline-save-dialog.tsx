@@ -2,7 +2,7 @@ import "./pipeline-save-dialog.scss";
 
 import { observer } from "mobx-react";
 import React from "react";
-import {computed, observable} from "mobx";
+import { computed, observable } from "mobx";
 import { ActionMeta } from "react-select/src/types";
 import { Trans } from "@lingui/macro";
 import { Dialog } from "../dialog";
@@ -14,6 +14,7 @@ import { pipelineStore } from "./pipeline.store";
 import { pipelineTaskResource } from "./pipeline-task";
 import { taskStore } from "../+tekton-task/task.store";
 import { PipelineVisualDialog } from "./pipeline-visual-dialog";
+import { apiManager } from "../../../client/api/api-manager";
 
 interface Props<T = any> extends Partial<Props> {
   value?: T;
@@ -28,9 +29,6 @@ export class PipelineSaveDialog extends React.Component<Props> {
   @observable static Data: Pipeline;
 
   @observable value: PipelineResult = this.props.value || pipeline;
-  // @computed get value(): PipelineResult {
-  //   return this.props.value || pipeline;
-  // }
 
   static open(pipeline: Pipeline) {
     PipelineSaveDialog.isOpen = true;
@@ -144,7 +142,10 @@ export class PipelineSaveDialog extends React.Component<Props> {
 
     try {
       // //will update pipeline
-      await pipelineStore.update(pipeline, { ...pipeline });
+      await apiManager.getApi(this.currentPipeline.selfLink).update(
+        { namespace: pipeline.getNs(), name: pipeline.getName() },
+        { ...pipeline },
+      );
       Notifications.ok(<>Pipeline {this.value.pipelineName} save succeeded</>);
       this.close();
       PipelineVisualDialog.close();

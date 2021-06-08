@@ -145,11 +145,6 @@ export class TaskRuns extends React.Component<Props> {
             className: "namespace",
             sortBy: sortBy.namespace,
           },
-          // {
-          //   title: <Trans>OwnerNamespace</Trans>,
-          //   className: "ownernamespace",
-          //   sortBy: sortBy.ownernamespace,
-          // },
           { title: <Trans>Steps</Trans>, className: "steps" },
           { title: <Trans>Timeout</Trans>, className: "timeout" },
           { title: <Trans>Age</Trans>, className: "age", sortBy: sortBy.age },
@@ -157,7 +152,6 @@ export class TaskRuns extends React.Component<Props> {
         renderTableContents={(taskRun: TaskRun) => [
           taskRun.getName(),
           taskRun.getNs(),
-          // taskRun.getOwnerNamespace(),
           this.renderSteps(taskRun),
           taskRun.spec.timeout,
           taskRun.getAge(),
