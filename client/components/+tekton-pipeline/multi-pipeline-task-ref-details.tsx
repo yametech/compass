@@ -20,7 +20,7 @@ interface Props<T = any> extends Partial<Props> {
 @observer
 export class MultiPipelineTaskStepDetails extends React.Component<Props> {
   static defaultProps = {
-    disable: false,
+    disable: true,
     namespace: "",
   }
 

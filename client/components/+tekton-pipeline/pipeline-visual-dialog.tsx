@@ -79,6 +79,7 @@ export class PipelineVisualDialog extends React.Component<Props> {
     this.initTimeout = setTimeout(() => {
       const anchor = document.getElementsByClassName("Wizard")[0];
       if (!anchor) return;
+
       this.width = anchor.clientWidth - wizardSpacing;
       this.height = wizardContentMaxHeight - wizardSpacing;
 
@@ -88,11 +89,7 @@ export class PipelineVisualDialog extends React.Component<Props> {
         this.props.stopRender();
         this.graph.bindClickOnNode((currentNode: any) => {
           this.currentNode = currentNode;
-          CopyTaskDialog.open(
-            this.graph,
-            this.currentNode,
-            PipelineVisualDialog.Data.getNs()
-          );
+          CopyTaskDialog.open(this.graph, this.currentNode, PipelineVisualDialog.Data.getNs());
         });
       }
 
@@ -171,14 +168,16 @@ export class PipelineVisualDialog extends React.Component<Props> {
         metadata: {
           name: this.pipeline.getName(),
           namespace: this.pipeline.getNs(),
-          ownerReferences: [{
-            apiVersion: this.pipeline.apiVersion,
-            kind: this.pipeline.kind,
-            name: this.pipeline.getName(),
-            uid: this.pipeline.getId(),
-            controller: true,
-            blockOwnerDeletion: true,
-          }]
+          ownerReferences: [
+            {
+              apiVersion: this.pipeline.apiVersion,
+              kind: this.pipeline.kind,
+              name: this.pipeline.getName(),
+              uid: this.pipeline.getId(),
+              controller: true,
+              blockOwnerDeletion: true,
+            }
+          ]
         } as IKubeObjectMetadata,
         spec: {
           data: data,
@@ -192,8 +191,13 @@ export class PipelineVisualDialog extends React.Component<Props> {
         { ...tektonGraph },
       )
     } else {
+      tektonGraph.spec = {
+        data: data,
+        width: this.graph.width,
+        height: this.graph.height,
+      };
       await apiManager.getApi(tektonGraph.selfLink).update(
-        { name: this.pipeline.getName(), namespace: this.pipeline.getNs() },
+        { name: tektonGraph.getName(), namespace: tektonGraph.getNs() },
         { ...tektonGraph },
       )
     }
@@ -201,49 +205,19 @@ export class PipelineVisualDialog extends React.Component<Props> {
     const annotation = this.pipeline.getAnnotation(graphAnnotationKey);
     if (annotation === "") {
       this.pipeline.addAnnotation(graphAnnotationKey, this.pipeline.getName());
-
       await apiManager.getApi(this.pipeline.selfLink).update(
         { namespace: this.pipeline.getNs(), name: this.pipeline.getName() },
         { ...this.pipeline },
       );
     }
-
   };
 
   save = async () => {
-    this.nodeData = this.graph.save();
+    await this.updateTektonGraph(JSON.stringify(this.graph.save()));
 
-    const data = JSON.stringify(this.nodeData);
-    let annotations = this.pipeline.metadata
-      ? this.pipeline.metadata.annotations
-      : undefined;
-    const graphName = annotations
-      ? annotations[graphAnnotationKey]
-      : "";
-
-    await this.updateTektonGraph(data);
-
-
-    const pipelineTasks = this.pipeline.spec.tasks
-    //sort the tasks in pipeline
-    if (pipelineTasks === undefined) {
-      this.pipeline.spec.tasks = [];
-      const pipelineTasks = this.getPipelineTasks()
-      this.pipeline.spec.tasks.push(...pipelineTasks);
-    } else {
-      if (pipelineTasks.length == this.getPipelineTasks().length) {
-        this.pipeline.spec.tasks = [];
-        const pipelineTasks = this.getPipelineTasks()
-        this.pipeline.spec.tasks.push(...pipelineTasks);
-      } else {
-        this.getPipelineTasks().map((task) => {
-          const t = pipelineTasks.find((x) => x.name == task.name);
-          if (t === undefined) {
-            this.pipeline.spec.tasks.push(task);
-          }
-        });
-      }
-    }
+    const collectTasks = this.getPipelineTasks();
+    this.pipeline.spec.tasks = [];
+    this.pipeline.spec.tasks.push(...collectTasks);
 
     PipelineSaveDialog.open(this.pipeline);
   };

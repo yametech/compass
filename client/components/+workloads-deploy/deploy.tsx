@@ -24,7 +24,6 @@ import { networkAttachmentDefinitionStore } from "../+sdn-multus-network-attachm
 enum sortBy {
   templateName = "templateName",
   appName = "appName",
-  ownerNamespace = "ownerNamespace",
   resourceType = "resourceType",
   generateTimestamp = "generateTimestamp",
   age = "age",
@@ -57,7 +56,6 @@ export class Deploys extends React.Component<Props> {
           sortingCallbacks={{
             [sortBy.templateName]: (deploy: Deploy) => deploy.getName(),
             [sortBy.appName]: (deploy: Deploy) => deploy.getAppName(),
-            [sortBy.ownerNamespace]: (deploy: Deploy) => deploy.getOwnerNamespace(),
             [sortBy.resourceType]: (deploy: Deploy) => deploy.getResourceType(),
             [sortBy.generateTimestamp]: (deploy: Deploy) => deploy.getGenerateTimestamp(),
             [sortBy.age]: (deploy: Deploy) => deploy.getAge(false),
@@ -74,7 +72,6 @@ export class Deploys extends React.Component<Props> {
             [
               { title: <Trans>AppName</Trans>, className: "appName", sortBy: sortBy.appName },
               { title: <Trans>TemplateName</Trans>, className: "template", sortBy: sortBy.templateName },
-              { title: <Trans>OwnerNamespace</Trans>, className: "OwnerNamespace", sortBy: sortBy.ownerNamespace },
               { title: <Trans>ResourceType</Trans>, className: "resourceType", sortBy: sortBy.resourceType },
               {
                 title: <Trans>Created</Trans>,
@@ -87,7 +84,6 @@ export class Deploys extends React.Component<Props> {
             // deploy.getAppName(),
             deployNameRender(deploy),
             deploy.getName(),
-            deploy.getOwnerNamespace(),
             deploy.getResourceType(),
             deploy.getCreated(),
             deploy.getAge(),
