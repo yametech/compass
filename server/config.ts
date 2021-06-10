@@ -30,7 +30,7 @@ export const config = {
     KUBE_BASE: '/api-kube', // kubernetes cluster api
     KUBE_USERS: '/api-users', // users & groups api
     KUBE_HELM: '/api', // helm charts api middleware
-    KUBE_RESOURCE_APPLIER: "/workloads",
+    KUBE_RESOURCE_APPLIER: "/editer",
   },
 
   // express.js port
