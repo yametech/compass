@@ -1,6 +1,7 @@
 import { autobind } from "../../utils";
 import { KubeObject } from "../kube-object";
 import { KubeApi } from "../kube-api";
+import { apiAccessControl } from "../index";
 
 @autobind()
 export class PodSecurityPolicy extends KubeObject {
@@ -91,4 +92,5 @@ export const pspApi = new KubeApi({
   apiBase: "/apis/policy/v1beta1/podsecuritypolicies",
   isNamespaced: false,
   objectConstructor: PodSecurityPolicy,
+  request: apiAccessControl,
 });

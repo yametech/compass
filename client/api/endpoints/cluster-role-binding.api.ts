@@ -1,5 +1,6 @@
 import { RoleBinding } from "./role-binding.api";
 import { KubeApi } from "../kube-api";
+import { apiAccessControl } from "../index";
 
 export class ClusterRoleBinding extends RoleBinding {
   static kind = "ClusterRoleBinding"
@@ -10,4 +11,5 @@ export const clusterRoleBindingApi = new KubeApi({
   apiBase: "/apis/rbac.authorization.k8s.io/v1/clusterrolebindings",
   isNamespaced: false,
   objectConstructor: ClusterRoleBinding,
+  request: apiAccessControl,
 });

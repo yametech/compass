@@ -1,6 +1,7 @@
 import { autobind } from "../../utils";
 import { Role } from "./role.api";
 import { KubeApi } from "../kube-api";
+import { apiAccessControl } from "../index";
 
 @autobind()
 export class ClusterRole extends Role {
@@ -12,4 +13,5 @@ export const clusterRoleApi = new KubeApi({
   apiBase: "/apis/rbac.authorization.k8s.io/v1/clusterroles",
   isNamespaced: false,
   objectConstructor: ClusterRole,
+  request: apiAccessControl,
 });

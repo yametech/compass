@@ -1,6 +1,7 @@
 import { autobind } from "../../utils";
 import { KubeObject } from "../kube-object";
 import { KubeApi } from "../kube-api";
+import { apiAccessControl } from "../index";
 
 @autobind()
 export class ServiceAccount extends KubeObject {
@@ -27,4 +28,5 @@ export const serviceAccountsApi = new KubeApi<ServiceAccount>({
   apiBase: "/api/v1/serviceaccounts",
   isNamespaced: true,
   objectConstructor: ServiceAccount,
+  request: apiAccessControl,
 });
