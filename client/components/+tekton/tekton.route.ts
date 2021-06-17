@@ -1,53 +1,53 @@
-import { RouteProps } from "react-router";
-import { buildURL } from "../../navigation";
-import { Tekton } from "./tekton";
+import { RouteProps } from 'react-router';
+import { buildURL } from '../../navigation';
+import { Tekton } from './tekton';
 
 export const tektonRoute: RouteProps = {
-  get path() {
-    return Tekton.tabRoutes.map(({ path }) => path).flat();
-  },
+	get path() {
+		return Tekton.tabRoutes.map(({ path }) => path).flat();
+	},
 };
 
 export const tektonsRoute: RouteProps = {
-  path: "/tektons",
+	path: '/tektons',
 };
 
 export const pipelineRoute: RouteProps = {
-  path: "/tekton-pipeline",
+	path: '/tekton-pipeline',
 };
 
 export const pipelineRunRoute: RouteProps = {
-  path: "/tekton-pipelinerun",
+	path: '/tekton-pipelinerun',
 };
 
 export const pipelineResourceRoute: RouteProps = {
-  path: "/tekton-pipelineresource",
+	path: '/tekton-pipelineresource',
 };
 
 export const taskRoute: RouteProps = {
-  path: "/tekton-task",
+	path: '/tekton-task',
 };
 
 export const taskRunRoute: RouteProps = {
-  path: "/tekton-taskrun",
+	path: '/tekton-taskrun',
 };
 
 export const opsSecretRoute: RouteProps = {
-  path: "/tekton-config",
+	path: '/tekton-config',
 };
 
 export const tektonStoreRoute: RouteProps = {
-  path: "/tekton-store",
+	path: '/tekton-store',
 };
 
 export const webHookRoute: RouteProps = {
-  path: "/tekton-webhook",
+	path: '/tekton-webhook',
 };
 
 export interface ITektonsOverviewRouteParams {}
 
 export const tektonsURL = buildURL<ITektonsOverviewRouteParams>(
-  tektonsRoute.path
+	tektonsRoute.path
 );
 export const tektonURL = buildURL(pipelineRoute.path);
 export const pipelineURL = buildURL(pipelineRoute.path);
