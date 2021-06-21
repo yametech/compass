@@ -7,7 +7,7 @@ import { ActionMeta } from "react-select/src/types";
 import { Trans } from "@lingui/macro";
 import { Dialog } from "../dialog";
 import { Wizard, WizardStep } from "../wizard";
-import { Pipeline } from "../../api/endpoints";
+import { Pipeline, taskApi } from "../../api/endpoints";
 import { Notifications } from "../notifications";
 import { PipelineSaveDetails, PipelineResult, pipeline } from "./pipeline-save-details";
 import { pipelineTaskResource } from "./pipeline-task";
@@ -52,9 +52,9 @@ export class PipelineSaveDialog extends React.Component<Props> {
 
   onOpen = () => {
     this.value.tasks = [];
-
-    this.currentPipeline.spec.tasks.map((item, index) => {
-      let task = taskStore.getByName(item.name);
+  
+    this.currentPipeline.spec.tasks.map(async (item, index) => {
+      const task = await taskApi.get({ name: item.name, namespace: this.currentPipeline.getNs() });
 
       this.value.tasks.push(this.currentPipeline.spec.tasks[index]);
       this.value.tasks[index].resources = null;

@@ -14,7 +14,7 @@ import { PipelineSaveDialog } from "./pipeline-save-dialog";
 import { tektonGraphStore } from "../+tekton-graph/tekton-graph.store";
 import { pipelineStore } from "./pipeline.store";
 import { IKubeObjectMetadata } from "../../api/kube-object";
-import { defaultInitConfig } from "../+tekton-graph/common";
+import { defaultInitConfig, defaultInitData, PipelineNodeConfig } from "../+tekton-graph/common";
 import { graphAnnotationKey } from '../+constant/tekton-constants'
 import { OwnerReferences } from '../../api/kube-object'
 import { apiManager } from "../../../client/api/api-manager";
@@ -76,7 +76,7 @@ export class PipelineVisualDialog extends React.Component<Props> {
   onOpen = async () => {
     clearTimeout(this.initTimeout);
     this.initTimeout = null;
-    this.initTimeout = setTimeout(() => {
+    this.initTimeout = setTimeout(async () => {
       const anchor = document.getElementsByClassName("Wizard")[0];
       if (!anchor) return;
 
@@ -93,40 +93,55 @@ export class PipelineVisualDialog extends React.Component<Props> {
         });
       }
 
-      if (this.nodeData == null) {
-        this.nodeData = pipelineStore.getNodeData(this.pipeline);
+      if ((this.nodeData === null || this.nodeData === undefined) && (this.pipeline.getAnnotation("yamecloud.io/tektongraphs") === this.pipeline.getName())) {
+        const graph = await tektonGraphApi.get({ name: this.pipeline.getName(), namespace: this.pipeline.getNs() });
+        this.nodeData = JSON.parse(graph.spec?.data);
       }
+
+      if (this.nodeData == undefined) {
+        this.nodeData = defaultInitData;
+      }
+
       this.graph.renderPipelineGraph(this.nodeData);
       this.setSize();
-
     }, 100);
   };
 
   //存取node{id,...} => <id,node>
-  nodeToMap(): Map<string, any> {
+  async nodeToMap(): Promise<Map<string, any>> {
     let items: Map<string, any> = new Map<string, any>();
-    this.nodeData.nodes.map((item: any) => {
+    let nodes: PipelineNodeConfig[];
+
+    if (this.pipeline.getAnnotation("yamecloud.io/tektongraphs") === this.pipeline.getName()) {
+      let _nodes = await tektonGraphApi.get({ name: this.pipeline.getName(), namespace: this.pipeline.getNs() }).
+        then((item: TektonGraph) => {
+          return JSON.parse(item.spec.data).nodes
+        });
+      nodes = _nodes;
+    }
+
+    if (nodes === undefined) {
+      nodes = defaultInitData.nodes
+    }
+
+    nodes.map((item: any) => {
       const ids = item.id.split("-");
-      if (items.get(ids[0]) === undefined) {
-        items.set(ids[0], new Array<any>());
-      }
+      if (items.get(ids[0]) === undefined) { items.set(ids[0], new Array<any>()); }
       items.get(ids[0]).push(item);
     });
+
     return items;
   }
 
   //通过map的关系，形成要提交的任务，组装数据。
-  getPipelineTasks(): PipelineTask[] {
-    const dataMap = this.nodeToMap();
+  async getPipelineTasks(): Promise<PipelineTask[]> {
+    const dataMap = await this.nodeToMap();
     let keys = Array.from(dataMap.keys());
-
     let tasks: PipelineTask[] = [];
-
     let index = 1;
 
     keys.map((i: any) => {
       let array = dataMap.get(String(index));
-
       if (index === 1) {
         array.map((item: any) => {
           let task: any = {};
@@ -161,7 +176,16 @@ export class PipelineVisualDialog extends React.Component<Props> {
   }
 
   updateTektonGraph = async (data: string) => {
-    const tektonGraph = tektonGraphStore.getByName(this.pipeline.getName());
+    let tektonGraph: TektonGraph;
+    if (this.pipeline.getAnnotation("yamecloud.io/tektongraphs") === this.pipeline.getName()) {
+      const _tektonGraph = await tektonGraphApi.get(
+        {
+          name: this.pipeline.getName(),
+          namespace: this.pipeline.getNs()
+        }
+      );
+      tektonGraph = _tektonGraph;
+    }
 
     if (tektonGraph == undefined) {
       const tektonGraph: Partial<TektonGraph> = {
@@ -185,7 +209,6 @@ export class PipelineVisualDialog extends React.Component<Props> {
           height: this.graph.height,
         },
       };
-
       await tektonGraphApi.create(
         { name: this.pipeline.getName(), namespace: this.pipeline.getNs() },
         { ...tektonGraph },
@@ -196,12 +219,15 @@ export class PipelineVisualDialog extends React.Component<Props> {
         width: this.graph.width,
         height: this.graph.height,
       };
+
       await apiManager.getApi(tektonGraph.selfLink).update(
         { name: tektonGraph.getName(), namespace: tektonGraph.getNs() },
         { ...tektonGraph },
       )
+
     }
 
+    // check pipeline relationship graph
     const annotation = this.pipeline.getAnnotation(graphAnnotationKey);
     if (annotation === "") {
       this.pipeline.addAnnotation(graphAnnotationKey, this.pipeline.getName());
@@ -210,12 +236,18 @@ export class PipelineVisualDialog extends React.Component<Props> {
         { ...this.pipeline },
       );
     }
+
   };
 
   save = async () => {
-    await this.updateTektonGraph(JSON.stringify(this.graph.save()));
 
-    const collectTasks = this.getPipelineTasks();
+    const graphData = this.graph.save();
+    console.log("collect graphdata->", JSON.stringify(graphData));
+
+    await this.updateTektonGraph(JSON.stringify(graphData));
+
+    const collectTasks = await this.getPipelineTasks();
+    console.log("collect tasks->", collectTasks);
     this.pipeline.spec.tasks = [];
     this.pipeline.spec.tasks.push(...collectTasks);
 
