@@ -11,12 +11,9 @@ import { Pipeline, PipelineTask, TektonGraph, tektonGraphApi } from "../../api/e
 import { PipelineGraph } from "../+tekton-graph/graph";
 import { CopyTaskDialog } from "../+tekton-task/copy-task-dialog";
 import { PipelineSaveDialog } from "./pipeline-save-dialog";
-import { tektonGraphStore } from "../+tekton-graph/tekton-graph.store";
-import { pipelineStore } from "./pipeline.store";
 import { IKubeObjectMetadata } from "../../api/kube-object";
 import { defaultInitConfig, defaultInitData, PipelineNodeConfig } from "../+tekton-graph/common";
 import { graphAnnotationKey } from '../+constant/tekton-constants'
-import { OwnerReferences } from '../../api/kube-object'
 import { apiManager } from "../../../client/api/api-manager";
 
 const wizardSpacing = parseInt(styles.wizardSpacing, 10) * 6;

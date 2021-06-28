@@ -28,7 +28,7 @@ export class CustomResources extends React.Component {
       <MainLayout>
         <Switch>
           <Route component={CrdList} {...crdDefinitionsRoute} exact/>
-          {/* <Route component={CrdResources} {...crdResourcesRoute}/> */}
+          <Route component={CrdResources} {...crdResourcesRoute}/>
           <Redirect to={crdURL()}/>
         </Switch>
       </MainLayout>

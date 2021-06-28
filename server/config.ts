@@ -27,7 +27,7 @@ export const config = {
     TERMINAL: '/terminal', // terminal api
     SDN: "/sdn", // network plugin api
     CONFIG: '',
-    KUBE_BASE: '/api-kube', // kubernetes cluster api
+    KUBE_BASE: '/workloads', // kubernetes cluster api
     KUBE_USERS: '/api-users', // users & groups api
     KUBE_HELM: '/api', // helm charts api middleware
     KUBE_RESOURCE_APPLIER: "/editer",
