@@ -22,7 +22,7 @@ export class Form extends KubeObject {
 
 export const formApi = new KubeApi({
     kind: Form.kind,
-    apiBase: "/apis/fuxi.nip.io/v1/forms",
+    apiBase: "/apis/yamecloud.io/v1/forms",
     isNamespaced: true,
     objectConstructor: Form,
 });

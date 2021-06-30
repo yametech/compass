@@ -1,21 +1,21 @@
-import {observer} from "mobx-react";
+import { observer } from "mobx-react";
 import React from "react";
-import {computed, observable, toJS} from "mobx";
-import {ActionMeta} from "react-select/src/types";
-import {_i18n} from "../../i18n";
+import { computed, observable, toJS } from "mobx";
+import { ActionMeta } from "react-select/src/types";
+import { _i18n } from "../../i18n";
 import {
   PipelineTask,
   TaskRef,
   PipelineTaskResources,
   Param,
 } from "../../api/endpoints";
-import {SubTitle} from "../layout/sub-title";
-import {Input} from "../input";
-import {Select, SelectOption} from "../select";
-import {taskStore} from "../+tekton-task/task.store";
-import {Icon} from "../icon";
-import {ParamsDetails} from "../+tekton-common";
-import {TaskSelect} from "./task-select";
+import { SubTitle } from "../layout/sub-title";
+import { Input } from "../input";
+import { Select, SelectOption } from "../select";
+import { taskStore } from "../+tekton-task/task.store";
+import { Icon } from "../icon";
+import { ParamsDetails } from "../+tekton-common";
+import { TaskSelect } from "./task-select";
 import {
   MutilPipelineResource,
   PipelineTaskWorkSpaces,
@@ -62,7 +62,7 @@ export class PipelineTaskDetail extends React.Component<Props> {
     namespace: "",
   };
   // @observable value: PipelineTask = this.props.value || pipelineTask;
-  @observable tasks = observable.array<String>([], {deep: false});
+  @observable tasks = observable.array<String>([], { deep: false });
 
   @computed get value(): PipelineTask {
     return this.props.value || pipelineTask;
@@ -71,31 +71,31 @@ export class PipelineTaskDetail extends React.Component<Props> {
   get taskOptions() {
     return [
       ...taskStore
-      .getAllByNs(this.props.namespace)
-      .map((item) => ({value: item.getName()}))
-      .slice()
+        .getAllByNs(this.props.namespace)
+        .map((item) => ({ value: item.getName() }))
+        .slice()
     ];
   }
 
   formatOptionLabel = (option: SelectOption) => {
-    const {value, label} = option;
+    const { value, label } = option;
     return (label || (<><Icon small material="layers" className="primary" /> {value} </>));
   };
 
   render() {
-    const {disable} = this.props;
+    const { disable } = this.props;
     const unwrapTasks = (options: SelectOption[]) => options.map((option) => option.value);
 
     return (
       <>
-        <SubTitle title={"Name"}/>
+        <SubTitle title={"Name"} />
         <Input
           disabled={disable}
           placeholder={_i18n._("Pipeline Task Name")}
           value={this.value.name}
           onChange={(value) => (this.value.name = value)}
         />
-        <SubTitle title={"Reference"}/>
+        <SubTitle title={"Reference"} />
         <Select
           value={this.value?.taskRef?.name}
           isDisabled={disable}
@@ -105,7 +105,7 @@ export class PipelineTaskDetail extends React.Component<Props> {
             this.value.taskRef.name = value
           }}
         />
-        <SubTitle title={"RunAfter"}/>
+        <SubTitle title={"RunAfter"} />
         <TaskSelect
           isMulti
           isDisabled={disable}
@@ -119,19 +119,19 @@ export class PipelineTaskDetail extends React.Component<Props> {
             this.value.runAfter = data;
           }}
         />
-        <SubTitle title={"Retries"}/>
+        <SubTitle title={"Retries"} />
         <Input
           placeholder={_i18n._("retries")}
           value={this.value?.retries?.toString()}
           onChange={(value) => (this.value.retries = Number(value))}
         />
-        <SubTitle title={"Timeout"}/>
+        <SubTitle title={"Timeout"} />
         <Input
           placeholder={_i18n._("timeout")}
           value={this.value?.timeout?.toString()}
           onChange={(value) => (this.value.timeout = value)}
         />
-        <br/>
+        <br />
         <ParamsDetails
           disable={disable}
           value={this.value?.params}
@@ -139,14 +139,14 @@ export class PipelineTaskDetail extends React.Component<Props> {
             this.value.params = value;
           }}
         />
-        <br/>
+        <br />
         <PipelineTaskWorkSpaces
           value={this.value?.workspaces}
           onChange={(value) => {
             this.value.workspaces = value;
           }}
         />
-        <br/>
+        <br />
         <MutilPipelineResource
           disable={disable}
           value={this.value?.resources}
@@ -154,7 +154,7 @@ export class PipelineTaskDetail extends React.Component<Props> {
             this.value.resources = value;
           }}
         />
-        <br/>
+        <br />
       </>
     );
   }

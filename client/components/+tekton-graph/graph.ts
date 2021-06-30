@@ -77,7 +77,7 @@ export class PipelineGraph extends Graph {
           return 0;
         })[0]
         .getModel().x +
-        spacingX * 1.01 || 0
+      spacingX * 1.01 || 0
     );
   }
 
@@ -94,7 +94,7 @@ export class PipelineGraph extends Graph {
           return 0;
         })[0]
         .getModel().y +
-        spacingY * 1.4 || 0
+      spacingY * 1.4 || 0
     );
   }
 

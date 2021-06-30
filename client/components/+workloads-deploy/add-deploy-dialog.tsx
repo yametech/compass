@@ -106,10 +106,16 @@ export class AddDeployDialog extends React.Component<Props> {
                   onChange={value => this.service = value} />
               </Collapse>
               <br />
-              <Collapse panelName={<Trans>Volume</Trans>} key={"volume"}>
-                <MultiVolumeClaimDetails value={this.volumeClaims}
-                  onChange={value => this.volumeClaims = value} />
-              </Collapse>
+              {
+                this.app.type != "Stone" ?
+                  <>
+                  </> :
+                  <Collapse panelName={<Trans>Volume</Trans>} key={"volume"}>
+                    <MultiVolumeClaimDetails value={this.volumeClaims}
+                      onChange={value => this.volumeClaims = value} />
+                  </Collapse>
+              }
+
             </div>
           </WizardStep>
         </Wizard>

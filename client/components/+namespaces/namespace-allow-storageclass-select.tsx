@@ -48,11 +48,7 @@ export class NamespaceAllowStorageClassSelect extends React.Component<Props> {
     if (namespaceName != '') {
 
       try {
-        options = namespaceStore.items.find(item => item.getName() === namespaceName)
-          .getAnnotations().filter(item => item.startsWith("fuxi.kubernetes.io/default_storage_limit"))
-          .map(item => (
-            { value: JSON.parse(item.split('=')[1])[0] }
-          ))
+        options = JSON.parse(namespaceStore.getByName(namespaceName).getAnnotation("fuxi.kubernetes.io/default_storage_limit"));
       } catch (err) {
         options = [];
       }

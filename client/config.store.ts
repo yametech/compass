@@ -67,7 +67,7 @@ export class ConfigStore {
   }
 
   public getOpsNamespace(): string {
-    return this.getDefaultNamespace() + "-" + "ops"
+    return this.getDefaultNamespace()
   }
 
   public getAllowedNamespaces() {

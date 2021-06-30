@@ -16,6 +16,7 @@ export const config = {
     BASE: '/api', // local express.js server api
     WATCHER: '/watcher', // watcher api
     TENANT: '/base',  // tenant api
+    ACCESSCONTROL: '/accesscontrol',  // accesscontrol api
     TEKTON: '/tekton', // tekton
     WORKLOAD: '/workload', // workload
     WORKLOADS: '/workloads',// 0.2.0 workload api server
@@ -26,10 +27,10 @@ export const config = {
     TERMINAL: '/terminal', // terminal api
     SDN: "/sdn", // network plugin api
     CONFIG: '',
-    KUBE_BASE: '/api-kube', // kubernetes cluster api
+    KUBE_BASE: '/workloads', // kubernetes cluster api
     KUBE_USERS: '/api-users', // users & groups api
     KUBE_HELM: '/api', // helm charts api middleware
-    KUBE_RESOURCE_APPLIER: "/api-kube",
+    KUBE_RESOURCE_APPLIER: "/editer",
   },
 
   // express.js port

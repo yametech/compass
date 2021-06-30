@@ -1,6 +1,7 @@
 import { autobind } from "../../utils";
 import { KubeObject } from "../kube-object";
 import { KubeApi } from "../kube-api";
+import { apiAccessControl } from "../index";
 
 export interface IRoleBindingSubject {
   kind: string;
@@ -34,4 +35,5 @@ export const roleBindingApi = new KubeApi({
   apiBase: "/apis/rbac.authorization.k8s.io/v1/rolebindings",
   isNamespaced: true,
   objectConstructor: RoleBinding,
+  request:apiAccessControl,
 });

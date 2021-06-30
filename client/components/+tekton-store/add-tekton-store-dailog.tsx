@@ -21,6 +21,7 @@ import {
   PipelineTask,
   TaskRef,
 } from "../../api/endpoints";
+import { apiManager } from "../../../client/api/api-manager";
 
 interface Props extends DialogProps { }
 
@@ -95,7 +96,7 @@ export class AddTektonStoreDialog extends React.Component<Props> {
       const currentTaskStore = await tektonStore.getByName(AddTektonStoreDialog.storeName)
       if (currentTaskStore === undefined) {
         console.log(currentTaskStore)
-        await tektonStore.create(
+        await tektonStoreApi.create(
           {
             name: AddTektonStoreDialog.storeName,
             namespace: tektonStoreNamespace,
@@ -116,7 +117,10 @@ export class AddTektonStoreDialog extends React.Component<Props> {
         currentTaskStore.spec.data = data;
         currentTaskStore.spec.tektonResourceType = resourceType;
         currentTaskStore.spec.paramsDescription = AddTektonStoreDialog.paramsDescription;
-        await tektonStore.update(currentTaskStore, { ...currentTaskStore })
+        await apiManager.getApi(currentTaskStore.selfLink).update(
+          { name: currentTaskStore.getName(), namespace: currentTaskStore.getNs() },
+          { ...currentTaskStore },
+        )
       }
 
       Notifications.ok(<>Add TektonStore {name} succeeded</>);

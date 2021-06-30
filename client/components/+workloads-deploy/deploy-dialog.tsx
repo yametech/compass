@@ -125,10 +125,6 @@ export class DeployDialog extends React.Component<Props> {
                 themeName="light"
                 className="box grow"
                 onChange={(v) => this.networkCard = v.value}
-              // onChange={(opts: SelectOption[]) => {
-              //   if (!opts) opts = [];
-              //   this.networkCard.replace(unwrapCNiName(opts));
-              // }}
               />
 
               <SubTitle title={<Trans>StorageClass</Trans>} />

@@ -38,8 +38,8 @@ export class EnvironmentDetails extends React.Component<Props> {
     return [
       // "Custom",
       "Normal",
-      "ConfigMaps",
-      "Secrets",
+      // "ConfigMaps",
+      // "Secrets",
       // "Other"
     ]
   }

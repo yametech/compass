@@ -1,20 +1,20 @@
-import {ActionMeta} from "react-select/src/types";
-import {observer} from "mobx-react";
+import { ActionMeta } from "react-select/src/types";
+import { observer } from "mobx-react";
 import React from "react";
-import {Icon} from "../icon";
-import {_i18n} from "../../i18n";
-import {t, Trans} from "@lingui/macro";
-import {Input} from "../input";
-import {computed, observable} from "mobx";
+import { Icon } from "../icon";
+import { _i18n } from "../../i18n";
+import { t, Trans } from "@lingui/macro";
+import { Input } from "../input";
+import { computed, observable } from "mobx";
 import { NamespaceSelect } from "../+namespaces/namespace-select";
 import { ConfigMapsSelect } from "../+config-maps/config-maps-select";
 import { ConfigMapsKeySelect } from "../+config-maps/config-maps-key-select";
 import { SecretKeySelect } from "../+config-secrets/secret-key-select";
 import { SecretsSelect } from "../+config-secrets/secrets-select";
-import {VolumeMounts, volumeMount, volumeMounts} from "./common";
-import {Grid,Paper} from "@material-ui/core";
-import {stopPropagation} from "../../utils";
-import {SubTitle} from "../layout/sub-title";
+import { VolumeMounts, volumeMount, volumeMounts } from "./common";
+import { Grid, Paper } from "@material-ui/core";
+import { stopPropagation } from "../../utils";
+import { SubTitle } from "../layout/sub-title";
 import { Select } from "../select";
 
 interface ArgsProps<T = any> extends Partial<ArgsProps> {
@@ -55,7 +55,7 @@ export class VolumeMountDetails extends React.Component<ArgsProps> {
         <Grid item xs={12} direction={"row"} zeroMinWidth>
           <Grid container spacing={5} direction={"row"} zeroMinWidth>
             <Grid item xs zeroMinWidth>
-              <SubTitle title={<Trans>MountPath</Trans>}/>
+              <SubTitle title={<Trans>MountPath</Trans>} />
               <Input
                 required={true}
                 placeholder={_i18n._(t`eg: /data`)}
@@ -66,7 +66,7 @@ export class VolumeMountDetails extends React.Component<ArgsProps> {
               />
             </Grid>
             <Grid item xs zeroMinWidth>
-            <SubTitle title={<Trans>Name</Trans>}/>
+              <SubTitle title={<Trans>Name</Trans>} />
               <Input
                 required={true}
                 placeholder={_i18n._(t`eg: volumeClaims name`)}
@@ -84,9 +84,9 @@ export class VolumeMountDetails extends React.Component<ArgsProps> {
     return (
       <Grid container spacing={2} alignItems={"center"} direction={"row"} zeroMinWidth>
         <Grid item xs={12} direction={"row"} zeroMinWidth>
-          <Grid container spacing={5} alignItems="center" direction="row">
+          <Grid container spacing={3} alignItems="center" direction="row">
             <Grid item xs zeroMinWidth>
-              <SubTitle title={<Trans>MountPath</Trans>}/>
+              <SubTitle title={<Trans>MountPath</Trans>} />
               <Input
                 required={true}
                 placeholder={_i18n._(t`eg: /data`)}
@@ -96,27 +96,44 @@ export class VolumeMountDetails extends React.Component<ArgsProps> {
                 }
               />
             </Grid>
+
             <Grid item xs zeroMinWidth>
-              <SubTitle title={<Trans>ConfigMap Namespace</Trans>}/>
-              <NamespaceSelect
-                required autoFocus
-                value={this.namespace}
-                onChange={value => this.namespace = value.value}
+              <SubTitle title={<Trans>SubPath</Trans>} />
+              <Input
+                required={true}
+                placeholder={_i18n._(t`eg: nginx.conf`)}
+                value={this.value.items[index].mountConfig.subPath}
+                onChange={
+                  value => this.value.items[index].mountConfig.subPath = value
+                }
               />
             </Grid>
           </Grid>
+
+          <Grid item xs zeroMinWidth>
+            <SubTitle title={<Trans>Namespace</Trans>} />
+            <NamespaceSelect
+              required autoFocus
+              value={this.value.items[index].mountConfig.namespace}
+              onChange={
+                value => this.value.items[index].mountConfig.namespace = value.value
+              }
+            />
+          </Grid>
+
           <Grid container spacing={5} alignItems="center" direction="row">
             <Grid item xs zeroMinWidth>
-              <SubTitle title={<Trans>ConfigMap Name</Trans>}/>
+              <SubTitle title={<Trans>ConfigMap Name</Trans>} />
               <ConfigMapsSelect
                 required autoFocus
                 value={this.value.items[index].mountConfig.configName}
-                namespace={this.namespace}
+                namespace={this.value.items[index].mountConfig.namespace}
                 onChange={value => this.value.items[index].mountConfig.configName = value.value}
               />
             </Grid>
+
             <Grid item xs zeroMinWidth>
-              <SubTitle title={<Trans>ConfigMap Key</Trans>}/>
+              <SubTitle title={<Trans>ConfigMap Key</Trans>} />
               <ConfigMapsKeySelect
                 required autoFocus
                 value={this.value.items[index].mountConfig.configKey}
@@ -136,7 +153,7 @@ export class VolumeMountDetails extends React.Component<ArgsProps> {
         <Grid item xs={12} direction={"row"} zeroMinWidth>
           <Grid container spacing={5} alignItems="center" direction="row">
             <Grid item xs zeroMinWidth>
-              <SubTitle title={<Trans>MountPath</Trans>}/>
+              <SubTitle title={<Trans>MountPath</Trans>} />
               <Input
                 required={true}
                 placeholder={_i18n._(t`eg: /data`)}
@@ -146,27 +163,44 @@ export class VolumeMountDetails extends React.Component<ArgsProps> {
                 }
               />
             </Grid>
+
             <Grid item xs zeroMinWidth>
-              <SubTitle title={<Trans>Secret Namespace</Trans>}/>
-              <NamespaceSelect
-                required autoFocus
-                value={this.namespace}
-                onChange={value => this.namespace = value.value}
+              <SubTitle title={<Trans>SubPath</Trans>} />
+              <Input
+                required={true}
+                placeholder={_i18n._(t`eg: nginx.conf`)}
+                value={this.value.items[index].mountConfig.subPath}
+                onChange={
+                  value => this.value.items[index].mountConfig.subPath = value
+                }
               />
             </Grid>
           </Grid>
+
+          <Grid item xs zeroMinWidth>
+            <SubTitle title={<Trans>Secret Namespace</Trans>} />
+            <NamespaceSelect
+              required autoFocus
+              value={this.value.items[index].mountConfig.namespace}
+              onChange={
+                value => this.value.items[index].mountConfig.namespace = value.value
+              }
+            />
+          </Grid>
+
           <Grid container spacing={5} alignItems="center" direction="row">
             <Grid item xs zeroMinWidth>
-              <SubTitle title={<Trans>Secret Name</Trans>}/>
+              <SubTitle title={<Trans>Secret Name</Trans>} />
               <SecretsSelect
                 required autoFocus
                 value={this.value.items[index].mountConfig.secretName}
-                namespace={this.namespace}
+                namespace={this.value.items[index].mountConfig.namespace}
                 onChange={value => this.value.items[index].mountConfig.secretName = value.value}
               />
             </Grid>
+
             <Grid item xs zeroMinWidth>
-              <SubTitle title={<Trans>Secret Key</Trans>}/>
+              <SubTitle title={<Trans>Secret Key</Trans>} />
               <SecretKeySelect
                 required autoFocus
                 value={this.value.items[index].mountConfig.secretKey}
@@ -175,6 +209,7 @@ export class VolumeMountDetails extends React.Component<ArgsProps> {
               />
             </Grid>
           </Grid>
+
         </Grid>
       </Grid>
     )
@@ -183,12 +218,12 @@ export class VolumeMountDetails extends React.Component<ArgsProps> {
   rVolumeMounts(index: number) {
     return (
       <>
-        {index !==0 && <br/>}
-        <Paper elevation={3} style={{padding: 25}}>
+        {index !== 0 && <br />}
+        <Paper elevation={3} style={{ padding: 25 }}>
           <Grid container spacing={2} alignItems={"center"} direction={"row"} zeroMinWidth>
             <Grid item xs={11} direction={"row"} zeroMinWidth>
               <Grid container spacing={1} direction={"row"} zeroMinWidth>
-              <SubTitle title={<Trans>VolumeMounts Type</Trans>}/>
+                <SubTitle title={<Trans>VolumeMounts Type</Trans>} />
                 <Select
                   options={this.selectOptions}
                   value={this.value.items[index].mountType}
@@ -196,9 +231,9 @@ export class VolumeMountDetails extends React.Component<ArgsProps> {
                     this.value.items[index].mountType = v.value
                   }}
                 />
-                <br/>
-                <br/>
-                <br/>
+                <br />
+                <br />
+                <br />
                 {this.value.items[index].mountType === 'VolumeClaim' && this.VolumeClaimForm(index)}
                 {this.value.items[index].mountType === 'ConfigMaps' && this.ConfigMapsForm(index)}
                 {this.value.items[index].mountType === 'Secrets' && this.SecretsForm(index)}
@@ -235,7 +270,7 @@ export class VolumeMountDetails extends React.Component<ArgsProps> {
               stopPropagation(event)
             }} />
           </>
-        }/>
+        } />
         {this.value.items.map((item: any, index: number) => {
           return this.rVolumeMounts(index)
         })}

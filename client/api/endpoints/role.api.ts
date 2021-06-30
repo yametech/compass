@@ -1,5 +1,6 @@
 import { KubeObject } from "../kube-object";
 import { KubeApi } from "../kube-api";
+import { apiAccessControl } from "../index";
 
 export class Role extends KubeObject {
   static kind = "Role"
@@ -21,4 +22,5 @@ export const roleApi = new KubeApi({
   apiBase: "/apis/rbac.authorization.k8s.io/v1/roles",
   isNamespaced: true,
   objectConstructor: Role,
+  request: apiAccessControl,
 });

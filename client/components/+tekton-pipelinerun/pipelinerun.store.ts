@@ -9,6 +9,7 @@ import { apiManager } from "../../api/api-manager";
 import { tektonGraphStore } from "../+tekton-graph/tekton-graph.store";
 import { initData } from "../+tekton-graph/common";
 import { taskRunStore } from "../+tekton-taskrun";
+import { graphAnnotationKey, runGraphAnnotationKey } from "../+constant/tekton-constants";
 
 @autobind()
 export class PipelineRunStore extends KubeObjectStore<PipelineRun> {
@@ -43,14 +44,7 @@ export class PipelineRunStore extends KubeObjectStore<PipelineRun> {
   }
 
   getNodeData(pipelineRun: PipelineRun) {
-    let graphName: string = "";
-    pipelineRun?.getAnnotations()?.filter((item) => {
-      const R = item.split("=");
-      //TODO:hard code needs fix
-      if (R[0] == "fuxi.nip.io/run-tektongraphs") {
-        graphName = R[1];
-      }
-    });
+    let graphName: string = pipelineRun.getAnnotation(runGraphAnnotationKey);
 
     if (graphName) {
       try {
@@ -63,14 +57,7 @@ export class PipelineRunStore extends KubeObjectStore<PipelineRun> {
   }
 
   getNodeSize(pipelineRun: PipelineRun) {
-    let graphName: string = "";
-    pipelineRun.getAnnotations().filter((item) => {
-      const R = item.split("=");
-      if (R[0] == "fuxi.nip.io/run-tektongraphs") {
-        graphName = R[1];
-      }
-    });
-
+    let graphName: string = pipelineRun.getAnnotation(runGraphAnnotationKey);
     if (graphName) {
       try {
         const tektonGraph = tektonGraphStore.getByName(graphName);

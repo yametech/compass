@@ -123,14 +123,15 @@ export class Sidebar extends React.Component<Props> {
               icon={<Icon material="palette" />}
               text={<Trans>Tekton</Trans>}
             />
-            <SidebarNavItem
+            {/* <SidebarNavItem
               id="istio"
+              isHidden={!isClusterAdmin}
               url={istioGatewayURL({ query })}
               routePath={istioRoute.path}
               subMenus={Istio.tabRoutes}
               icon={<Icon material="dialpad" />}
               text={<Trans>ServiceMesh</Trans>}
-            />
+            /> */}
             <SidebarNavItem
               id="config"
               url={configURL({ query })}

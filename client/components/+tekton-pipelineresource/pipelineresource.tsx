@@ -31,7 +31,6 @@ export class PipelineResources extends React.Component<Props> {
           sortingCallbacks={{
             [sortBy.name]: (pipelineResource: PipelineResource) => pipelineResource.getName(),
             [sortBy.namespace]: (pipelineResource: PipelineResource) => pipelineResource.getNs(),
-            [sortBy.ownernamespace]: (pipelineResource: PipelineResource) => pipelineResource.getOwnerNamespace(),
             [sortBy.age]: (pipelineResource: PipelineResource) => pipelineResource.getAge(false),
           }}
           searchFilters={[
@@ -41,13 +40,11 @@ export class PipelineResources extends React.Component<Props> {
           renderTableHeader={[
             { title: <Trans>Name</Trans>, className: "name", sortBy: sortBy.name },
             { title: <Trans>Namespace</Trans>, className: "namespace", sortBy: sortBy.namespace },
-            { title: <Trans>OwnerNamespace</Trans>, className: "ownernamespace", sortBy: sortBy.ownernamespace },
             { title: <Trans>Age</Trans>, className: "age", sortBy: sortBy.age },
           ]}
           renderTableContents={(pipelineResource: PipelineResource) => [
             pipelineResource.getName(),
             pipelineResource.getNs(),
-            pipelineResource.getOwnerNamespace(),
             pipelineResource.getAge(),
           ]}
           renderItemMenu={(item: PipelineResource) => {

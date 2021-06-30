@@ -7,16 +7,14 @@ import { Trans } from "@lingui/macro";
 import { Dialog } from "../dialog";
 import { Wizard, WizardStep } from "../wizard";
 import { observer } from "mobx-react";
-import { Pipeline, PipelineTask, TektonGraph } from "../../api/endpoints";
+import { Pipeline, PipelineTask, TektonGraph, tektonGraphApi } from "../../api/endpoints";
 import { PipelineGraph } from "../+tekton-graph/graph";
 import { CopyTaskDialog } from "../+tekton-task/copy-task-dialog";
 import { PipelineSaveDialog } from "./pipeline-save-dialog";
-import { tektonGraphStore } from "../+tekton-graph/tekton-graph.store";
-import { pipelineStore } from "./pipeline.store";
 import { IKubeObjectMetadata } from "../../api/kube-object";
-import { defaultInitConfig } from "../+tekton-graph/common";
+import { defaultInitConfig, defaultInitData, PipelineNodeConfig } from "../+tekton-graph/common";
 import { graphAnnotationKey } from '../+constant/tekton-constants'
-import { OwnerReferences } from '../../api/kube-object'
+import { apiManager } from "../../../client/api/api-manager";
 
 const wizardSpacing = parseInt(styles.wizardSpacing, 10) * 6;
 const wizardContentMaxHeight = parseInt(styles.wizardContentMaxHeight);
@@ -75,9 +73,10 @@ export class PipelineVisualDialog extends React.Component<Props> {
   onOpen = async () => {
     clearTimeout(this.initTimeout);
     this.initTimeout = null;
-    this.initTimeout = setTimeout(() => {
+    this.initTimeout = setTimeout(async () => {
       const anchor = document.getElementsByClassName("Wizard")[0];
       if (!anchor) return;
+
       this.width = anchor.clientWidth - wizardSpacing;
       this.height = wizardContentMaxHeight - wizardSpacing;
 
@@ -87,48 +86,59 @@ export class PipelineVisualDialog extends React.Component<Props> {
         this.props.stopRender();
         this.graph.bindClickOnNode((currentNode: any) => {
           this.currentNode = currentNode;
-          CopyTaskDialog.open(
-            this.graph,
-            this.currentNode,
-            PipelineVisualDialog.Data.getNs()
-          );
+          CopyTaskDialog.open(this.graph, this.currentNode, PipelineVisualDialog.Data.getNs());
         });
       }
 
-      if (this.nodeData == null) {
-        this.nodeData = pipelineStore.getNodeData(this.pipeline);
+      if ((this.nodeData === null || this.nodeData === undefined) && (this.pipeline.getAnnotation("yamecloud.io/tektongraphs") === this.pipeline.getName())) {
+        const graph = await tektonGraphApi.get({ name: this.pipeline.getName(), namespace: this.pipeline.getNs() });
+        this.nodeData = JSON.parse(graph.spec?.data);
       }
+
+      if (this.nodeData == undefined) {
+        this.nodeData = defaultInitData;
+      }
+
       this.graph.renderPipelineGraph(this.nodeData);
       this.setSize();
-
     }, 100);
   };
 
   //存取node{id,...} => <id,node>
-  nodeToMap(): Map<string, any> {
+  async nodeToMap(): Promise<Map<string, any>> {
     let items: Map<string, any> = new Map<string, any>();
-    this.nodeData.nodes.map((item: any) => {
+    let nodes: PipelineNodeConfig[];
+
+    if (this.pipeline.getAnnotation("yamecloud.io/tektongraphs") === this.pipeline.getName()) {
+      let _nodes = await tektonGraphApi.get({ name: this.pipeline.getName(), namespace: this.pipeline.getNs() }).
+        then((item: TektonGraph) => {
+          return JSON.parse(item.spec.data).nodes
+        });
+      nodes = _nodes;
+    }
+
+    if (nodes === undefined) {
+      nodes = defaultInitData.nodes
+    }
+
+    nodes.map((item: any) => {
       const ids = item.id.split("-");
-      if (items.get(ids[0]) === undefined) {
-        items.set(ids[0], new Array<any>());
-      }
+      if (items.get(ids[0]) === undefined) { items.set(ids[0], new Array<any>()); }
       items.get(ids[0]).push(item);
     });
+
     return items;
   }
 
   //通过map的关系，形成要提交的任务，组装数据。
-  getPipelineTasks(): PipelineTask[] {
-    const dataMap = this.nodeToMap();
+  async getPipelineTasks(): Promise<PipelineTask[]> {
+    const dataMap = await this.nodeToMap();
     let keys = Array.from(dataMap.keys());
-
     let tasks: PipelineTask[] = [];
-
     let index = 1;
 
     keys.map((i: any) => {
       let array = dataMap.get(String(index));
-
       if (index === 1) {
         array.map((item: any) => {
           let task: any = {};
@@ -163,101 +173,80 @@ export class PipelineVisualDialog extends React.Component<Props> {
   }
 
   updateTektonGraph = async (data: string) => {
-    const graphName =
-      this.pipeline.getName() + "-" + new Date().getTime().toString();
+    let tektonGraph: TektonGraph;
+    if (this.pipeline.getAnnotation("yamecloud.io/tektongraphs") === this.pipeline.getName()) {
+      const _tektonGraph = await tektonGraphApi.get(
+        {
+          name: this.pipeline.getName(),
+          namespace: this.pipeline.getNs()
+        }
+      );
+      tektonGraph = _tektonGraph;
+    }
 
-    const tektonGraph: Partial<TektonGraph> = {
-      metadata: {
-        name: graphName,
-        namespace: this.pipeline.getNs(),
-        labels: Object.fromEntries(
-          new Map<string, string>().set(
-            "namespace",
-            this.pipeline.getNs().split("-")[0]
-          )
-        ),
-      } as IKubeObjectMetadata,
-      spec: {
+    if (tektonGraph == undefined) {
+      const tektonGraph: Partial<TektonGraph> = {
+        metadata: {
+          name: this.pipeline.getName(),
+          namespace: this.pipeline.getNs(),
+          ownerReferences: [
+            {
+              apiVersion: this.pipeline.apiVersion,
+              kind: this.pipeline.kind,
+              name: this.pipeline.getName(),
+              uid: this.pipeline.getId(),
+              controller: true,
+              blockOwnerDeletion: true,
+            }
+          ]
+        } as IKubeObjectMetadata,
+        spec: {
+          data: data,
+          width: this.graph.width,
+          height: this.graph.height,
+        },
+      };
+      await tektonGraphApi.create(
+        { name: this.pipeline.getName(), namespace: this.pipeline.getNs() },
+        { ...tektonGraph },
+      )
+    } else {
+      tektonGraph.spec = {
         data: data,
         width: this.graph.width,
         height: this.graph.height,
-      },
-    };
+      };
 
-    const newTektonGraph = await tektonGraphStore.create(
-      { namespace: this.pipeline.getNs(), name: graphName },
-      { ...tektonGraph }
-    );
+      await apiManager.getApi(tektonGraph.selfLink).update(
+        { name: tektonGraph.getName(), namespace: tektonGraph.getNs() },
+        { ...tektonGraph },
+      )
 
-    const ownerReferences: OwnerReferences = {
-      apiVersion: this.pipeline.getResourceVersion(),
-      kind: this.pipeline.kind,
-      name: this.pipeline.getName(),
-      uid: this.pipeline.getId(),
-      controller: false,
-      blockOwnerDeletion: false,
     }
-    newTektonGraph.addOwnerReferences([ownerReferences]);
-    await tektonGraphStore.update(newTektonGraph, { ...newTektonGraph })
 
+    // check pipeline relationship graph
+    const annotation = this.pipeline.getAnnotation(graphAnnotationKey);
+    if (annotation === "") {
+      this.pipeline.addAnnotation(graphAnnotationKey, this.pipeline.getName());
+      await apiManager.getApi(this.pipeline.selfLink).update(
+        { namespace: this.pipeline.getNs(), name: this.pipeline.getName() },
+        { ...this.pipeline },
+      );
+    }
 
-
-    this.pipeline.addAnnotation(
-      graphAnnotationKey,
-      newTektonGraph.getName()
-    );
-
-    await pipelineStore.update(this.pipeline, { ...this.pipeline });
   };
 
   save = async () => {
-    this.nodeData = this.graph.save();
 
-    const data = JSON.stringify(this.nodeData);
-    let annotations = this.pipeline.metadata
-      ? this.pipeline.metadata.annotations
-      : undefined;
-    const graphName = annotations
-      ? annotations[graphAnnotationKey]
-      : "";
+    const graphData = this.graph.save();
+    console.log("collect graphdata->", JSON.stringify(graphData));
 
-    if (graphName != "") {
-      try {
-        let tektonGraph = tektonGraphStore.getByName(
-          graphName,
-          this.pipeline.getNs()
-        );
-        if (tektonGraph.spec.data !== data) {
-          await this.updateTektonGraph(data);
-        }
-      } catch (e) {
-        await this.updateTektonGraph(data);
-      }
-    } else {
-      await this.updateTektonGraph(data);
-    }
+    await this.updateTektonGraph(JSON.stringify(graphData));
 
-
-    const pipelineTasks = this.pipeline.spec.tasks
-    //sort the tasks in pipeline
-    if (pipelineTasks === undefined) {
-      this.pipeline.spec.tasks = [];
-      const pipelineTasks = this.getPipelineTasks()
-      this.pipeline.spec.tasks.push(...pipelineTasks);
-    } else {
-      if (pipelineTasks.length == this.getPipelineTasks().length) {
-        this.pipeline.spec.tasks = [];
-        const pipelineTasks = this.getPipelineTasks()
-        this.pipeline.spec.tasks.push(...pipelineTasks);
-      } else {
-        this.getPipelineTasks().map((task) => {
-          const t = pipelineTasks.find((x) => x.name == task.name);
-          if (t === undefined) {
-            this.pipeline.spec.tasks.push(task);
-          }
-        });
-      }
-    }
+    const collectTasks = await this.getPipelineTasks();
+    console.log("collect tasks->", collectTasks);
+    this.pipeline.spec.tasks = [];
+    this.pipeline.spec.tasks.push(...collectTasks);
 
     PipelineSaveDialog.open(this.pipeline);
   };

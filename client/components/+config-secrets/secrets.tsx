@@ -113,9 +113,7 @@ export function SecretMenu(props: KubeObjectMenuProps<Secret>) {
   const [mountIcon, setMountIcon] = useState("add");
 
   useEffect(() => {
-    const labels = object.getLabels().find(label => {
-      return label.split("=")[0] == "mount"
-    })
+    const labels = object.getLabel("mount");
     if (labels == undefined) {
       setMount("Mount");
       setMountIcon("add");
@@ -182,7 +180,7 @@ export function SecretMenu(props: KubeObjectMenuProps<Secret>) {
     <>
       <KubeObjectMenu {...props} >
         {
-          className == "OpsSecrets" ?
+          className == "TektonConfig" ?
             <MenuItem onClick={mountAction}>
               <Icon material={mountIcon} title={_i18n._(t`Mount`)} interactive={toolbar} />
               <span className="title">{_i18n._(mount)}</span>

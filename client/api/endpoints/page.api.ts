@@ -12,7 +12,7 @@ export class Page extends KubeObject {
 
 export const pageApi = new KubeApi({
     kind: Page.kind,
-    apiBase: "/apis/fuxi.nip.io/v1/pages",
+    apiBase: "/apis/yamecloud.io/v1/pages",
     isNamespaced: true,
     objectConstructor: Page,
 });

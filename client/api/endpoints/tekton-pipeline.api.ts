@@ -145,7 +145,7 @@ export class Pipeline extends KubeObject {
 
   getGraphName() {
     let annotations = this.metadata ? this.metadata.annotations : undefined;
-    return annotations ? annotations["fuxi.nip.io/tektongraphs"] : "";
+    return annotations ? annotations["yamecloud.io/tektongraphs"] : "";
   }
 
   getTaskSet() {

@@ -90,14 +90,13 @@ export class StoneDetails extends React.Component<Props> {
             </DrawerItem>
             <ResourceMetricsText metrics={metrics} />
           </BookTabsNode>
-          
-          <BookTabsNode name="Pods" iconName="mail">
+
+          <BookTabsNode name="Pods" iconName="view_stream">
             <PodDetailsList pods={childPods} owner={stone} />
           </BookTabsNode>
 
-          <BookTabsNode name="Events" iconName="view_stream">
+          <BookTabsNode name="Events" iconName="access_time">
             <KubeEventDetails object={stone} />
-
             {statefulsets.length > 0 &&
               <>
                 {statefulsets.map((statefulset, index) => <KubeEventDetails key={`state${index}`} object={statefulset} title={"Event:statefulset-" + statefulset.getName()} />)}

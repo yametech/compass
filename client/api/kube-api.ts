@@ -39,9 +39,12 @@ export class KubeApi<T extends KubeObject = any> {
   static matcher = /(\/apis?.*?)\/(?:(.*?)\/)?(v.*?)(?:\/namespaces\/(.+?))?\/([^\/]+)(?:\/([^\/?]+))?.*$/;
 
   static parseApi(apiPath = "") {
+    // console.log("parse api ->", apiPath);
     apiPath = new URL(apiPath, location.origin).pathname;
     const [, apiPrefix, apiGroup = "", apiVersion, namespace, resource, name] =
       apiPath.match(KubeApi.matcher) || [];
+
+    // console.log("parse api -> apiPrefix:", apiPrefix, " namespace:", namespace);
     const apiVersionWithGroup = [apiGroup, apiVersion]
       .filter((v) => v)
       .join("/");

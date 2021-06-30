@@ -48,7 +48,7 @@ export class TektonStore extends KubeObject {
 
 export const tektonStoreApi = new KubeApi({
   kind: TektonStore.kind,
-  apiBase: "/apis/fuxi.nip.io/v1/tektonstores",
+  apiBase: "/apis/yamecloud.io/v1/tektonstores",
   isNamespaced: true,
   objectConstructor: TektonStore,
   request: apiTekton,

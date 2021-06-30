@@ -46,6 +46,20 @@ export default () => {
           changeOrigin: true,
           // pathRewrite: { '^/base': '' }
         },
+        '/accesscontrol/': {
+          target: 'http://127.0.0.1:8080',
+          secure: false,
+          changeOrigin: true,
+          logLevel: 'debug'
+          // pathRewrite: { '^/base': '' }
+        },
+        '/editer/': {
+          target: 'http://127.0.0.1:8080',
+          secure: false,
+          changeOrigin: true,
+          logLevel: 'debug'
+          // pathRewrite: { '^/base': '' }
+        },
         '/watcher/': {
           target: 'http://127.0.0.1:8080',
           ws: true,
@@ -123,7 +137,7 @@ export default () => {
           target: 'http://127.0.0.1:8080',
           secure: false,  // 如果是https接口，需要配置这个参数
           changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
-          pathRewrite: { '^/api-kube': '/workload' },
+          pathRewrite: { '^/api-kube': '/workloads' },
         },
 
         '/api-resource/': {
@@ -143,7 +157,7 @@ export default () => {
           target: 'http://127.0.0.1:8080',
           secure: false,  // 如果是https接口，需要配置这个参数
           changeOrigin: true, // 如果接口跨域，需要进行这个参数配置
-          pathRewrite: { '^/api': '/workload' }
+          pathRewrite: { '^/api': '/workloads' }
         },
 
         '/workload/': {

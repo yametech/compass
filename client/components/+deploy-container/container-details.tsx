@@ -59,7 +59,7 @@ export class ContainerDetails extends React.Component<Props> {
             onChange={(value) => this.value.base = value}
           /> : null}
         <br/>
-        {readyProbe ?
+        {/* {readyProbe ?
           <ProbeDetails
             className={"ReadyProbe"}
             themeName={this.theme}
@@ -80,7 +80,7 @@ export class ContainerDetails extends React.Component<Props> {
             themeName={this.theme} value={this.value.lifeCycle}
             onChange={(value) => this.value.lifeCycle = value}
           /> : null}
-        <br/>
+        <br/> */}
         {environment ?
           <EnvironmentDetails
             themeName={this.theme}

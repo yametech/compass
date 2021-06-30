@@ -58,12 +58,7 @@ export class PipelineRunDialog extends React.Component<Props> {
   @observable static isOpen = false;
   @observable static pipelineData: Pipeline = null;
   @observable graph: any = null;
-  // @observable nameSpace: string = "";
   @observable value: PipelineRunResult = this.props.value || pipelineRunResult;
-
-  // @computed get value(): PipelineRunResult {
-  //   return this.props.value || pipelineRunResult;
-  // }
 
   static open(pipeline: Pipeline) {
     PipelineRunDialog.isOpen = true;
@@ -91,7 +86,6 @@ export class PipelineRunDialog extends React.Component<Props> {
     this.value.namespace = this.pipeline.getNs();
 
     //fill the  resources
-
     this.pipeline.spec?.resources?.map((item: any, index: number) => {
       let resources: PipelineResourceBinding = {
         name: item.name,
@@ -112,65 +106,6 @@ export class PipelineRunDialog extends React.Component<Props> {
 
   submit = async () => {
     try {
-      /*// create a pipeline run
-      const runNodeData = pipelineStore.getNodeData(this.pipeline);
-      let width = 1000;
-      let height = 1000;
-      const nodeSize = pipelineStore.getNodeSize(this.pipeline);
-      if (nodeSize != null) {
-        width = nodeSize.width;
-        height = nodeSize.height;
-      }
-
-      const graph = await tektonGraphStore.create(
-        {
-          name: "run-" + this.pipeline.getName() + "-" + new Date().getTime().toString(),
-          namespace: this.pipeline.getNs(),
-          labels: new Map<string, string>().set("namespace", this.pipeline.getValueFromLabels("namespace")),
-        },
-        {
-          spec: {
-            data: JSON.stringify(runNodeData),
-            width: width,
-            height: height,
-          },
-        }
-      );
-
-      const pipelineRun: Partial<PipelineRun> = {
-        metadata: {
-          name: this.value.name,
-          annotations: Object.fromEntries(new Map<string, string>().set(runGraphAnnotationKey, graph.getName())),
-        } as IKubeObjectMetadata,
-        spec: {
-          resources: this.value.resources,
-          pipelineRef: this.value.pipelineRef,
-          serviceAccountName: this.value.serviceAccountName,
-          workspaces: this.value.workspces,
-          params: this.value.params,
-        },
-      };
-
-
-
-      let resultObject: any = await pipelineRunApi.create(
-        { name: this.value.name, namespace: this.pipeline.getNs() },
-        { ...pipelineRun }
-      );
-
-      // const currentPipelineRun = resultObject["Object"] as PipelineRun
-      const currentPipelineRun = resultObject as PipelineRun
-      const ownerReferences: OwnerReferences = {
-        apiVersion: currentPipelineRun.metadata.resourceVersion,
-        kind: currentPipelineRun.kind,
-        name: this.pipeline.metadata.name,
-        uid: currentPipelineRun.metadata.uid,
-        controller: false,
-        blockOwnerDeletion: false,
-      }
-      graph.addOwnerReferences([ownerReferences]);
-      await tektonGraphStore.update(graph, { ...graph })*/
-
       await pipelineRunApi.post({path:  this.pipeline.selfLink + "/run"},{
         metadata: {
           name: this.value.name,

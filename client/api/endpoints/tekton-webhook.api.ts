@@ -30,7 +30,7 @@ export class TektonWebHook extends KubeObject {
 
 export const tektonWebHookApi = new KubeApi({
   kind: TektonWebHook.kind,
-  apiBase: "/apis/fuxi.nip.io/v1/tektonwebhooks",
+  apiBase: "/apis/yamecloud.io/v1/tektonwebhooks",
   isNamespaced: true,
   objectConstructor: TektonWebHook,
   request: apiTekton,
