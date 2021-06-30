@@ -37,7 +37,10 @@
 
 ```shell
 
-kubectl apply -f https://raw.githubusercontent.com/yametech/compass/master/kubernetes/release.yml
+# 给master节点打标签
+for node in $(kubectl get node -l node-role.kubernetes.io/master |awk '{print $1}'); do kubectl label nodes $node yamecloud.kubernetes.io/node=master --overwrite; done
+
+kubectl apply -f https://raw.githubusercontent.com/yametech/compass/master/kubernetes/release-0.2.0.yaml
 
 //找compass的svc。以nodeport的方式暴露
 kubectl  get svc  -n kube-system
